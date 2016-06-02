@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{fileUploadEstudanteView.setUpload}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<div align="center">
+			<h2>
+				<h:outputText value="Anexo de Documentos" />
+			</h2>
+		</div>
+		<p:separator />
+		<p:panel header="Arquivos Requerimento de 2ª Via: "
+			style="min-width: 800px;">
+			<h:outputLabel
+				value="Utilize os espaços abaixo para anexar os documentos requeridos no processo de solicitação de 2ª via de cartão PLE (Passe Livre Estudantil)." />
+			<br />
+			<h:form id="formExemplos" enctype="multipart/form-data">
+				<p:separator />
+				<h3>
+					<p:outputLabel value="Download de Modelos de Declaração:" />
+				</h3>
+				<h:panelGrid columns="2">
+					<p:outputLabel
+						value="Exemplo Declaração para Cartão Danificado ou Inutilizado doc :" />
+					<p:commandButton value="Download"
+						onclick="PrimeFaces.monitorDownload(start, stop);">
+						<p:fileDownload value="#{fileUploadEstudanteView.getDOC()}" />
+					</p:commandButton>
+
+					<p:outputLabel
+						value="Exemplo Declaração para Cartão Danificado ou Inutilizado docx :" />
+					<p:commandButton value="Download"
+						onclick="PrimeFaces.monitorDownload(start, stop);">
+						<p:fileDownload value="#{fileUploadEstudanteView.getDOCX()}" />
+					</p:commandButton>
+
+					<p:outputLabel
+						value="Exemplo Declaração para Cartão Danificado ou Inutilizado odt :" />
+					<p:commandButton value="Download"
+						onclick="PrimeFaces.monitorDownload(start, stop);">
+						<p:fileDownload value="#{fileUploadEstudanteView.getODT()}" />
+					</p:commandButton>
+				</h:panelGrid>
+				<br />
+				<p:separator />
+				<br />
+				<b><h:outputLabel value="Prezado estudante," /><br/>
+				<h:outputLabel value="Se você está tendo problemas para anexar mais de uma folha de um documento (Ex.: BO) favor, 
+				clique no botão abaixo para juntar as folhas do seu arquivo!" /></b>
+   	 			<br/>
+   	 			<br/>
+   	 			<p:commandButton value="Juntar Arquivo"
+					action="#{fileUploadEstudanteView.concatenaArquivos}"
+					update=":arquivosForm :MsgGlobal" styleClass="left">
+				</p:commandButton>
+				<br/>
+				<br/>
+				<br/>
+			</h:form>
+			<p:separator />
+			<h:form id="arquivosForm">
+				<h:outputLabel
+					value="Somente é permitido envio de documentos em formato PDF, texto (ODT, DOC, DOCX) e/ou arquivos de imagem (JPG,JPEG,GIF,BMP e PNG) de até " />
+				<b><h:outputLabel value="2 Mega Bytes" /></b>
+				<h:outputLabel value=" ;" />
+				<p:graphicImage value="/resources/images/ods-icon.png" />
+				<p:graphicImage value="/resources/images/pdf-icon.png" />
+				<p:graphicImage value="/resources/images/xls-icon.png" />
+				<p:graphicImage value="/resources/images/img-icon.png" />
+				<br />
+				<h:outputLabel
+					value="ATENÇÃO!!!! Após enviar o arquivo, não será possível desfazer a ação." />
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="3" style="margin-top:20px; width:1200px">
+						<p:outputLabel
+							value="#{fileUploadEstudanteView.descricaoArquivos[0]}"
+							escape="false" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadEstudanteView.doUploadBO}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="boIcone" sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|bmp|docx?|odt)$/"
+							label="Procurar..." auto="true" style="width:600px"
+							invalidFileMessage="Tipo de arquivo não permitido!"
+							fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais!" />
+						<p:graphicImage id="boIcone"
+							value="#{fileUploadEstudanteView.iconeBO}" width="50px"
+							autoUpdate="true" />
+						<p:outputLabel
+							value="#{fileUploadEstudanteView.descricaoArquivos[1]}"
+							escape="false" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadEstudanteView.doUploadTAXA}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="taxaIcone" sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|bmp|docx?|odt)$/"
+							label="Procurar..." auto="true" style="width:600px"
+							invalidFileMessage="Tipo de arquivo não permitido!"
+							fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais!" />
+						<p:graphicImage id="taxaIcone"
+							value="#{fileUploadEstudanteView.iconeTAXA}" width="50px"
+							autoUpdate="true" />
+					</h:panelGrid>
+					<p:column width="10%">
+						<p:messages severity="info" escape="false" showDetail="true"
+							autoUpdate="true" closable="true" />
+					</p:column>
+				</h:panelGrid>
+				<p:separator />
+				<h:outputLabel
+					value="Informamos que a aprovação desta solicitação incorrerá no bloqueio imediato do antigo cartão e que a entrega se dará mediante apresentação e retenção do mesmo." />
+				<br />
+				<br />
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Motivo da Solicitação" for="motivo" />
+					<p:selectOneMenu id="motivo"
+						value="#{fileUploadEstudanteView.sol.motivo}" required="true"
+						requiredMessage="Motivo da Solicitação é um Campo Obrigatório!" immediate="true">
+						<f:selectItem itemLabel="Perda" itemValue="1" />
+						<f:selectItem itemLabel="Roubo ou Furto" itemValue="2" />
+						<f:selectItem itemLabel="Cartão Danificado ou Inutilizado"
+							itemValue="3" />
+					</p:selectOneMenu>
+					<p:message for="motivo" display="text" />
+					<p:outputLabel value="Email para Contato" for="email" />
+					<p:inputText id="email" size="50"
+						value="#{fileUploadEstudanteView.sol.email}" required="true"
+						requiredMessage="E-mail é um campo obrigatório!" />
+					<p:message for="email" display="text" />
+					<p:outputLabel value="Observações:" />
+					<p:inputTextarea id="obs"
+						value="#{fileUploadEstudanteView.sol.obs}" size="30" rows="5"
+						cols="30" counter="display" maxlength="255"
+						counterTemplate="{0}/255" autoResize="false" />
+					<h:outputText id="display" />
+				</h:panelGrid>
+				<p:separator />
+				<p:outputLabel
+					value="Utilize o campo observações para detalhar quaisquer informações que julgar pertinentes quanto ao motivo da solicitação;"
+					style="font-size: 9px !important;line-height: 0.5 !important;" />
+				<br />
+				<br />
+				<p:commandButton value="Enviar"
+					action="#{fileUploadEstudanteView.arquivos}"
+					update=":arquivosForm :MsgGlobal" styleClass="left">
+				</p:commandButton>
+				<br />
+				<br />
+			</h:form>
+		</p:panel>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>

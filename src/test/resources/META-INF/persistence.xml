@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+
+	<persistence-unit name="sciePU">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>br.gov.df.dftrans.scie.domain.Cidade</class>
+		<class>br.gov.df.dftrans.scie.domain.Curso</class>
+		<class>br.gov.df.dftrans.scie.domain.Declaracao</class>
+		<class>br.gov.df.dftrans.scie.domain.DocumentoPendencia</class>
+		<class>br.gov.df.dftrans.scie.domain.Endereco</class>
+		<class>br.gov.df.dftrans.scie.domain.Estudante</class>
+		<class>br.gov.df.dftrans.scie.domain.Frequencia</class>
+		<class>br.gov.df.dftrans.scie.domain.InstituicaoCurso</class>
+		<class>br.gov.df.dftrans.scie.domain.InstituicaoEnsino</class>
+		<class>br.gov.df.dftrans.scie.domain.LogAlteracaoBanco</class>
+		<class>br.gov.df.dftrans.scie.domain.Representante</class>
+		<class>br.gov.df.dftrans.scie.domain.UF</class>
+		<class>br.gov.df.dftrans.scie.domain.Usuario</class>
+		<class>br.gov.df.dftrans.scie.domain.AutorizacaoRepresentante</class>
+		<class>br.gov.df.dftrans.scie.domain.Comentario</class>
+		<class>br.gov.df.dftrans.scie.domain.ExtensaoAcesso</class>
+		<class>br.gov.df.dftrans.scie.domain.LogValidacaoCadastro</class>
+		<class>br.gov.df.dftrans.scie.domain.Motivo</class>
+		<class>br.gov.df.dftrans.scie.domain.Solicitacao</class>
+
+		<!--<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/scie" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+			<property name="hibernate.default_schema" value="CadSchool" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.c3p0.min_size" value="5"/>
+			<property name="hibernate.c3p0.max_size" value="20"/>
+			<property name="hibernate.c3p0.timeout" value="1800"/>
+			<property name="hibernate.c3p0.max_statements" value="100"/>
+		</properties>-->
+
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:oracle:thin:@10.64.2.240:1521:DFTDEV" />
+			<property name="hibernate.connection.username" value="srb2" />
+			<property name="hibernate.connection.password" value="srb1232" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="100" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+		</properties>
+		
+		<!--<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@10.72.39.79:1521/HADES" />
+			<property name="hibernate.default_schema" value="db_scie" />
+			<property name="hibernate.connection.username" value="db_scie" />
+			<property name="hibernate.connection.password" value="dftrans2scie" />
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="1800" />
+			<property name="hibernate.c3p0.max_statements" value="100" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>-->
+		<!--  
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect" />
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@10.72.31.161:1521/GDFPROD"/>
+			<property name="hibernate.default_schema" value="db_scie" />
+			<property name="hibernate.connection.username" value="db_scie" />
+			<property name="hibernate.connection.password" value="dftrans2scie"/>
+			<property name="hibernate.c3p0.min_size" value="5"/>
+			<property name="hibernate.c3p0.max_size" value="20"/>
+			<property name="hibernate.c3p0.timeout" value="1800"/>
+			<property name="hibernate.c3p0.max_statements" value="100"/>
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+		-->
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>SCIE - Sistema De Solicita&ccedil;&otilde;es de Segunda
+		Via</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<script>
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 0,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só Horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Todo o Dia'
+		};
+
+		//retorna o código da imagem/audio
+		function getValor(valor) {
+			switch (valor) {
+			case ("0"):
+				return "978832";
+			case ("1"):
+				return "529752";
+			case ("2"):
+				return "385528";
+			case ("3"):
+				return "972207";
+			case ("4"):
+				return "656274";
+			case ("5"):
+				return "360116";
+			case ("6"):
+				return "61870";
+			case ("7"):
+				return "273371";
+			case ("8"):
+				return "890843";
+			case ("9"):
+				return "671206";
+			}
+			return "";
+		};
+	</script>
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-75294057-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+</h:head>
+<h:body>
+	<p:growl id="MsgGlobal" autoUpdate="true" showDetail="true"
+		escape="false" />
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" closable="false" resizable="false"
+			collapsible="false">
+			<ui:insert name="cabecalho" />
+			<h:graphicImage value="/resources/images/bar.png"
+				style="z-index: 1;max-height: 110px;" width="100%" height="100%" />
+			<h:outputLink value="http://www.passelivreestudantil.df.gov.br/">
+				<h:graphicImage value="/resources/images/logo-passe.jpg"
+					style="position:absolute; top:10px; left:50px; z-index: 2"
+					height="70%" />
+			</h:outputLink>
+		</p:layoutUnit>
+		<p:layoutUnit position="west" closable="false" collapsible="false">
+			<ui:insert name="menu" />
+			<h:form>
+				<p:slideMenu backLabel="Voltar">
+					<p:submenu label="Instituição">
+						<p:submenu label="Cadastro">
+							<p:menuitem value="Atualizar Cadastro"
+								action="#{loginBean.atualizarCadastro}" />
+							<p:menuitem value="Verificar Pendências"
+								action="#{loginBean.instituicaoHome}" />
+						</p:submenu>
+					</p:submenu>
+					<p:submenu label="Estudante">
+						<p:menuitem value="Cadastro"
+							url="http://www.passelivreestudantil.df.gov.br/" />
+						<p:menuitem value="Solicitação de 2ª Via"
+							action="#{loginBean.estudanteHome}" />
+						<p:menuitem value="Solicitação de Extensão de Acessos"
+							action="#{loginBean.estudanteAcessosHome}" />
+						<p:menuitem value="Acompanhamento de Agendamento"
+							action="#{loginBean.estudanteAgendamento}" />
+						<p:menuitem value="Primeiro Cartão PLE"
+							action="#{loginBean.estudanteNovo}" />
+					</p:submenu>
+					<p:menuitem value="Operador de Cadastro"
+						action="#{loginBean.validadorIndex}" />
+					<p:separator />
+					<p:menuitem value="Login" action="#{loginBean.login}"
+						rendered="#{loginBean.logado()}" />
+					<p:menuitem value="Logoff" action="#{loginBean.logOff}"
+						rendered="#{loginBean.deslogado()}" />
+					<p:separator />
+					<p:menuitem value="Início" action="#{loginBean.index}" />
+					<p:separator />
+					<p:menuitem value="" style="height: 50px !important;"
+						disabled="true" />
+				</p:slideMenu>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="center" closable="false" resizable="true"
+			collapsible="false">
+			<ui:insert name="conteudo" />
+		</p:layoutUnit>
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage value="/resources/images/loading_spinner.gif" />
+		</p:dialog>
+		<ui:insert name="rodape" />
+		<p:layoutUnit position="south" closable="false" resizable="false"
+			collapsible="false" minSize="100">
+			<h:graphicImage value="/resources/images/bar.png" style="z-index: 1"
+				width="100%" height="130" />
+			<h:panelGrid columns="3" width="100%"
+				style="position:absolute; bottom:50px; left:0px; z-index: 2">
+				<p:column />
+				<p:column>
+					<div align="center">
+						<h:outputLink value="http://www.dftrans.df.gov.br">
+							<h:graphicImage value="/resources/images/dftrans-dti.png"
+								width="300" style="position:relative;vertical-align:middle;" />
+						</h:outputLink>
+						<p:spacer width="100" height="10" />
+						<h:outputLink value="http://www.semob.df.gov.br">
+							<h:graphicImage value="/resources/images/mobilidade.png"
+								width="350" style="position:relative;vertical-align:middle;" />
+						</h:outputLink>
+					</div>
+				</p:column>
+				<p:column />
+			</h:panelGrid>
+			<br />
+			<p:separator />
+			<div align="right">
+				<h:outputText
+					value="Sistema de Cadastro de Instituições de Ensino ..::SCIE::.. versão 1.0  ©2016 DFTrans-DTI. Todos direitos reservados"
+					style="font-size: 10px !important;" />
+			</div>
+		</p:layoutUnit>
+
+	</p:layout>
+</h:body>
+</h:html>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{solicitacaoMB.init}" immediate="true" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText
+					value="Validação de Solicitação de 2 Via de PLE" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="validacaoForm">
+			<p:commandButton value="Voltar"
+				action="#{loginBean.validadorIndex()}" styleClass="left" />
+			<h:panelGrid columns="2" width="100%">
+				<h:panelGrid columns="1" width="100%">
+					<p:panel header="Dados da Solicitação" toggleable="true"
+						closable="false">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="CPF do Estudante" />
+							<p:inputMask id="cpf" size="14"
+								value="#{solicitacaoMB.solicitacao.cpf}"
+								mask="999.999.999-99" readonly="true" />
+							<p:outputLabel value="Motivo" />
+							<p:inputText size="30" id="motivo"
+								value="#{solicitacaoMB.motivo}" readonly="true" />
+							<p:outputLabel value="Observações" />
+							<p:inputTextarea size="20" id="observacoes"
+								value="#{solicitacaoMB.solicitacao.obs}" readonly="true" />
+							<p:outputLabel value="Data da última atualização" />
+							<p:inputText size="20" id="atualizacao"
+								value="#{solicitacaoMB.solicitacao.atualizacao}" readonly="true" />
+							<p:outputLabel value="Número NSU do pagamento" />
+							<p:inputText size="20" id="nsuPagamento"
+								value="#{solicitacaoMB.solicitacao.nsuPagamento}"/>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel header="Documentos Anexados"
+						toggleable="true" closable="false">
+						<p:outputLabel for="documento" value="Documento: " />
+						<p:selectOneListbox id="documento"
+							value="#{solicitacaoMB.documento}" scrollHeight="200"
+							style="width: 400px">
+							<f:selectItem itemLabel="#{fileUploadEstudanteView.descricaoArquivos[0]}"
+								itemValue="0" />
+							<f:selectItem itemLabel="#{fileUploadEstudanteView.descricaoArquivos[1]}"
+								itemValue="1" />
+							<p:ajax event="change" listener="#{solicitacaoMB.setarDocumento}"
+								update="label labelAut autenticacao" />
+						</p:selectOneListbox>
+						<p:separator />
+						<p>
+							<b><h:outputText
+									value="Clique abaixo para visualizar o documento:"
+									style="font-size: 18px !important;"/></b>
+						</p>
+						<h:outputLink value="../../arquivo.xhtml"
+							title="#{solicitacaoMB.getLabel()}">
+							<h:outputText id="label" value="#{solicitacaoMB.getLabel()}"
+								style="font-size: 16px !important;"/>
+								<p:ajax/>
+						</h:outputLink>
+						<br/>
+						<h:outputText id="labelAut" value="Autenticação: "
+							style="font-size: 16px !important;" />
+						<h:outputText id="autenticacao"
+							value="#{solicitacaoMB.getAutenticacao()}"
+							style="font-size: 16px !important;"/>
+					</p:panel>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<p:panel header="Validar Cadastro">
+						<p:outputLabel
+								value="Prezado Validador, utilize os campos abaixo para avaliar a solicitação de Segunda Via. ATENÇÃO!!! Os campos abaixo serão impressos no e-mail enviado ao estudante."/>
+						<br/><br/>
+						<h:panelGrid columns="5">
+							<p:outputLabel
+								value="Arquivo: #{fileUploadEstudanteView.descricaoArquivos[0]}"/>
+							<p:inputSwitch value="#{solicitacaoMB.arquivoValido[0]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textBO"
+								value="#{solicitacaoMB.comentario[0]}" rows="5" cols="30"
+								counter="display0" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textBO"
+								value="Escreva aqui o motivo da validade/invalidade..."/>
+							<h:outputText id="display0"/>
+							<p:outputLabel
+								value="Arquivo: #{fileUploadEstudanteView.descricaoArquivos[1]}"/>
+							<p:inputSwitch value="#{solicitacaoMB.arquivoValido[1]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textTAXA"
+								value="#{solicitacaoMB.comentario[1]}" rows="5" cols="30"
+								counter="display1" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textTAXA"
+								value="Escreva aqui o motivo da validade/invalidade..."/>
+							<h:outputText id="display1" />
+							<p:outputLabel value="Validação Solicitação"
+								style="font-weight: bold;font-size: 16px !important;" />
+							<p:inputSwitch value="#{solicitacaoMB.arquivoValido[2]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textSolicitacao"
+								value="#{solicitacaoMB.comentario[2]}" rows="5" cols="30"
+								counter="display2" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textSolicitacao"
+								value="Escreva aqui o motivo da validade/invalidade do cadastro..." />
+							<h:outputText id="display2" />
+							<p:outputLabel/><p:outputLabel/><p:outputLabel/>
+						</h:panelGrid>
+						<h:outputText id="nota" value="*Atenção!!! Apenas marque como válido o campo Validação Solicitação se todos os outros campos estiverem válidos!" 
+						style="color: gray !important; font-size: 11px !important;line-height: 0.5 !important;"/>
+						<p:separator/>
+						<p:outputLabel
+								value="Os campos abaixo não serão impressos no e-mail ao estudante!"/>
+						<h:panelGrid columns="4">
+							<p:outputLabel value="Motivo (Comentário Interno)"/>
+							<p:selectOneMenu id = "motivoSelect" value="#{solicitacaoMB.solicitacao.comentario.motivo}" 
+								converter="motivoConverter" var="m" filter="true"
+								filterMatchMode="contains" editable="false">
+								<f:selectItems value="#{MotivoService.motivos}" var="motivo"
+								itemLabel="#{motivo.motivo}" itemValue="#{motivo}" effect="fold" />
+								<p:column>
+									<h:outputText value="#{m.motivo}"/>
+								</p:column>
+							</p:selectOneMenu>
+							<p:outputLabel/><p:outputLabel/>
+							<p:outputLabel value="Comentário Interno" />
+							<p:inputTextarea id="textComentario"
+								value="#{solicitacaoMB.solicitacao.comentario.descricaoComentario}" rows="5" cols="30"
+								counter="display3" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textComentario"
+								value="Escreva aqui o comentário da validade/invalidade do cadastro..." />
+							<h:outputText id="display3" />
+						</h:panelGrid>
+					</p:panel>
+				</h:panelGrid>
+			</h:panelGrid>
+			<br />
+			<p:commandButton value="Concluir" update = ":MsgGlobal"
+				action="#{solicitacaoMB.terminarValidacao}" styleClass="left">
+				<p:confirm header="Confirmação" message="Deseja encerrar a validação?" icon="ui-icon-alert" />
+			</p:commandButton>
+			
+			<p:confirmDialog id = "dialog" global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    		</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</h:html>

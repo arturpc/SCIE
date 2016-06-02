@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+    <f:viewAction action="#{fileUploadView.setUploaded}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:steps activeIndex="1" readonly="false">
+			<p:menuitem value="Dados Cadastrais" url="/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Documentos Comprobatórios" url="/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Cursos Oferecidos" url="/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true" />
+			<p:menuitem value="Confirmação" url="/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true" />
+		</p:steps>
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="arquivosForm" enctype="multipart/form-data">
+			<p:panel header="Arquivos de Comprovação dos Dados Cadastrais: " style="min-width: 800px;">
+				<h:outputLabel value="Utilize os espaços abaixo para anexar os documentos comprobatórios dos dados cadastrais inseridos."/>
+				<br/>
+				<h:outputLabel value="Somente é permtido envio de documentos em formato PDF e/ou arquivos de imagem (JPG,JPEG,GIF,TIFF,BMP e PNG);"/>
+				<p:graphicImage value="/resources/images/ods-icon.png"/>
+				<p:graphicImage value="/resources/images/pdf-icon.png"/>
+				<p:graphicImage value="/resources/images/xls-icon.png"/>
+				<p:graphicImage value="/resources/images/img-icon.png"/>
+				<br />
+				<h:outputLabel>Após clicar em Enviar Arquivo, não será possível desfazer a ação. </h:outputLabel>
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="3" style="margin-top:20px; width:800px">
+						<p:outputLabel value="#{fileUploadView.descricaoArquivos[0]}" />
+						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadAto}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="atoIcone" sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px" 
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:graphicImage id="atoIcone" value="#{fileUploadView.iconeAto}"
+							width="50px" autoUpdate="true" />
+						<p:outputLabel
+							value="#{fileUploadView.descricaoArquivos[1]}" />
+						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadCNPJ}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="cnpjIcone" sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:graphicImage id="cnpjIcone" value="#{fileUploadView.iconeCNPJ}"
+							width="50px" autoUpdate="true" />
+						<p:outputLabel
+							value="#{fileUploadView.descricaoArquivos[2]}" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadView.doUploadDiretor}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="diretorIcone" sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:graphicImage id="diretorIcone"
+							value="#{fileUploadView.iconeDiretor}" width="50px"
+							autoUpdate="true" />
+						<p:outputLabel
+							value="#{fileUploadView.descricaoArquivos[3]}" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadView.doUploadEndereco}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							update="enderecoIcone" sizeLimit="2000000"
+							fileLimit="1" allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:graphicImage id="enderecoIcone"
+							value="#{fileUploadView.iconeEndereco}" width="50px"
+							autoUpdate="true" />
+						<p:separator/>
+						<p:separator/>
+						<p:separator/>
+						<p:outputLabel
+							value="#{fileUploadView.descricaoArquivos[4]}" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadView.doUploadCursoSuperior}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:outputLabel/>
+						<p:outputLabel
+							value="#{fileUploadView.descricaoArquivos[5]}" />
+						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadEstatuto}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:outputLabel/>
+						<p:outputLabel value="#{fileUploadView.descricaoArquivos[6]}" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadView.doUploadConvenio}"
+							mode="advanced" dragDropSupport="true" multiple="false"
+							sizeLimit="2000000" fileLimit="1"
+							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
+							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
+							invalidSizeMessage="Arquivo grande demais"/>
+						<p:outputLabel/>
+					</h:panelGrid>
+					<p:column width="10%"><p:messages severity="info" escape="false" showDetail="true"
+						autoUpdate="true" closable="true"/></p:column>
+					
+				</h:panelGrid>
+			</p:panel>
+			<br/>
+			<p:commandButton value="Avançar" action="#{fileUploadView.arquivos}"
+				update=":arquivosForm :MsgGlobal" styleClass="left" />
+
+			<br/>
+			<br/>
+			<p:separator/>
+			<h:outputLabel value = "#{fileUploadView.msgPortaria} " style="font-size: 9px !important;line-height: 0.5 !important;"/>
+			<h:outputLink value="http://www.buriti.df.gov.br/ftp/diariooficial/2016/03_Mar%C3%A7o/DODF%20N%C2%BA%2040%20de%2001-03-2016/Se%C3%A7%C3%A3o%2001.pdf">
+				<h:outputLabel value = "Para acessar a portaria, clique aqui!" style="font-size: 9px !important;line-height: 0.5 !important;"/>
+			</h:outputLink>
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>

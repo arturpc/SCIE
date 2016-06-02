@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho" />
+	<f:metadata>
+		<f:viewAction action="#{FrequenciaMB.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<h:form>
+			<p:separator />
+			<div align="center">
+				<h2>
+					<h:outputText value="Cadastro de Frequências de Alunos" />
+				</h2>
+			</div>
+			<p:separator />
+			<br />
+			<p:outputLabel
+				value="Prezado representante de instituição de Ensino, utilize o espaço abaixo para anexar as frequências mensais dos estudantes de sua instituição." />
+			<br />
+			<p:outputLabel
+				value="Lembre-se de preencher a lista de Mês de Refêrencia antes de enviar o arquivo!!!" />
+			<br />
+			<p:outputLabel
+				value="Caso tenha alguma dúvida quanto ao preenchimento da lista de frequência, utilize exemplos abaixo:" />
+			<br />
+			<br />
+			<b><p:outputLabel
+					value="Código da Instituição: #{FrequenciaMB.instituicao.id}" /> </b>
+			<br/>
+			<br />
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Exemplo xls :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{FrequenciaMB.getXls()}" />
+				</p:commandButton>
+
+				<p:outputLabel value="Exemplo xlsx :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{FrequenciaMB.getXlsx()}" />
+				</p:commandButton>
+
+				<p:outputLabel value="Exemplo ods :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{FrequenciaMB.getOds()}" />
+				</p:commandButton>
+			</h:panelGrid>
+			<p:separator />
+			<br />
+			<h:panelGrid columns="4">
+				<p:outputLabel value="Mês de Referência: " />
+				<p:selectOneMenu value="#{FrequenciaMB.valorMes}" converter="mesReferenciaConverter">
+					<p:ajax listener="#{FrequenciaMB.mostrarMes}"/>	
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Mes" />
+					<f:selectItems value="#{FrequenciaMB.meses}" var="mesSelecionado"
+						itemLabel="#{mesSelecionado.display}" itemValue="#{mesSelecionado.value} "/>
+				</p:selectOneMenu>
+				<p:outputLabel />
+				<p:outputLabel />
+				<p:outputLabel value="Enviar Frequências: " />
+				<p:fileUpload fileUploadListener="#{FrequenciaMB.doUpload}"
+					mode="advanced" dragDropSupport="true" multiple="false"
+					update="icone freqTab" sizeLimit="2000000"
+					allowTypes="/(\.|\/)(xlsx?|ods)$/" label="Procurar..."
+					uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio"
+					invalidFileMessage="Tipo de arquivo não permitido!"
+					invalidSizeMessage="Arquivo grande demais" />
+				<p:graphicImage id="icone" value="#{FrequenciaMB.icone}"
+					width="50px" autoUpdate="true" />
+				<p:column width="10%">
+					<p:messages severity="info" escape="false" showDetail="true"
+						autoUpdate="true" closable="true" />
+					<p:messages severity="error" escape="false" showDetail="true"
+						autoUpdate="true" closable="true" />
+				</p:column>
+			</h:panelGrid>
+			<p:separator />
+			<p:fieldset legend="Frequências" toggleable="true" toggleSpeed="500"
+				collapsed="true">
+				<p:dataTable id="freqTab" var="rowFreq"
+					value="#{FrequenciaMB.frequencias}" editable="false"
+					emptyMessage="Não há frequências cadastradas." paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,30,100">
+
+					<p:column headerText="Referência">
+						<h:outputText value="#{rowFreq.dataReferencia}" />
+					</p:column>
+					<p:column headerText="Matricula">
+						<h:outputText value="#{rowFreq.estudante.matricula}" />
+					</p:column>
+					<p:column headerText="Estudante">
+						<h:outputText value="#{rowFreq.estudante.nome}" />
+					</p:column>
+					<p:column headerText="Nascimento">
+						<h:outputText value="#{rowFreq.estudante.dataNascimento}" />
+					</p:column>
+					<p:column headerText="Frequência">
+						<h:outputText value="#{rowFreq.getFrequenciaString()}" />
+					</p:column>
+					<p:column headerText="Responsável">
+						<h:outputText value="#{rowFreq.estudante.responsavel}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<br />
+			<p:commandButton value="Voltar" action="#" />
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape" />
+</ui:composition>
+</h:html>

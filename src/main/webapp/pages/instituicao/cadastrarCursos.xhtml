@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho" />
+	<f:metadata>
+		<f:viewAction action="#{MBCursoView.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:steps activeIndex="2" readonly="false">
+			<p:menuitem value="Dados Cadastrais"
+				url="/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Documentos Comprobatórios"
+				url="/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Cursos Oferecidos"
+				url="/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true" />
+			<p:menuitem value="Confirmação"
+				url="/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true" />
+		</p:steps>
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form>
+			<h:outputLabel>Utilize os espaços abaixo para cadastrar os cursos oferecidos pela sua Instituição de Ensino: </h:outputLabel>
+			<br />
+			<br />
+			<p:panel header="Cadastrar Cursos">
+				<p:panelGrid columns="3">
+					<p:pickList iconOnly="true" id="cursosPickList"
+						converter="cursoConverter" value="#{MBCursoView.dualListCurso}"
+						var="curso" itemLabel="#{curso.curso}" itemValue="#{curso}"
+						showCheckbox="false" effect="bounce" showSourceFilter="true"
+						showTargetFilter="true" filterMatchMode="contains"
+						disabled="#{MBCursoView.detalharCursos}">
+
+						<f:facet name="sourceCaption" autoUpdate="true">Todos os Cursos</f:facet>
+						<p:column>#{curso.curso}-(#{curso.nivel})</p:column>
+						<f:facet name="targetCaption" autoUpdate="true">Meus Cursos</f:facet>
+
+						<p:ajax event="transfer" listener="#{MBCursoView.onTransfer}"
+							update="cursosPickList" />
+
+					</p:pickList>
+					<p:commandButton id="detalharCursos" value="Detalhar Cursos"
+						action="#{MBCursoView.detalharCurso}"
+						update="detalheCursos nmCurso 
+					turnoCurso dtInicio dtFim cursosPickList detalharCursos"
+						disabled="#{MBCursoView.detalharCursos}" />
+					<p:panel id="detalheCursos" header="Detalhes de Oferta do Curso"
+						autoUpdate="true">
+						<p:panelGrid columns="2" autoUpdate="true">
+							<p:outputLabel value="Nome do Curso" />
+							<p:inputText id="nmCurso" size="30"
+								value="#{MBCursoView.instCurso.curso.curso}" disabled="true"
+								autoUpdate="true" />
+							<p:outputLabel value="Turno" />
+							<p:selectOneMenu id="turnoCurso"
+								disabled="#{!MBCursoView.detalharCursos}"
+								value="#{MBCursoView.instCurso.turno}" autoUpdate="true">
+								<f:selectItem itemLabel="Matutino" itemValue="MATUTINO" />
+								<f:selectItem itemLabel="Vespertino" itemValue="VESPERTINO" />
+								<f:selectItem itemLabel="Noturno" itemValue="NOTURNO" />
+								<f:selectItem itemLabel="Misto" itemValue="MISTO" />
+								<f:selectItem itemLabel="Integral" itemValue="INTEGRAL" />
+							</p:selectOneMenu>
+							<p:outputLabel for="periodoAno"
+								value="Quantidade de Anos (Ensino Fundamental e Médio) ou Semestres" />
+							<p:spinner id="periodoAno" value="#{MBCursoView.instCurso.ano}"
+								disabled="#{!MBCursoView.detalharCursos}" min="0" max="20" />
+							<p:outputLabel for="dtInicio"
+								value="Data de Inicio de oferta do Curso" />
+							<p:calendar id="dtInicio" value="#{MBCursoView.instCurso.inicio}"
+								showOn="button" pattern="dd/MM/yyyy"
+								disabled="#{!MBCursoView.detalharCursos}" locale="pt" />
+							<p:outputLabel for="dtFim" value="Data de Fim de oferta do Curso" />
+							<p:calendar id="dtFim" value="#{MBCursoView.instCurso.fim}"
+								showOn="button" pattern="dd/MM/yyyy"
+								disabled="#{!MBCursoView.detalharCursos}" locale="pt" />
+						</p:panelGrid>
+						<br />
+						<p:commandButton value="Cadastrar Detalhe"
+							action="#{MBCursoView.cadastrarCurso}"
+							update="cursosPickList detalheCursos nmCurso turnoCurso dtInicio dtFim cursoTab"
+							disabled="#{MBCursoView.fimCadastro}" />
+					</p:panel>
+				</p:panelGrid>
+				<p:separator />
+				<p:panel header="Cursos Cadastrados" autoUpdate="true">
+					<p:dataTable id="cursoTab" var="rowCurso"
+						value="#{MBCursoView.cadastrados}" editable="false"
+						emptyMessage="Não há cursos cadastrados." paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,30,100">>
+						<p:column headerText="Código E-mec">
+							<h:outputText value="#{rowCurso.curso.codEmec}" />
+						</p:column>
+
+						<p:column headerText="Nome do Curso">
+							<h:outputText value="#{rowCurso.curso.curso}" />
+						</p:column>
+
+						<p:column headerText="Nivel">
+							<h:outputText value="#{rowCurso.curso.nivel}" />
+						</p:column>
+
+						<p:column headerText="Turno">
+							<h:outputText value="#{rowCurso.turno}" />
+						</p:column>
+
+						<p:column headerText="Periodos/Ano">
+							<h:outputText value="#{rowCurso.ano}" />
+						</p:column>
+
+						<p:column headerText="Data de Início">
+							<h:outputText value="#{rowCurso.inicio}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<br />
+				<p:commandButton value="Avançar" action="#{MBCursoView.finalizar}" />
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+	<ui:define name="rodape" />
+
+</ui:composition>
+</h:html>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{acessoMB.init}" immediate="true" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText
+					value="Validação de Solicitação de Extensão de Acessos de PLE" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="validacaoForm">
+			<p:commandButton value="Voltar"
+				action="#{loginBean.validadorIndex()}" styleClass="left" />
+			<h:panelGrid columns="2" width="100%">
+				<h:panelGrid columns="1" width="100%">
+					<p:panel header="Dados da Solicitação" toggleable="true"
+						closable="false">
+						<h:panelGrid columns="3">
+							<p:outputLabel value="CPF do Estudante" />
+							<p:inputMask id="cpf" size="14"
+								value="#{acessoMB.extAcesso.cpf}"
+								mask="999.999.999-99" readonly="true" />
+							<p:outputLabel/>
+							<p:outputLabel value="Motivo" />
+							<p:inputText size="30" id="motivo"
+								value="#{acessoMB.motivo}" readonly="true" />
+							<p:commandButton id="help" icon="fa fa-fw fa-question-circle"
+								title="Ajuda Motivos" type="button" onclick="PF('dlg1').show();" />
+							<p:outputLabel value="Observações" />
+							<p:inputTextarea size="20" id="observacoes"
+								value="#{acessoMB.extAcesso.obs}" readonly="true" />
+							<p:outputLabel/>
+							<p:outputLabel value="Data da última atualização" />
+							<p:inputText size="20" id="atualizacao"
+								value="#{acessoMB.extAcesso.atualizacao}" readonly="true" />
+							<p:outputLabel/>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel header="Documentos Anexados"
+						toggleable="true" closable="false">
+						<p:outputLabel for="documento" value="Documento: " />
+						<p:selectOneListbox id="documento"
+							value="#{acessoMB.documento}" scrollHeight="200"
+							style="width: 400px">
+							<f:selectItem itemLabel="#{acessoMB.nomesArquivos[0]}"
+								itemValue="2" itemDisabled="#{acessoMB.existeArquivo[0]}"/>
+							<f:selectItem itemLabel="#{acessoMB.nomesArquivos[1]}"
+								itemValue="3" itemDisabled="#{acessoMB.existeArquivo[1]}"/>
+							<p:ajax event="change" listener="#{acessoMB.setarDocumento}"
+								update="label labelAut autenticacao" />
+						</p:selectOneListbox>
+						<p:separator />
+						<p>
+							<b><h:outputText
+									value="Clique abaixo para visualizar o documento:"
+									style="font-size: 18px !important;" rendered="#{acessoMB.temArquivos()}"/></b>
+						</p>
+						<h:outputLink value="../../arquivo.xhtml"
+							title="#{acessoMB.getLabel()}">
+							<h:outputText id="label" value="#{acessoMB.getLabel()}"
+								style="font-size: 16px !important;" rendered="#{acessoMB.temArquivos()}"/>
+								<p:ajax/>
+						</h:outputLink>
+						<br/>
+						<h:outputText id="labelAut" value="Autenticação: "
+							style="font-size: 16px !important;" rendered="#{acessoMB.temArquivos()}"/>
+						<h:outputText id="autenticacao"
+							value="#{acessoMB.getAutenticacao()}"
+							style="font-size: 16px !important;" rendered="#{acessoMB.temArquivos()}"/>
+					</p:panel>
+				</h:panelGrid>
+				<h:panelGrid columns="1" width="100%">
+					<p:panel header="Validar Cadastro">
+						<p:outputLabel
+								value="Prezado Validador, utilize os campos abaixo para avaliar a solicitação de Extensão de Acessos. ATENÇÃO!!! Os campos abaixo serão impressos no e-mail enviado ao estudante."/>
+						<br/><br/>
+						<h:panelGrid columns="5">
+							<p:outputLabel
+								value="Arquivo: #{acessoMB.nomesArquivos[0]}"/>
+							<p:inputSwitch value="#{acessoMB.arquivoValido[0]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textDocumento1"
+								value="#{acessoMB.comentario[0]}" rows="5" cols="30"
+								counter="display0" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textDocumento1"
+								value="Escreva aqui o motivo da validade/invalidade..."/>
+							<h:outputText id="display0"/>
+							<p:outputLabel
+								value="Arquivo: #{acessoMB.nomesArquivos[1]}"/>
+							<p:inputSwitch value="#{acessoMB.arquivoValido[1]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textDocumento2"
+								value="#{acessoMB.comentario[1]}" rows="5" cols="30"
+								counter="display1" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textDocumento2"
+								value="Escreva aqui o motivo da validade/invalidade..."/>
+							<h:outputText id="display1" />
+							<p:outputLabel value="Validação Solicitação"
+								style="font-weight: bold;font-size: 16px !important;" />
+							<p:inputSwitch value="#{acessoMB.arquivoValido[2]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textSolicitacao"
+								value="#{acessoMB.comentario[2]}" rows="5" cols="30"
+								counter="display2" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textSolicitacao"
+								value="Escreva aqui o motivo da validade/invalidade do cadastro..." />
+							<h:outputText id="display2" />
+						</h:panelGrid>
+						<h:outputText id="nota" value="*Atenção!!! Apenas marque como válido o campo Validação Solicitação se todos os outros campos estiverem válidos!" 
+						style="color: gray !important; font-size: 11px !important;line-height: 0.5 !important;"/>
+						<p:separator/>
+						<p:outputLabel
+								value="Os campos abaixo não serão impressos no e-mail ao estudante!"/>
+						<h:panelGrid columns="4">
+							<p:outputLabel value="Motivo (Comentário Interno)"/>
+							<p:selectOneMenu id = "motivoSelect" value="#{acessoMB.extAcesso.comentario.motivo}" 
+								converter="motivoConverter" var="m" filter="true"
+								filterMatchMode="contains" editable="false">
+								<f:selectItems value="#{MotivoService.motivos}" var="motivo"
+								itemLabel="#{motivo.motivo}" itemValue="#{motivo}" effect="fold" />
+								<p:column>
+									<h:outputText value="#{m.motivo}"/>
+								</p:column>
+							</p:selectOneMenu>
+							<p:outputLabel/><p:outputLabel/>
+							<p:outputLabel value="Comentário Interno" />
+							<p:inputTextarea id="textComentario"
+								value="#{acessoMB.extAcesso.comentario.descricaoComentario}" rows="5" cols="30"
+								counter="display3" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="7"/>
+							</p:inputTextarea>
+							<p:watermark for="textComentario"
+								value="Escreva aqui o comentário da validade/invalidade do cadastro..." />
+							<h:outputText id="display3" />
+						</h:panelGrid>
+					</p:panel>
+				</h:panelGrid>
+			</h:panelGrid>
+			<br />
+			<p:commandButton value="Concluir" update = ":MsgGlobal"
+				action="#{acessoMB.terminarValidacao}" styleClass="left">
+				<p:confirm header="Confirmação" message="Deseja encerrar a validação?" icon="ui-icon-alert" />
+			</p:commandButton>
+			
+			<p:confirmDialog id = "dialog" global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    		</p:confirmDialog>
+    		<p:dialog header="Ajuda Motivos" widgetVar="dlg1" minHeight="40">
+    		<b><p:outputLabel value="Texto mostrado ao estudante para preenchimento:" /></b>
+    		<br />
+			<ol type="1">
+				<li><b><p:outputLabel value="Matrícula em mais de uma IE" /></b>
+				<p:outputLabel
+						value=" - Marque esta opção se você possuir matrícula em duas Instituições de Ensino" /><br />
+					<p:outputLabel
+						value="reconhecidas pela Secretaria de Educação do Distrito Federal (SEDF) ou pelo Ministério da Educação (MEC). Exemplos comuns (CILs, Escolas Parque);" /></li>
+				<li><b><p:outputLabel value="Estágio Obrigatório" /></b>
+				<p:outputLabel
+						value=" - Marque esta opção se você estiver cursando o estágio obrigatório do seu curso." /><br />
+					<p:outputLabel
+						value="Atenção!!! Estágio remunerado ou voluntário não-obrigatórios não dão direito ao PLE;" /></li>
+				<li><b><p:outputLabel value="Insuficiência de Acessos" /></b>
+				<p:outputLabel
+						value=" - Marque esta opção se você só está matriculado(a) em uma Instituição de Ensino," /><br />
+					<p:outputLabel
+						value="mas o número mínimo de viagens dos seus trajetos escola-casa não são suficientes para o seu deslocamento;" /></li>
+				<li><b><p:outputLabel value="Alteração de endereço/IE" /></b>
+				<p:outputLabel
+						value=" - Marque esta opção para mudança de endereço residencial ou mudança de Instituição de Ensino; Será necessário comprovar os dois endereços (casa e IE);" /></li>
+			</ol>
+		</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</h:html>

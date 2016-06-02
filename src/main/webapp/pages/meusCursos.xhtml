@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h:head>
+        <title>Meus Cursos</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+     
+    <h:body style="background-color: white">
+        <i id="customheader" class="fa fa-fw fa-car" style="display:none"></i>
+ 
+        <p:dataTable var="curso" value="#{DeclaracaoMB.cursos}">
+            <p:column headerText="Código E-Mec">
+                <h:outputText value="#{curso.codEmec}" />
+            </p:column>
+ 
+            <p:column headerText="Nome">
+                <h:outputText value="#{curso.curso}" />
+            </p:column>
+ 
+            <p:column headerText="Nível">
+                <h:outputText value="#{curso.nivel}" />
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>

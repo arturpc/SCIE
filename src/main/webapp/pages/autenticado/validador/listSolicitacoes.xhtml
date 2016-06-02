@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{solicitacaoMB.start}" immediate="true" />
+	</f:metadata>
+
+	<ui:define name="conteudo">
+
+		<h:form id="frmSolicitacaoListagem">
+			<!-- List Solicitacoes -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado"
+				value="#{solicitacaoMB.solicitacoes}" var="solicitacao"
+				paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,25,50,100,500,1000,#{solicitacaoMB.solicitacoes.getRowCount()}"  rows="100" id="tblSolicitacao">
+
+				<p:column headerText="ID" sortBy="#{solicitacao.id}" style="width: 45px !important;">
+					<h:outputText value="#{solicitacao.id}" />
+				</p:column>
+
+				<p:column headerText="CPF" filterBy="#{solicitacao.cpf}"
+					sortBy="#{solicitacao.cpf}" style="width: 110px !important;">
+					<h:outputText value="#{solicitacao.cpf}" />
+				</p:column>
+
+				<p:column headerText="MOTIVO" filterBy="#{solicitacao.motivo}"
+					sortBy="#{solicitacao.motivo}" style="width: 130px !important;" filterFunction="#{solicitacaoMB.filterMotivo}">
+					<h:outputText
+						value = "#{solicitacao.motivo == 3 ? 'Cartão danificado ou inutilizado[3]' : solicitacao.motivo == 2 ? 'Roubo ou Furto[2]' : 
+						solicitacao.motivo == 1 ? 'Perda[1]' : 'Desmotivado(Irregular)'}"/>
+				</p:column>
+
+				<p:column headerText="STATUS" filterBy="#{solicitacao.status}"
+					sortBy="#{solicitacao.status}" style="width: 130px !important;" filterFunction="#{solicitacaoMB.filterStatus}">
+					<h:outputText
+						value="#{solicitacao.status == -1 ? 'Duplicidade[-1]' : solicitacao.status == 0 ? 'Solicitado[0]' : solicitacao.status == 1 ? 
+						'Em análise[1]' : solicitacao.status == 2 ? 'Aprovado[2]' : solicitacao.status == 3 ? 'Rejeitado[3]' : solicitacao.status == 4 ? 
+						'Cartão Impresso[4]' : solicitacao.status == 5 ? 'Cartão Entregue[5]' : 'Irregular'}" />
+				</p:column>
+
+				<p:column headerText="OBSERVACAO" filterBy="#{solicitacao.obs}"
+					sortBy="#{solicitacao.obs}" style="width: 300px !important;">
+					<h:outputText value="#{solicitacao.obs}" />
+				</p:column>
+
+				<p:column headerText="EMAIL" filterBy="#{solicitacao.email}"
+					sortBy="#{solicitacao.email}" style="width: 300px !important;">
+					<h:outputText value="#{solicitacao.email}" />
+				</p:column>
+
+
+				<p:column headerText="DATA" filterBy="#{solicitacao.atualizacao}"
+					sortBy="#{solicitacao.atualizacao}" style="width: 110px !important;">
+					<h:outputText value="#{solicitacao.atualizacao}" />
+				</p:column>
+
+
+				<p:column headerText="USUARIO"
+					filterBy="#{solicitacao.usuario.nome}"
+					sortBy="#{solicitacao.usuario.nome}" style="width: 110px !important;">
+					<h:outputText value="#{solicitacao.usuario.nome}" />
+				</p:column>
+
+
+				<p:column headerText="Validar" style="width: 45px !important;">
+					<p:commandButton icon=" ui-icon-closethick" action="#{solicitacaoMB.desalocarSolicitacao}" disabled="#{solicitacao.status != 1}">
+						<p:confirm header="Confirmação" message="Deseja desalocar a validação da solicitação #{solicitacao.id}?" icon="ui-icon-alert" />
+						<f:param name="solicitacao" value="solicitacao" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-search" action="#{solicitacaoMB.validarSolicitacao}" disabled="#{solicitacao.status != 0}">
+						<p:confirm header="Confirmação" message="Deseja alocar a validação da solicitação #{solicitacao.id}?" icon="ui-icon-alert" />
+						<f:param name="solicitacao" value="solicitacao" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			
+			<p:confirmDialog id = "dialog" global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    		</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

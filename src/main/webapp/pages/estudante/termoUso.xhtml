@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<div align="center">
+				<h2>
+					<h:outputText
+						value="Sistema de Cadastro de Solicitações de Segunda Via do PLE (2Via)" />
+				</h2>
+			</div>
+			<p:separator />
+			<br />
+			<p:outputLabel
+				value="*Para solicitar a segunda via do seu cartão com benefício do Passe Livre Estudantil, é obrigatório o aceite deste Termo de Uso." />
+			<br />
+			<h2>
+				<b><p:outputLabel
+						value="1. GESTOR DO SISTEMA DE CADASTRO DO PASSE LIVRE ESTUDANTIL DO DF" /></b>
+			</h2>
+			<br />
+			<p:outputLabel value="1.1 " />
+			<b><p:outputLabel
+					value="Transporte Urbano do Distrito Federal – DFTRANS" /></b>
+			<p:outputLabel
+				value=", CNPJ n. 05.764.629/0001-21, com sede SAIN - Estação Rodoferroviária - Ala Sul - Sobreloja - CEP: 70.631-900, Gestor do Sistema de Atualização de Cadastro Estudantil." />
+			<br />
+			<br />
+			<b><p:outputLabel value="2. FUNDAMENTOS" /></b>
+			<br />
+			<br />
+			<p:outputLabel value="2.1 Constituição Federal de 1988;" />
+			<br />
+			<p:outputLabel value="2.2 Lei n° 4.462, de 13 de janeiro de 2010;" />
+			<br />
+			<p:outputLabel
+				value="2.3 Portaria Conjunta, nº 05 de 24 de fevereiro de 2016 – Secretaria de Estado de Mobilidade e Transporte Urbano do Distrito Federal." />
+			<br />
+			<br />
+			<b><p:outputLabel value="3. SEGUNDA VIA DO CARTÃO ESTUDANTIL" /></b>
+			<br />
+			<br />
+			<p:outputLabel
+				value="3.1 O prazo para o fornecimento da 2ª (segunda) via do cartão passe livre estudantil será de até 10 dias úteis a partir da aprovação do cadastro e da solicitação da 2ª via;" />
+			<br />
+			<p:outputLabel
+				value="3.2 Para o fornecimento da 2ª (segunda) via do cartão passe livre estudantil, por motivo de inutilização, perda, roubo ou furto, a entidade pública gestora do STPC/DF cobrará o preço público equivalente ao valor de 7 (sete) vezes o valor da menor tarifa vigente na data da solicitação " />
+			<p:outputLabel value="(hoje: #{EstudanteMB.valorTaxaAtual});"/>
+			<br />
+			<p:outputLabel
+				value="3.3 A solicitação da 2ª (segunda) via do cartão que conceda qualquer benefício tarifário com direito a transporte gratuito, motivada por extravio, roubo ou furto deverá ser acompanhada do boletim de ocorrência registrado em delegacia de polícia." />
+			<br />
+			<p:outputLabel
+				value="3.4 A solicitação de segunda via deverá ser solicitada exclusivamente via web e para isso o estudante deverá já ter realizado o seu cadastro no site Passe Livre Estudantil (" />
+			<h:outputLink value="http://www.passelivreestudantil.df.gov.br">
+				<p:outputLabel value="www.passelivreestudantil.df.gov.br" />
+			</h:outputLink>
+			<p:outputLabel value=") e ter sido aprovado." />
+			<br />
+			<p:outputLabel
+				value="3.5 É obrigatório para solicitação da segunda via do cartão passe livre anexar os seguintes documentos digitalizados e legíveis: comprovante de pagamento (" /><b><p:outputLabel value="depósito identificado com o CPF do estudante"/></b><p:outputLabel value=") da taxa de segunda via, Boletim de ocorrência, no caso de " />
+			<b><p:outputLabel value="perda, furto ou roubo" /></b>
+			<p:outputLabel
+				value=", declaração de próprio punho e assinatura do beneficiário ou responsável legal, para casos de " />
+			<b><p:outputLabel
+					value="cartões danificados, queimados ou apresentando mal funcionamento." /></b>
+			<br />
+			<p:outputLabel
+				value="3.6 O pagamento da segunda via deverá ser efetuado " /><b><p:outputLabel value="em depósito identificado com o CPF do estudante"/></b><p:outputLabel value=" que está solicitando a segunda via. O banco a receber o depósito será o Banco de Brasília BRB (070), Conta Corrente nº 205001420-6, em nome da DFTrans. " /><b><p:outputLabel value="Em hipótese alguma será aceito depósito que não esteja no CPF do estudante;"/></b>
+			<br />
+			<p:outputLabel
+				value="3.7 Nos casos em que o cartão estiver danificado, queimado ou apresentando mal funcionamento o estudante deverá efetuar o pagamento da segunda via, solicitar a segunda via pela web e levar o cartão para realizar a troca no dia do recebimento do novo cartão." />
+			<br />
+			<p:outputLabel
+				value="3.8 Não será entregue novo cartão sem a apresentação do cartão danificado." />
+			<br />
+			<p:outputLabel
+				value="3.9 A entrega do cartão será agendada e o estudante receberá um e-mail com a data para recebimento da segunda via do seu cartão." />
+			<br />
+			<p:outputLabel
+				value="3.10 Não serão realizados entregas de segunda via de cartão passe livre estudantil sem que o estudante tenha realizado seu cadastramento, ou não tenha sido agendado ou compareça fora da data agendada." />
+			<br />
+			<p:outputLabel
+				value="3.11 Ao solicitar segunda via de cartão, o cartão antigo será bloqueado imediatamente e só poderá ser utilizado o novo cartão." />
+			<br />
+			<p:outputLabel
+				value="3.12 A segunda via só será entregue, tanto nos casos de perda, furto ou roubo quanto nos casos de cartão danificado, mediante a apresentação física da taxa de pagamento efetuada no BRB. Esse comprovante de pagamento ficará retido no DFTRANS no momento do recebimento do cartão." />
+			<br />
+			<p:outputLabel
+				value="3.13 A segunda via só será entregue na presença do beneficiário, mesmo que menor de idade acompanhado pelos pais." />
+			<br />
+			<br />
+			<b><p:outputLabel value="4 EFEITOS, PRAZO E FORO" /></b>
+			<br />
+			<br />
+			<p:outputLabel
+				value="4.1. Sem prejuízo do definido no subitem anterior, fica resguardado o direito a realização de aditivo (s) a este instrumento a qualquer momento, mediante prévio conhecimento das novas regras e condições com o consequente aceite eletrônico, anuindo o titular ou responsável ao Termo de Uso." />
+			<br />
+			<p:outputLabel
+				value="4.2. Elege-se o foro de Brasília - DF para dirimir eventuais dúvidas oriundas deste pacto, com exclusão de qualquer outro, por mais privilegiado que seja." />
+			<br />
+			<br />
+			<p:panelGrid columns="1">
+				<p:selectBooleanCheckbox value="#{EstudanteMB.termo}" itemLabel="*Ao clicar neste ícone, eu declaro ter lido e estar ciente do termo acima e concordar integralmente com todas as suas cláusulas." style="font-size:8px !important;"/>
+			</p:panelGrid>
+			<br/>
+			<p:commandButton value="Continuar"
+				action="#{EstudanteMB.verificarTermo}"
+				update="MsgGlobal" />
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</h:html>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<p:steps activeIndex="0" readonly="false">
+			<p:menuitem value="Dados Cadastrais" url="/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Documentos Comprobatórios" url="a/pages/instituicao/rquivosCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Cursos Oferecidos" url="/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true" />
+			<p:menuitem value="Confirmação" url="/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true" />
+		</p:steps>
+		<p:separator/>
+		<div align="center"><h2><h:outputText value="Cadastro de Instituições de Ensino"/></h2></div>
+		<p:separator/>
+		<h:form id="instituicaoForm">
+			<br/>
+			<h:outputLabel value = "#{InstituicaoMB.topMessage}"/>
+			<br/>
+			<b><h:outputLabel value = "#{InstituicaoMB.obsMessage}"/></b>
+			<br/>
+			<br/>
+			<p:panel header="Dados da Instituição">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Nome da Instituição"/>
+					<p:inputText id = "nmInst" size="50"
+						value="#{InstituicaoMB.instituicao.nomeInstituicao}"
+						required="true" requiredMessage="Nome da Instituição é um campo obrigatório!" 
+						validatorMessage="Nome da Instituição inválido!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="nmInst" display = "text" />
+					<p:outputLabel value="Número do CNPJ"></p:outputLabel>
+					<p:inputMask id = "cnpjInst" size="20" value="#{InstituicaoMB.instituicao.cnpj}"
+						mask="99.999.999/9999-99" required="true" requiredMessage="CNPJ é um campo obrigatório!"/>
+					<p:message for="cnpjInst" display = "text" />
+					<p:outputLabel value="Razão Social"></p:outputLabel>
+					<p:inputText size="50" id = "rzscInst"
+						value="#{InstituicaoMB.instituicao.razaoSocial}" required="true" 
+						requiredMessage="Razão Social é um campo obrigatório!"
+						validatorMessage="Razão Social é um campo obrigatório!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="rzscInst" display = "text" />
+					<p:outputLabel value="Código INEP/E-mec"/>
+					<p:inputText size="20" id = "inepInst"
+						value="#{InstituicaoMB.instituicao.codInepEmec}" 
+						required="true" requiredMessage="Inep/E-mec é um campo obrigatório!"
+						validatorMessage="Inep/E-mec é um campo obrigatório!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="inepInst" display = "text" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Dados do Endereço Comercial da Instituição">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Número do CEP"></p:outputLabel>
+					<p:inputMask id = "cepInst" size="10" value="#{InstituicaoMB.endereco.cep}"
+						mask="99.999-999" required="true" 
+						requiredMessage="CEP é um campo obrigatório!">
+						<p:ajax process="@this" 
+                                        event="blur" 
+                                        listener="#{InstituicaoMB.consultarCEP}"
+                                        update=":MsgGlobal" />
+                    </p:inputMask>
+					<p:message id="cepMSG" for="cepInst" display = "text" />
+					<p:outputLabel value="Nome do Bairro"/>
+					<p:inputText id = "bairroEnd" size="50" value="#{InstituicaoMB.endereco.bairro}"
+					validatorMessage="Nome de Bairro inválido!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="bairroEnd" display = "text" />
+					<p:outputLabel value="Número"/>
+					<p:inputText size="5" id = "nroEnd"
+						value="#{InstituicaoMB.endereco.numeroEndereco}"
+						validatorMessage="Número de Endereço Inválido! Preencha apenas números!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="nroEnd" display = "text" />
+					<p:outputLabel value="Logradouro"/>
+					<p:inputText id = "logEnd" size="50" value="#{InstituicaoMB.endereco.logradouro}"
+						validatorMessage="Logradouro de Endereço inválido!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="logEnd" display = "text" />
+					<p:outputLabel value="Complemento"/>
+					<p:inputText size="100" id = "complEnd"
+						value="#{InstituicaoMB.endereco.complemento}"
+						validatorMessage="Complemento de Endereço inválido!">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="complEnd" display = "text" />
+					<p:outputLabel value="Cidade"/>
+					<p:selectOneMenu id = "cidEnd" value="#{InstituicaoMB.cidade}" 
+						converter="cidadeConverter" var="c" filter="true"
+						filterMatchMode="contains" editable="false" style="width: 400px">
+						<p:ajax listener="#{InstituicaoMB.printCidade}"/>
+						<f:selectItems value="#{selectOneMenu.cidades}" var="cidade"
+							itemLabel="#{cidade.nome} - #{cidade.uf.uf}" itemValue="#{cidade}" effect="fold" />
+						<p:column>
+							<h:outputText value="#{c.nome} - #{c.uf.uf}"/>
+						</p:column>
+					</p:selectOneMenu>
+					<p:message for="cidEnd" display = "text" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Dados do Representante da Instituição">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Nome do Representante"/>
+					<p:inputText id = "nmRep" size="50" value="#{InstituicaoMB.representante.nome}"
+						required="true" requiredMessage="Nome do Representante é um campo obrigatório!"
+						validatorMessage="Nome de Representante inválido">
+						<f:validator validatorId="namesValidator" />
+					</p:inputText>
+					<p:message for="nmRep" display = "text" />
+					<p:outputLabel value="CPF do representante" />
+					<p:inputMask value="#{InstituicaoMB.representante.cpf}"
+						id="inputCPF" mask="999.999.999-99" disabled="true"/>
+					<p:message for="inputCPF" display = "text" />
+					<p:outputLabel value="Cargo do Representante"/>
+					<p:selectOneMenu id="cargoRep" value="#{InstituicaoMB.representante.cargo}" 
+					required="true" requiredMessage="Cargo do Representante é um campo obrigatório!">
+            			<f:selectItem itemLabel="Diretor" itemValue="1" />
+            			<f:selectItem itemLabel="Secretário" itemValue="2" />
+       				</p:selectOneMenu>
+					<p:message for="cargoRep" display = "text" />
+					<p:outputLabel value="Email para Contato"/>
+					<p:inputText id = "emailRep" size="50" value="#{InstituicaoMB.representante.email}"
+						required="true" requiredMessage="E-mail é um campo obrigatório!"/>
+					<p:message for="emailRep" display = "text" />
+					<p:outputLabel value="Telefone para Contato (1)"/>
+					<p:inputMask value="#{InstituicaoMB.contato1}"
+						id="inputTelefone1" mask="(99) 9999-9999?9" required = "true"
+						requiredMessage="Telefone é um campo obrigatório!"/>
+					<p:message for="inputTelefone1" display = "text" />
+					<p:outputLabel value="Telefone para Contato (2)"/>
+					<p:inputMask value="#{InstituicaoMB.contato2}"
+						id="inputTelefone2" mask="(99) 9999-9999?9"/>
+					<p:message for="inputTelefone2" display = "text" />
+					<p:outputLabel value="Telefone para Contato (3)"/>
+					<p:inputMask value="#{InstituicaoMB.contato3}"
+						id="inputTelefone3" mask="(99) 9999-9999?9"/>
+					<p:message for="inputTelefone3" display = "text" />
+					<p:outputLabel value="Telefone para Contato (4)"/>
+					<p:inputMask value="#{InstituicaoMB.contato4}"
+						id="inputTelefone4" mask="(99) 9999-9999?9" />
+					<p:message for="inputTelefone4" display = "text" />
+					<p:outputLabel value="Telefone para Contato (5)"/>
+					<p:inputMask value="#{InstituicaoMB.contato5}"
+						id="inputTelefone5" mask="(99) 9999-9999?9"/>
+					<p:message for="inputTelefone5" display = "text" />
+				</h:panelGrid>
+			</p:panel>
+			<br/>
+			<p:commandButton value="Avançar" action="#{InstituicaoMB.atualizar}" update = ":instituicaoForm :MsgGlobal cepMSG" styleClass = "left"/>
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>

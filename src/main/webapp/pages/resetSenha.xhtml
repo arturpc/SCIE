@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<f:facet name="header">
+			<h:outputText value="Autenticação"
+				style="font-size: 15px !important;" />
+		</f:facet>
+		<h:form id="frmLogin">
+		<h:outputLabel value="Para alterar sua senha, digite a senha antiga, e depois digite e confirme a nova senha: "/>
+			<h:panelGrid columns="2">
+				<p:outputLabel id="senhaAntiga" value="Senha antiga:" />
+				<p:password maxlength="15" size="20"
+					value="#{loginBean.senhaAntiga}" required="true"
+					requiredMessage="Preencha a senha antiga!"/>
+				<p:outputLabel value="Nova Senha: " />
+				<p:password id="novaSenha" maxlenght="15" size="20"
+					value="#{loginBean.novaSenha}" required="true"
+					requiredMessage="Preencha a nova senha!" 
+					feedback="true" inline="true"
+					weakLabel="Senha Fraca" goodLabel="Senha Razoável"
+					strongLabel="Senha Forte" promptLabel="Digite uma Senha"/>
+				<p:outputLabel value="Confirme Nova Senha: " />
+				<p:password id = "novaSenha2" value="#{loginBean.novaSenha2}" 
+					maxlength="15" size="20"
+					required="true" requiredMessage="Confirme a nova senha!!!"/>
+			</h:panelGrid>
+			<p:messages severity="info" autoUpdate="true"
+				style="margin-top:20px ; width: 300px" showDetail="true"/>
+			<p:messages severity="error" autoUpdate="true"
+				style="margin-top:20px ; width: 300px" showDetail="true"/>
+			<h:panelGrid columns="1">
+				<p:commandButton value="Alterar"
+					action="#{loginBean.resetPassword()}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

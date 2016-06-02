@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{instIndexMB.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<h:outputLabel id="benvindo" value="Bem vindo(a):" />
+		<b><h:outputLabel id="nome" value="#{instIndexMB.user.nome}" /></b>
+		<br />
+		<br />
+		<p:clock pattern="HH:mm:ss dd/MM/yyyy" />
+		<br />
+		<p:separator />
+		<p:dock position="top" maxWidth="100">
+			<p:menuitem value="Editar Minhas Informações"
+				icon="/resources/images/edit-icon.png"
+				url="#{loginBean.atualizarCadastro()}" />
+			<p:menuitem value="Alterar Senha"
+				icon="/resources/images/password-icon.png"
+				url="#{loginBean.resetSenha()}" />
+			<p:menuitem value="Enviar Declarações"
+				icon="/resources/images/decl-icon.png"
+				url="#{loginBean.subirDeclaracao()}"
+				rendered="#{instIndexMB.cadastroValido()}" />
+			<p:menuitem value="Enviar Frequencias"
+				icon="/resources/images/list-icon.png"
+				url="#{loginBean.subirFrequencia()}"
+				rendered="#{instIndexMB.cadastroValido()}" />
+		</p:dock>
+		<p:fieldset legend="Cadastro" toggleable="true" toggleSpeed="500"
+			collapsed="true">
+			<p:fieldset legend="Pendência de Validação Cadastral Aberta"
+				toggleable="true" toggleSpeed="500" collapsed="true">
+				<p:dataTable id="abertasTab" var="rowAbertas"
+					value="#{instIndexMB.abertas}" editable="false"
+					emptyMessage="Não há Pendências de validação cadastral abertas."
+					paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<p:column headerText="Nome da Instituição">
+						<h:outputText value="#{rowAbertas.instituicao.nomeInstituicao}" />
+					</p:column>
+
+					<p:column headerText="Nome do Documento Referente">
+						<h:outputText value="#{rowAbertas.documento.descricao}" />
+					</p:column>
+
+					<p:column headerText="Estado Pendência">
+						<h:outputText value="#{instIndexMB.validacao[0]}" />
+					</p:column>
+
+					<p:column headerText="Comentário">
+						<h:outputText value="#{rowAbertas.comentario}" />
+					</p:column>
+
+					<p:column headerText="Data de Atualização">
+						<h:outputText value="#{rowAbertas.atualizacao}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<p:fieldset legend="Pendência de Validação Cadastral Em Análise"
+				toggleable="true" toggleSpeed="500" collapsed="true">
+				<p:dataTable id="analiseTab" var="rowAnalise"
+					value="#{instIndexMB.emAnalise}" editable="false"
+					emptyMessage="Não há Pendências de validação cadastral em análise."
+					paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<p:column headerText="Nome da Instituição">
+						<h:outputText value="#{rowAnalise.instituicao.nomeInstituicao}" />
+					</p:column>
+
+					<p:column headerText="Nome do Documento Referente">
+						<h:outputText value="#{rowAnalise.documento.descricao}" />
+					</p:column>
+
+					<p:column headerText="Estado Pendência">
+						<h:outputText value="#{instIndexMB.validacao[1]}" />
+					</p:column>
+
+					<p:column headerText="Comentário">
+						<h:outputText value="#{rowAnalise.comentario}" />
+					</p:column>
+
+					<p:column headerText="Data de Atualização">
+						<h:outputText value="#{rowAnalise.atualizacao}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<p:fieldset
+				legend="Pendência de Validação Cadastral Aprovada (Histórico)"
+				toggleable="true" toggleSpeed="500" collapsed="true">
+				<p:dataTable id="aprovadasTab" var="rowAprovadas"
+					value="#{instIndexMB.aprovadas}" editable="false"
+					emptyMessage="Não há Pendências de validação cadastral aprovadas."
+					paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<p:column headerText="Nome da Instituição">
+						<h:outputText value="#{rowAprovadas.instituicao.nomeInstituicao}" />
+					</p:column>
+
+					<p:column headerText="Nome do Documento Referente">
+						<h:outputText value="#{rowAprovadas.documento.descricao}" />
+					</p:column>
+
+					<p:column headerText="Estado Pendência">
+						<h:outputText value="#{instIndexMB.validacao[2]}" />
+					</p:column>
+
+					<p:column headerText="Comentário">
+						<h:outputText value="#{rowAprovadas.comentario}" />
+					</p:column>
+
+					<p:column headerText="Data de Atualização">
+						<h:outputText value="#{rowAprovadas.atualizacao}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<p:fieldset
+				legend="Pendência de Validação Cadastral Reprovada (Histórico)"
+				toggleable="true" toggleSpeed="500" collapsed="true">
+				<p:dataTable id="reprovadasTab" var="rowReprovadas"
+					value="#{instIndexMB.reprovadas}" editable="false"
+					emptyMessage="Não há Pendências de validação cadastral reprovadas."
+					paginator="true" rows="5"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<p:column headerText="Nome da Instituição">
+						<h:outputText value="#{rowReprovadas.instituicao.nomeInstituicao}" />
+					</p:column>
+
+					<p:column headerText="Nome do Documento Referente">
+						<h:outputText value="#{rowReprovadas.documento.descricao}" />
+					</p:column>
+
+					<p:column headerText="Estado Pendência">
+						<h:outputText value="#{instIndexMB.validacao[3]}" />
+					</p:column>
+
+					<p:column headerText="Comentário">
+						<h:outputText value="#{rowReprovadas.comentario}" />
+					</p:column>
+
+					<p:column headerText="Data de Atualização">
+						<h:outputText value="#{rowReprovadas.atualizacao}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+		</p:fieldset>
+	</ui:define>
+</ui:composition>
+</h:html>

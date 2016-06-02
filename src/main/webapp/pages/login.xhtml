@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<f:facet name="header">
+			<h:outputText value="Autenticação"
+				style="font-size: 15px !important;" />
+		</f:facet>
+		<h:form id="frmLogin">
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Login" />
+					<p:inputText maxlength="50" size="20"
+						value="#{loginBean.user.login}" required="true"
+						requiredMessage="Login é um campo obrigatório" />
+					<p:outputLabel value="Senha" />
+					<p:keyboard value="#{loginBean.user.senha}" layout="custom"
+						layoutTemplate="#{loginBean.gerarTeclado()}" password="true"
+						required="true" requiredMessage="Senha é um campo obrigatório"
+						maxlength="50" />
+				</h:panelGrid>
+				<p:column>
+					<p:messages severity="info" autoUpdate="true"
+						style="margin-top:20px ; width: 300px" />
+					<p:messages severity="error" autoUpdate="true"
+						style="margin-top:20px ; width: 300px" />
+				</p:column>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:outputLabel
+				value="***Área de acesso restrito."
+				style="font-size: 11px !important;line-height: 0.5 !important; color: gray !important;" />
+				<p:commandButton value="Logar" action="#{loginBean.validate()}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{arquivoMB.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<br/>
+		<p:commandButton value="Voltar" action="#{arquivoMB.voltar()}" />
+		<br/>
+		<br/>
+		<div align = "center"><p:media value="#{arquivoMB.streamedContent1}" width="80%"
+			height="1000px" player="pdf" cache="false">
+         Navegador sem suporte para visualiza&ccedil;&atilde;o de PDF. 
+		</p:media></div>
+		<br/>
+		<div align = "center"><p:graphicImage value="#{arquivoMB.streamedContent2}" cache="false"
+			rendered="#{arquivoMB.imagem}" /></div>
+		<br />
+		<h:form id="arquivoForm" enctype="multipart/form-data">
+		<p:commandButton value="Download"
+						onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{!arquivoMB.imagem}">
+						<p:fileDownload value="#{arquivoMB.getDOC()}" />
+		</p:commandButton>
+		</h:form>
+		<br/>
+	</ui:define>
+
+</ui:composition>
+</h:html>

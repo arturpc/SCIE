@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{fileUploadConcatenaView.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<br />
+		<p:commandButton value="Voltar"
+			action="#{fileUploadConcatenaView.voltar()}" />
+		<br />
+		<br />
+		<h:form id="arquivosForm">
+			<p:separator />
+			<div align="center">
+				<h3>
+					<h:outputText value="Unificador de Arquivos" />
+				</h3>
+			</div>
+			<p:separator />
+			<h:panelGrid columns="3" style="margin-top:20px; width:1200px">
+				<p:outputLabel
+					value="Prezado estudante, utilize a caixa ao lado para juntar os seus arquivos em um arquivo só. 
+		Lembramos que as páginas deve ser do mesmo tipo de arquivo (pdf, png, jpeg, etc...)"
+					escape="false" />
+				<p:fileUpload
+					fileUploadListener="#{fileUploadConcatenaView.doUpload}"
+					mode="advanced" dragDropSupport="true" multiple="false"
+					update="concatenaArquivos :arquivoForm:btnDownload"
+					sizeLimit="2000000" fileLimit="5"
+					allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|bmp)$/" label="Procurar..."
+					auto="true" style="width:600px"
+					invalidFileMessage="Tipo de arquivo não permitido!"
+					fileLimitMessage="É permitido envio de cinco arquivos"
+					invalidSizeMessage="Arquivos grandes demais!" />
+				<p:graphicImage id="concatenaArquivos"
+					value="#{fileUploadConcatenaView.iconeUploaded}" width="50px"
+					autoUpdate="true" />
+			</h:panelGrid>
+		</h:form>
+		<br />
+		<h:form id="arquivoForm" enctype="multipart/form-data">
+			<p:commandButton id="btnDownload" value="Download"
+				onclick="PrimeFaces.monitorDownload(start, stop);"
+				disabled="#{!fileUploadConcatenaView.isUploaded}">
+				<p:fileDownload value="#{fileUploadConcatenaView.getDOC()}" />
+			</p:commandButton>
+		</h:form>
+		<br />
+		<p:separator />
+		<div align="center">
+			<h3>
+				<h:outputText value="Tutorial" />
+			</h3>
+		</div>
+		<br />
+		<br />
+		<iframe width="100%" height="500" src="https://www.youtube.com/embed/zmm7pCRYdUU" frameborder="0" allowfullscreen="true"/>
+		<br />
+		<br />
+		<b>Tutorial para juntar arquivos na Solicitação de Segunda Via / Extensão de Acessos do Passe Livre Estudantil</b><br />
+		<ol>
+			<li>Acesse o site www.ple.df.gov.br</li>
+			<li>Escolha a bolinha de acordo com a solicitação (2 Via ou Acessos)</li>
+			<li>Digite seu CPF e Senha do site do PLE</li>
+			<li>Aceite o termo de uso</li>
+			<li>Clique em Continuar</li>
+			<li>Clique no botão Juntar Arquivo para unir as folhas do seu documento</li>
+			<li>Clique em Procurar e acrescente as folhas do seu arquivo uma a uma</li>
+			<li>Se seu documento possuir mais do que cinco folhas, faça o 
+				download parcial a cada 5 folhas (limite máximo de uploads), clique
+				em voltar e refaça os passos 6 e 7</li>
+			<li>Faça o download do documento resultado de todas as folhas e
+				use-o como anexo na solicitação!</li>
+		</ol>
+
+	</ui:define>
+
+</ui:composition>
+</h:html>

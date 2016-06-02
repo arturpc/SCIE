@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<f:facet name="header">
+			<h:outputText value="Confirmação"
+				style="font-size: 15px !important;" />
+		</f:facet>
+		<br/>
+		Prezado estudante, seu pedido foi realizado com sucesso!!!
+		<br/>
+		Em instantes você receberá uma mensagem pelo email
+		<b>
+		<h:outputLabel value = "#{fileUploadEstudanteView.sol.email}"/>
+		</b>
+		com instruções!!!
+	</ui:define>
+</ui:composition>
+</h:html>

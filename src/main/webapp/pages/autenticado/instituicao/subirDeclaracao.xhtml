@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{DeclaracaoMB.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<h:form>
+			<p:separator />
+			<div align="center">
+				<h2>
+					<h:outputText value="Cadastro de Declarações de Alunos" />
+				</h2>
+			</div>
+			<p:separator />
+			<br />
+			<h:outputLabel
+				value="Prezado representante de Instituição de Ensino, utilize o espaço abaixo para anexar as declarações de matrícula dos estudantes de sua instituição." />
+			<br />
+			<h:outputLabel
+				value="Atente-se ao código exibido abaixo, ele será necessário no preenchimento da declaração!" />
+			<br />
+			<h:outputLabel
+				value="Caso tenha alguma dúvida quanto ao preenchimento, favor utilize exemplos abaixo:" />
+			<br />
+			<br />
+			<b><p:outputLabel
+					value="Código da Instituição: #{DeclaracaoMB.inst.id}" /> </b>
+			<br />
+			<br />
+			<h:panelGrid columns="2">
+				<p:separator />
+				<p:separator />
+				<p:outputLabel value="Visualizar Meus Cursos :" />
+				<p:lightBox iframe="true" id="lightbox1"
+					style="background-color: white !important">
+					<p:commandButton value="Meus Cursos">
+						<h:outputLink value="/SCIE/pages/meusCursos.xhtml"
+							title="Meus Cursos" />
+					</p:commandButton>
+				</p:lightBox>
+				<p:separator />
+				<p:separator />
+				<p:outputLabel value="Exemplo xls :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{DeclaracaoMB.getXls()}" />
+				</p:commandButton>
+
+				<p:outputLabel value="Exemplo xlsx :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{DeclaracaoMB.getXlsx()}" />
+				</p:commandButton>
+
+				<p:outputLabel value="Exemplo ods :" />
+				<p:commandButton value="Download"
+					onclick="PrimeFaces.monitorDownload(start, stop);">
+					<p:fileDownload value="#{DeclaracaoMB.getOds()}" />
+				</p:commandButton>
+			</h:panelGrid>
+			<br />
+			<p:separator />
+			<h:panelGrid columns="4">
+				<p:outputLabel value="Enviar Declarações: " />
+				<p:fileUpload fileUploadListener="#{DeclaracaoMB.doUpload}"
+					mode="advanced" dragDropSupport="true" multiple="false"
+					update="icone declaracoesTab" sizeLimit="2000000"
+					allowTypes="/(\.|\/)(xlsx?|ods)$/" label="Procurar..."
+					uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio"
+					invalidFileMessage="Tipo de arquivo não permitido!"
+					invalidSizeMessage="Arquivo grande demais" />
+				<p:graphicImage id="icone" value="#{DeclaracaoMB.icone}"
+					width="50px" autoUpdate="true" />
+				<p:column width="10%">
+					<p:messages severity="info" escape="false" showDetail="true"
+						autoUpdate="true" closable="true" />
+					<p:messages severity="error" escape="false" showDetail="true"
+						autoUpdate="true" closable="true" />
+				</p:column>
+			</h:panelGrid>
+			<p:separator />
+			<p:fieldset legend="Declarações" toggleable="true" toggleSpeed="500"
+				collapsed="true">
+				<p:dataTable id="declaracoesTab" var="declaracao"
+					value="#{DeclaracaoMB.declaracoes}" editable="false"
+					emptyMessage="Não há declarações cadastradas." paginator="true"
+					autoUpdate="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="10,30,100">
+					<p:column headerText="Nome do Estudante">
+						<h:outputText value="#{declaracao.estudante.nome}" />
+					</p:column>
+
+					<p:column headerText="Matrícula do Estudante">
+						<h:outputText value="#{declaracao.estudante.matricula}" />
+					</p:column>
+
+					<p:column headerText="Data de Nascimento do Estudante">
+						<h:outputText value="#{declaracao.estudante.dataNascimento}" />
+					</p:column>
+
+					<p:column headerText="CPF do Estudante">
+						<h:outputText value="#{declaracao.estudante.cpf}" />
+					</p:column>
+
+					<p:column headerText="Nome do Responsável pelo Estudante">
+						<h:outputText value="#{declaracao.estudante.responsavel}" />
+					</p:column>
+
+					<p:column headerText="Nome do Curso">
+						<h:outputText value="#{declaracao.estudante.curso}" />
+					</p:column>
+
+					<p:column headerText="Série/Grau/Período do Curso">
+						<h:outputText value="#{declaracao.estudante.periodo}" />
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			<br />
+			<p:commandButton value="Voltar" action="#{loginBean.instituicaoHome}"
+				styleClass="left" />
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>

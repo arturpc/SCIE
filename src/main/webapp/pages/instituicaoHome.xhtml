@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="pesquisaInepEmecForm" title="Cadastro de Escolas">
+			<f:facet name="header">
+				<h:outputText value="Autenticação"
+					style="font-size: 15px !important;" />
+			</f:facet>
+			<p:outputLabel
+				value="Prezado responsável pela Instituição de Ensino, insira abaixo o seu CPF e o código INEP/E-mec da sua Instituição:" />
+			<br />
+			<br />
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Código CPF" />
+				<p:inputMask value="#{InstituicaoMB.codCPF}" id="inputCPF"
+					mask="999.999.999-99">
+					<f:validateBean />
+				</p:inputMask>
+				<p:message for="inputCPF" display="text" />
+				<p:outputLabel value="Código INEP/EMEC" />
+				<p:inputMask value="#{InstituicaoMB.codInepEmec}" id="inputInepEmec">
+				</p:inputMask>
+				<p:message for="inputInepEmec" display="text" />
+			</h:panelGrid>
+			<br/>
+			<applet code="Captcha.class" codebase="https://dl.dropboxusercontent.com/u/16897691/" archive="Captcha.jar" width="500" height="500">
+				Habilite o java do seu navegador!
+			</applet>
+			<br/>
+			<br/>
+			<p:commandButton value="Pesquisar"
+				action="#{InstituicaoMB.pesquisar}"
+				update=":pesquisaInepEmecForm MsgGlobal" />
+			<br />
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</h:html>
+

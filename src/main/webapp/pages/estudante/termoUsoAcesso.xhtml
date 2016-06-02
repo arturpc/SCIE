@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<div align="center">
+				<h2>
+					<h:outputText
+						value="Sistema de Cadastro de Solicitação de Extensão de Acessos do PLE" />
+				</h2>
+			</div>
+			<p:separator />
+			<br />
+			<p:outputLabel
+				value="*Para solicitar a extensão de acessos do benefício do Passe Livre Estudantil, é obrigatório o aceite deste Termo de Uso." />
+			<br />
+			<br />
+			<h2>
+				<b><p:outputLabel
+						value="1. GESTOR DO SISTEMA DE CADASTRO DO PASSE LIVRE ESTUDANTIL DO DF" /></b>
+			</h2>
+			<br />
+			<p:outputLabel value="1.1 " />
+			<b><p:outputLabel
+					value="Transporte Urbano do Distrito Federal – DFTRANS" /></b>
+			<p:outputLabel
+				value=", CNPJ n. 05.764.629/0001-21, com sede SAIN - Estação Rodoferroviária - Ala Sul - Sobreloja - CEP: 70.631-900, Gestor do Sistema de Atualização de Cadastro Estudantil." />
+			<br/>
+			<br />
+			<b><p:outputLabel value="2. FUNDAMENTOS" /></b>
+			<br />
+			<br />
+			<p:outputLabel value="2.1 Constituição Federal de 1988;" />
+			<br />
+			<p:outputLabel value="2.2 Lei n° 4.462, de 13 de janeiro de 2010;" />
+			<br />
+			<p:outputLabel
+				value="2.3 Portaria Conjunta, nº 05 de 24 de fevereiro de 2016 – Secretaria de Estado de Mobilidade e Transporte Urbano do Distrito Federal." />
+			<br />
+			<br />
+			<b><p:outputLabel value="3. EXTENSÃO DO NÚMERO DE ACESSOS DO PASSE LIVRE ESTUDANTIL" /></b>
+			<br />
+			<br />
+			<p:outputLabel
+				value="3.1 A solicitação da extensão do número de acessos do Passe Livre Estudantil - PLE deverá ser requisitada exclusivamente via plataforma web no sítio " />
+			<h:outputLink value="http://mais.ple.dftrans.df.gov.br/2Via/estudanteAcessosHome.xhtml">
+				<p:outputLabel value="mais.ple.dftrans.df.gov.br" />
+			</h:outputLink>
+			<p:outputLabel
+				value=", através do CPF do estudante;" />
+			<br />
+			<p:outputLabel
+				value="3.2 O estudante deverá ter o seu cadastro aprovado para inicar a solicitação da extensão do número de acessos do PLE bem como possuir o cartão PLE ativo e não bloqueado;"/>
+			<br />
+			<p:outputLabel
+				value="3.3 O prazo para o fornecimento da extensão do número de acessos do PLE será de até 10 dias úteis a partir da aprovação da solicitação de extensão de acessos;" />
+			<br />
+			<p:outputLabel
+				value="3.4 A solicitação de extensão do número de acessos do PLE deverá ser motivada e comprovada, sob cada caso (vide item 3.5), com documentos digitalizados e legíveis que deverão ser anexados à plataforma web e que serão usados como base para a análise de legitimidade da solicitação, bem como confrontados com os dados cadastrais apresentados;" />
+			<br />
+			<p:outputLabel
+				value="3.5 São motivos da solicitação de extensão do número de acessos do PLE e documentos que serão obrigatóriamente digitalizados e enviados:" />
+				<ol type="1">
+				<li><p:outputLabel
+				value="Matrícula em mais de uma Instituição de Ensino reconhecida pela Secretaria de Educação do Distrito Federal (SEDF) ou Ministério da Educação (MEC) conforme a Lei 4.462, de 13 de janeiro de 2010, em cursos que estabelecem o direito de acesso ao PLE - Declaração da segunda Instituição de Ensino, que ainda não foi cadastrada, contendo no mínimo os seguintes dados: número de matrícula, curso e CPF do estudante e nome e endereço comercial da Instituição de Ensino;"/></li>
+				<li><p:outputLabel 
+				value="Estágio "/><b><p:outputLabel value="Obrigatório"/></b><p:outputLabel value=" conforme a Lei 4.462, de 13 de janeiro de 2010 - Declaração de Estágio "/>
+				<b><p:outputLabel value="Obrigatório"/></b><p:outputLabel value=" contendo matrícula, nome e CPF do estudante bem como a assinatura do Supervisor do Estágio Obrigatório e "/>
+				<b><p:outputLabel value="Grade Horária"/></b><p:outputLabel value=" que confirme a "/><b><p:outputLabel value="disciplina Estágio Obrigatório"/></b><p:outputLabel value=";"/></li>
+				<li><p:outputLabel
+				value="Insuficiência de 4 acessos diários e/ou 54 acessos mensais que respeitem o trajeto residência-escola-estágio-residência "/>
+				<b><p:outputLabel value="ou"/></b><p:outputLabel value=" residência-escola-residência conforme a Lei 4.462, de 13 de janeiro de 2010 - Neste caso serão confrontados os arquivos já anexados do comprovante de residência do estudante e o endereço de sua Instituição de Ensino no cadastro já realizado."/></li>
+				<li><p:outputLabel
+				value="Alteração de endereço residencial do estudante e/ou de Instituição de Ensino matriculado(a) - Comprovante do novo endereço "/><b><p:outputLabel value="e"/></b><p:outputLabel value=" declaração da nova Instituição de Ensino contendo minimamente os seguintes dados: número da matrícula, nome, curso e CPF do estudante e nome e endereço comercial da Instituição de Ensino;"/></li>
+				</ol>
+			<br />
+			<p:outputLabel
+				value="3.6 O resultado da análise da solicitação da extensão do número de acessos do PLE será enviado ao solicitante via correio eletrônico (e-mail) cadastrado no momento da solicitação, com as devidas justificativas de deferimento/indeferimento;" />
+			<br />
+			<br />
+			<b><p:outputLabel value="4 EFEITOS, PRAZO E FORO" /></b>
+			<br />
+			<br />
+			<p:outputLabel
+				value="4.1. Sem prejuízo do definido no subitem anterior, fica resguardado o direito a realização de aditivo (s) a este instrumento a qualquer momento, mediante prévio conhecimento das novas regras e condições com o consequente aceite eletrônico, anuindo o titular ou responsável ao Termo de Uso." />
+			<br />
+			<p:outputLabel
+				value="4.2. Elege-se o foro de Brasília - DF para dirimir eventuais dúvidas oriundas deste pacto, com exclusão de qualquer outro, por mais privilegiado que seja." />
+			<br />
+			<br />
+			<p:panelGrid columns="1">
+				<p:selectBooleanCheckbox value="#{EstudanteMB.termo}" itemLabel="*Ao clicar neste ícone, eu declaro ter lido e estar ciente do termo acima e concordar integralmente com todas as suas cláusulas." style="font-size:8px !important;"/>
+			</p:panelGrid>
+			<br/>
+			<p:commandButton value="Continuar"
+				action="#{EstudanteMB.verificarTermoAcessos}"
+				update="MsgGlobal" />
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</h:html>

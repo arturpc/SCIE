@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<ui:define name="conteudo">
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Usuários" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="userForm">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="Nome do Usuário" for="nome" />
+				<p:inputText id="nome" size="50" value="#{usuarioMB.nome}"
+					required="true"
+					requiredMessage="Nome do Usuário é um campo obrigatório!"
+					validatorMessage="Nome de Usuário inválido">
+					<f:validator validatorId="namesValidator" />
+				</p:inputText>
+				<p:message for="nome" display="text" />
+				<p:outputLabel value="Perfil" for="perfis" />
+				<p:selectOneMenu id="perfis" value="#{usuarioMB.perfil}"
+					required="true" requiredMessage="Perfil é um campo obrigatório!">
+					<f:selectItem itemLabel="Validador" itemValue="2" />
+					<f:selectItem itemLabel="Instituição" itemValue="0" />
+					<f:selectItem itemLabel="Administrador" itemValue="1" />
+				</p:selectOneMenu>
+				<p:message for="perfis" display="text" />
+				<p:outputLabel value="Email do Usuário" for="email" />
+				<p:inputText id="email" size="50" value="#{usuarioMB.email}"
+					required="true" requiredMessage="E-mail é um campo obrigatório!" />
+				<p:message for="email" display="text" />
+			</h:panelGrid>
+			<p:commandButton value="cadastrar"
+				actionListener="#{usuarioMB.cadastrarUsuario}"
+				update=":userForm :MsgGlobal" styleClass="left" />
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>

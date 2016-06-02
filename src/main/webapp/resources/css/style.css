@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+
+.ui-widget, .ui-widget .ui-widget {font-size: 14px;}
+.ui-layout-north {z-index: 20 !important;overflow: visible !important;}
+.ui-layout-north .ui-layout-unit-content {overflow: visible !important;}
+.cabecalho {}
+.conteudo {position: relative;right: 50%;top: 50%;}
+.left {float:left; margin-left:0; margin-right:10px; margin-bottom:5px;}
+.right {float:right;margin-right:0; margin-left: 10px; margin-bottom:5px;}
+.center {text-align: center; margin-right:0; margin-left:10px; margin-bottom:5px;}
+.ui-state-highlight{text-shadow: none !important;}
+.ui-panelgrid{border-style: none;}
+span{font-size: 14px !important; color: black !important;}
+.forty-percent {width: 40%;}
+.sixty-percent {width: 60%;}
+.top-alignment {vertical-align: top;}
+.ui-column-title {color: white !important; font-weight: bold !important;}

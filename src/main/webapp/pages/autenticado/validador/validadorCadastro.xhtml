@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{confirmacaoMB.reset}" immediate="true" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText
+					value="Validação do Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="validacaoForm">
+			<p:commandButton value="Voltar"
+				action="#{loginBean.validadorIndex()}" styleClass="left" />
+			<h:panelGrid columns="2" width="100%"
+				columnClasses="sixty-percent top-alignment, forty-percent top-alignment">
+				<h:panelGrid columns="1" width="100%">
+					<p:panel header="Dados da Instituição" toggleable="true"
+						closable="false">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Nome da Instituição" />
+							<p:inputText id="nmInst" size="50"
+								value="#{confirmacaoMB.instituicao.nomeInstituicao}"
+								readonly="true" />
+							<p:outputLabel value="Número do CNPJ" />
+							<p:inputMask id="cnpjInst" size="20"
+								value="#{confirmacaoMB.instituicao.cnpj}"
+								mask="99.999.999/9999-99" readonly="true" />
+							<p:outputLabel value="Razão Social" />
+							<p:inputText size="50" id="rzscInst"
+								value="#{confirmacaoMB.instituicao.razaoSocial}" readonly="true" />
+							<p:outputLabel value="Código INEP/E-mec" />
+							<p:inputText size="20" id="inepInst"
+								value="#{confirmacaoMB.instituicao.codInepEmec}" readonly="true" />
+						</h:panelGrid>
+					</p:panel>
+					<p:panel header="Dados do Endereço Comercial da Instituição"
+						toggleable="true" closable="false">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Número do CEP" />
+							<p:inputMask id="cepInst" size="10"
+								value="#{confirmacaoMB.instituicao.endereco.cep}"
+								mask="99.999-999" readonly="true" />
+							<p:outputLabel value="Nome do Bairro" />
+							<p:inputText id="bairroEnd" size="50"
+								value="#{confirmacaoMB.instituicao.endereco.bairro}"
+								readonly="true" />
+							<p:outputLabel value="Número"></p:outputLabel>
+							<p:inputText size="5" id="nroEnd"
+								value="#{confirmacaoMB.instituicao.endereco.numeroEndereco}"
+								readonly="true" />
+							<p:outputLabel value="Logradouro" />
+							<p:inputText id="logEnd" size="50"
+								value="#{confirmacaoMB.instituicao.endereco.logradouro}"
+								readonly="true" />
+							<p:outputLabel value="Complemento" />
+							<p:inputText size="100" id="complEnd"
+								value="#{confirmacaoMB.instituicao.endereco.complemento}"
+								readonly="true" />
+							<p:outputLabel value="Cidade" />
+							<p:inputText size="50" id="cidEnd"
+								value="#{confirmacaoMB.instituicao.endereco.cidade.nome}"
+								readonly="true" />
+							<p:outputLabel value="Estado" />
+							<p:inputText size="2" id="estEnd"
+								value="#{confirmacaoMB.instituicao.endereco.cidade.uf.uf}"
+								readonly="true" />
+						</h:panelGrid>
+					</p:panel>
+					<p:panel header="Dados do Representante da Instituição"
+						toggleable="true" closable="false">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="Nome do Representante" />
+							<p:inputText id="nmRep" size="50"
+								value="#{confirmacaoMB.instituicao.representante.nome}"
+								readonly="true" />
+							<p:outputLabel value="CPF do representante" />
+							<p:inputMask id="inputCPF" mask="999.999.999-99"
+								value="#{confirmacaoMB.instituicao.representante.cpf}"
+								readonly="true" />
+							<p:outputLabel value="Cargo do Representante" />
+							<p:inputText id="cargoRep" size="10"
+								value="#{confirmacaoMB.getRepCargo()}" readonly="true" />
+							<p:outputLabel value="Email para Contato" />
+							<p:inputText id="emailRep" size="50"
+								value="#{confirmacaoMB.instituicao.representante.email}"
+								readonly="true" />
+							<p:outputLabel value="Telefones para Contato" />
+							<p:inputTextarea id="inputTelefone"
+								value="#{confirmacaoMB.instituicao.representante.getTelefoneString()}"
+								readonly="true" rows="5" cols="14" />
+						</h:panelGrid>
+					</p:panel>
+					<p:panel header="Cursos Cadastrados" autoUpdate="true"
+						toggleable="true" closable="false">
+						<p:dataTable id="cursoTab" var="rowCurso"
+							value="#{confirmacaoMB.cadastrados}" editable="false"
+							emptyMessage="Não há cursos cadastrados." paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,30,100">
+							<p:column headerText="Código E-mec">
+								<h:outputText value="#{rowCurso.curso.codEmec}" />
+							</p:column>
+
+							<p:column headerText="Nome do Curso">
+								<h:outputText value="#{rowCurso.curso.curso}" />
+							</p:column>
+
+							<p:column headerText="Nivel">
+								<h:outputText value="#{rowCurso.curso.nivel}" />
+							</p:column>
+
+							<p:column headerText="Turno">
+								<h:outputText value="#{rowCurso.turno}" />
+							</p:column>
+							
+							<p:column headerText="Periodos/Ano">
+								<h:outputText value="#{rowCurso.ano}" />
+							</p:column>
+
+							<p:column headerText="Data de Início">
+								<h:outputText value="#{rowCurso.inicio}" />
+							</p:column>
+						</p:dataTable>
+					</p:panel>
+					<p:panel header="Arquivos de Comprovação dos Dados Cadastrais"
+						toggleable="true" closable="false">
+						<p:outputLabel for="documento" value="Documento: " />
+						<p:selectOneListbox id="documento"
+							value="#{confirmacaoMB.documento}" scrollHeight="50"
+							style="width: 400px;">
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[0]}"
+								itemValue="0" itemDisabled="#{!confirmacaoMB.exists[0]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[1]}"
+								itemValue="1" itemDisabled="#{!confirmacaoMB.exists[1]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[2]}"
+								itemValue="2" itemDisabled="#{!confirmacaoMB.exists[2]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[3]}"
+								itemValue="3" itemDisabled="#{!confirmacaoMB.exists[3]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[4]}"
+								itemValue="4" itemDisabled="#{!confirmacaoMB.exists[4]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[5]}"
+								itemValue="5" itemDisabled="#{!confirmacaoMB.exists[5]}" />
+							<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[6]}"
+								itemValue="6" itemDisabled="#{!confirmacaoMB.exists[6]}" />
+							<p:ajax event="change" listener="#{confirmacaoMB.setarDocumento}"
+								update="label labelAut autenticacao" />
+						</p:selectOneListbox>
+						<p:separator />
+						<p>
+							<b><h:outputText
+									value="Clique abaixo para visualizar o documento:"
+									style="font-size: 18px !important;" /></b>
+						</p>
+						<h:outputLink value="../../arquivo.xhtml"
+							title="#{confirmacaoMB.getLabel()}">
+							<h:outputText id="label" value="#{confirmacaoMB.getLabel()}"
+								rendered="#{confirmacaoMB.getExisteDocumento()}"
+								style="font-size: 16px !important;" />
+						</h:outputLink>
+						<p:spacer width="100" height="10" />
+						<h:outputText id="labelAut" value="Autenticação: "
+							rendered="#{confirmacaoMB.getExisteDocumento()}"
+							style="font-size: 16px !important;" />
+						<h:outputText id="autenticacao"
+							value="#{confirmacaoMB.getAutenticacao()}"
+							rendered="#{confirmacaoMB.getExisteDocumento()}"
+							style="font-size: 16px !important;" />
+					</p:panel>
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+					<p:panel header="Validar Cadastro">
+						<h:panelGrid columns="5">
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[0]}"
+								rendered="#{confirmacaoMB.existsLog[0]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[0]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[0]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textAto"
+								value="#{validadorMB.comentario[0]}" rows="5" cols="30"
+								counter="display0" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[0]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textAto"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[0]}" />
+							<h:outputText id="display0"
+								rendered="#{confirmacaoMB.existsLog[0]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[1]}"
+								rendered="#{confirmacaoMB.existsLog[1]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[1]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[1]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textCNPJ"
+								value="#{validadorMB.comentario[1]}" rows="5" cols="30"
+								counter="display1" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[1]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textCNPJ"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[1]}" />
+							<h:outputText id="display1"
+								rendered="#{confirmacaoMB.existsLog[1]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[2]}"
+								rendered="#{confirmacaoMB.existsLog[2]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[2]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[2]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textDiretor"
+								value="#{validadorMB.comentario[2]}" rows="5" cols="30"
+								counter="display2" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[2]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textDiretor"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[2]}" />
+							<h:outputText id="display2"
+								rendered="#{confirmacaoMB.existsLog[2]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[3]}"
+								rendered="#{confirmacaoMB.existsLog[3]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[3]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[3]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textEndereco"
+								value="#{validadorMB.comentario[3]}" rows="5" cols="30"
+								counter="display3" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[3]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textEndereco"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[3]}" />
+							<h:outputText id="display3"
+								rendered="#{confirmacaoMB.existsLog[3]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[4]}"
+								rendered="#{confirmacaoMB.existsLog[4]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[4]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[4]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textCurso"
+								value="#{validadorMB.comentario[4]}" rows="5" cols="30"
+								counter="display4" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[4]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textCurso"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[4]}" />
+							<h:outputText id="display4"
+								rendered="#{confirmacaoMB.existsLog[4]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[5]}"
+								rendered="#{confirmacaoMB.existsLog[5]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[5]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[5]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textEstatuto"
+								value="#{validadorMB.comentario[5]}" rows="5" cols="30"
+								counter="display5" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[5]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textEstatuto"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[5]}" />
+							<h:outputText id="display5"
+								rendered="#{confirmacaoMB.existsLog[5]}" />
+							<p:outputLabel
+								value="Arquivo: #{fileUploadView.descricaoArquivos[6]}"
+								rendered="#{confirmacaoMB.existsLog[6]}" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[6]}"
+								onLabel="Válido" offLabel="Inválido"
+								rendered="#{confirmacaoMB.existsLog[6]}">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textConvenio"
+								value="#{validadorMB.comentario[6]}" rows="5" cols="30"
+								counter="display6" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false" rendered="#{confirmacaoMB.existsLog[6]}">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textConvenio"
+								value="Escreva aqui o motivo da validade/invalidade..."
+								rendered="#{confirmacaoMB.existsLog[6]}" />
+							<h:outputText id="display6"
+								rendered="#{confirmacaoMB.existsLog[6]}" />
+							<p:outputLabel value="Validação Cadastro"
+								style="font-weight: bold;font-size: 16px !important;" />
+							<p:inputSwitch value="#{validadorMB.arquivoValido[7]}"
+								onLabel="Válido" offLabel="Inválido">
+								<p:ajax />
+							</p:inputSwitch>
+							<p:inputTextarea id="textCadastro"
+								value="#{validadorMB.comentario[7]}" rows="5" cols="30"
+								counter="display7" maxlength="200" counterTemplate="{0}/200."
+								autoResize="false">
+								<p:poll interval="5" />
+							</p:inputTextarea>
+							<p:watermark for="textCadastro"
+								value="Escreva aqui o motivo da validade/invalidade do cadastro..." />
+							<h:outputText id="display7" />
+						</h:panelGrid>
+					</p:panel>
+				</h:panelGrid>
+			</h:panelGrid>
+			<br />
+			<p:commandButton value="Concluir"
+				action="#{confirmacaoMB.terminarValidacao}" styleClass="left">
+				<p:confirm header="Confirmação" message="Deseja confirmar a validação?" icon="ui-icon-alert" />
+			</p:commandButton>
+				
+			<p:confirmDialog id = "dialog" global="true" showEffect="fade" hideEffect="fade">
+        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    		</p:confirmDialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</h:html>

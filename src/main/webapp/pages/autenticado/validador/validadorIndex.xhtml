@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+	</ui:define>
+	<f:metadata>
+    <f:viewAction action="#{validadorMB.init}" immediate="true"/>
+	</f:metadata>
+	<ui:define name="conteudo">
+	<h:outputLabel id = "benvindo" value="Bem vindo(a):" />
+	<b><h:outputLabel id = "nome" value="#{validadorMB.user.nome}" /></b>
+	<br/><br/>
+	<p:clock pattern="HH:mm:ss dd/MM/yyyy"/>
+	<br/>
+	<p:separator/>
+	<p:dock position="top" maxWidth="100">
+    	<p:menuitem value="Validar Instituições de Ensino" icon="/resources/images/edit-icon.png" url="#{loginBean.validadorCadastro()}" update=":MsgGlobal"/>
+    	<p:menuitem value="Validar Solicitações de 2ª Via" icon="/resources/images/card-icon.png" url="#{loginBean.validadorSolicitacao()}" update=":MsgGlobal"/>
+    	<p:menuitem value="Visualizar Solicitações de 2ª Via" icon="/resources/images/list-icon.png" url="#{loginBean.listSolicitacoes2Via()}" update=":MsgGlobal"/>
+    	<p:menuitem value="Validar Extensão de Acessos" icon="/resources/images/mais-icon.png" url="#{loginBean.validadorAcessos()}" update=":MsgGlobal"/>
+    	<p:menuitem value="Visualizar Extensão de Acessos" icon="/resources/images/mais-list-icon.png" url="#{loginBean.listSolicitacoesAcessos()}" update=":MsgGlobal"/>
+    	<p:menuitem value="Alterar Senha" icon="/resources/images/password-icon.png" url="#{loginBean.resetSenha()}" update=":MsgGlobal"/>
+	</p:dock>
+	</ui:define>
+</ui:composition>
+</h:html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="cabecalho">
+		<!--  <p:commandLink value="Logar"/> -->
+	</ui:define>
+	<f:metadata>
+		<f:viewAction action="#{confirmacaoMB.init}" />
+	</f:metadata>
+	<ui:define name="conteudo">
+		<p:steps activeIndex="3" readonly="false">
+			<p:menuitem value="Dados Cadastrais"
+				url="/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Documentos Comprobatórios"
+				url="/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true" />
+			<p:menuitem value="Cursos Oferecidos"
+				url="/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true" />
+			<p:menuitem value="Confirmação"
+				url="/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true" />
+		</p:steps>
+		<p:separator />
+		<div align="center">
+			<h2>
+				<h:outputText value="Cadastro de Instituições de Ensino" />
+			</h2>
+		</div>
+		<p:separator />
+		<h:form id="confirmacaoForm">
+			<p:panel header="Dados da Instituição" toggleable="true" closable="false">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome da Instituição" />
+					<p:inputText id="nmInst" size="50"
+						value="#{confirmacaoMB.instituicao.nomeInstituicao}"
+						readonly="true" />
+					<p:outputLabel value="Número do CNPJ" />
+					<p:inputMask id="cnpjInst" size="20"
+						value="#{confirmacaoMB.instituicao.cnpj}"
+						mask="99.999.999/9999-99" readonly="true" />
+					<p:outputLabel value="Razão Social" />
+					<p:inputText size="50" id="rzscInst"
+						value="#{confirmacaoMB.instituicao.razaoSocial}" readonly="true" />
+					<p:outputLabel value="Código INEP/E-mec" />
+					<p:inputText size="20" id="inepInst"
+						value="#{confirmacaoMB.instituicao.codInepEmec}" readonly="true" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Dados do Endereço Comercial da Instituição" toggleable="true" closable="false">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Número do CEP" />
+					<p:inputMask id="cepInst" size="10"
+						value="#{confirmacaoMB.instituicao.endereco.cep}"
+						mask="99.999-999" readonly="true" />
+					<p:outputLabel value="Nome do Bairro" />
+					<p:inputText id="bairroEnd" size="50"
+						value="#{confirmacaoMB.instituicao.endereco.bairro}"
+						readonly="true" />
+					<p:outputLabel value="Número"></p:outputLabel>
+					<p:inputText size="5" id="nroEnd"
+						value="#{confirmacaoMB.instituicao.endereco.numeroEndereco}"
+						readonly="true" />
+					<p:outputLabel value="Logradouro" />
+					<p:inputText id="logEnd" size="50"
+						value="#{confirmacaoMB.instituicao.endereco.logradouro}"
+						readonly="true" />
+					<p:outputLabel value="Complemento" />
+					<p:inputText size="100" id="complEnd"
+						value="#{confirmacaoMB.instituicao.endereco.complemento}"
+						readonly="true" />
+					<p:outputLabel value="Cidade" />
+					<p:inputText size="50" id="cidEnd"
+						value="#{confirmacaoMB.instituicao.endereco.cidade.nome}"
+						readonly="true" />
+					<p:outputLabel value="Estado" />
+					<p:inputText size="2" id="estEnd"
+						value="#{confirmacaoMB.instituicao.endereco.cidade.uf.uf}"
+						readonly="true" />
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Dados do Representante da Instituição" toggleable="true" closable="false">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Nome do Representante" />
+					<p:inputText id="nmRep" size="50"
+						value="#{confirmacaoMB.instituicao.representante.nome}"
+						readonly="true" />
+					<p:outputLabel value="CPF do representante" />
+					<p:inputMask id="inputCPF" mask="999.999.999-99"
+						value="#{confirmacaoMB.instituicao.representante.cpf}"
+						readonly="true" />
+					<p:outputLabel value="Cargo do Representante" />
+					<p:inputText id="cargoRep" size="10"
+						value="#{confirmacaoMB.getRepCargo()}" readonly="true" />
+					<p:outputLabel value="Email para Contato" />
+					<p:inputText id="emailRep" size="50"
+						value="#{confirmacaoMB.instituicao.representante.email}"
+						readonly="true" />
+					<p:outputLabel value="Telefones para Contato" />
+					<p:inputTextarea id="inputTelefone"
+						value="#{confirmacaoMB.instituicao.representante.getTelefoneString()}"
+						readonly="true" rows="5" cols="14"/>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel header="Arquivos de Comprovação dos Dados Cadastrais" toggleable="true" closable="false">
+				<p:outputLabel for="documento" value="Documento: " />
+				<p:selectOneListbox id="documento"
+					value="#{confirmacaoMB.documento}" scrollHeight="50"
+					style="width: 400px;">
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[0]}"
+						itemValue="0" itemDisabled="#{!confirmacaoMB.exists[0]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[1]}"
+						itemValue="1" itemDisabled="#{!confirmacaoMB.exists[1]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[2]}"
+						itemValue="2" itemDisabled="#{!confirmacaoMB.exists[2]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[3]}"
+						itemValue="3" itemDisabled="#{!confirmacaoMB.exists[3]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[4]}"
+						itemValue="4" itemDisabled="#{!confirmacaoMB.exists[4]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[5]}"
+						itemValue="5" itemDisabled="#{!confirmacaoMB.exists[5]}"/>
+					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[6]}"
+						itemValue="6" itemDisabled="#{!confirmacaoMB.exists[6]}"/>
+					<p:ajax event="change" listener="#{confirmacaoMB.setarDocumento}"
+						update="label" />
+				</p:selectOneListbox>
+				<p:separator />
+				<h3>Clique abaixo para visualizar o documento:</h3>
+				<h:outputLink value="../arquivo.xhtml"
+					title="#{confirmacaoMB.getLabel()}">
+					<h:outputText id="label"
+						value="#{confirmacaoMB.getLabel()}"
+						rendered="#{confirmacaoMB.getExisteDocumento()}" />
+				</h:outputLink>
+			</p:panel>
+			<p:panel header="Cursos Cadastrados" autoUpdate="true" toggleable="true" closable="false">
+					<p:dataTable id = "cursoTab" var="rowCurso" value="#{confirmacaoMB.cadastrados}"
+						editable="false" emptyMessage="Não há cursos cadastrados." 
+						paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="10,30,100">>
+						<p:column headerText="Código E-mec">
+							<h:outputText value="#{rowCurso.curso.codEmec}" />
+						</p:column>
+
+						<p:column headerText="Nome do Curso">
+							<h:outputText value="#{rowCurso.curso.curso}" />
+						</p:column>
+
+						<p:column headerText="Nivel">
+							<h:outputText value="#{rowCurso.curso.nivel}" />
+						</p:column>
+
+						<p:column headerText="Turno">
+							<h:outputText value="#{rowCurso.turno}" />
+						</p:column>
+						
+						<p:column headerText="Periodos/Ano">
+							<h:outputText value="#{rowCurso.ano}" />
+						</p:column>
+						
+						<p:column headerText="Data de Início">
+							<h:outputText value="#{rowCurso.inicio}"/>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<br/>
+			<p:commandButton value="Concluir" action="#{confirmacaoMB.verifyUser}" styleClass = "left"/>
+		</h:form>
+	</ui:define>
+	<ui:define name="rodape">
+	</ui:define>
+</ui:composition>
+</h:html>
