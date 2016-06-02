@@ -62,9 +62,9 @@ public class FileUploadView implements Serializable {
 	private Date date = Calendar.getInstance().getTime();
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 	private String[] arquivosAtuais;
-	private LogDAO logdao = LogDAO.LogDAO();
+	private LogDAO logdao = LogDAO.logDAO();
 	private LogValidacaoCadastro log;
-	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
+	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.documentoPendenciaDAO();
 	private String msgPortaria = Parametros.getParameter("cadastro_arquivos_portaria");
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;

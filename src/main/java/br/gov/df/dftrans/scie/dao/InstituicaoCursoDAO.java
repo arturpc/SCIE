@@ -23,7 +23,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serializable {
 	private static InstituicaoCursoDAO dao = null;
 
-	public static InstituicaoCursoDAO InstituicaoCursoDAO() {
+	public static InstituicaoCursoDAO instituicaoCursoDAO() {
 		if (dao == null) {
 			setDao(new InstituicaoCursoDAO());
 		}
@@ -217,7 +217,7 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, InstituicaoCurso.class);
 			List<InstituicaoCurso> list = typedQuery.setParameter("id", idInstituicao).getResultList();
 			List<Curso> cursos = new ArrayList<Curso>();
-			CursoDAO cursodao = CursoDAO.CursoDAO();
+			CursoDAO cursodao = CursoDAO.cursoDAO();
 			for (InstituicaoCurso i : list) {
 				cursos.add(cursodao.get(i.getCurso()));
 			}

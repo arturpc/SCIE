@@ -21,7 +21,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 	private static DeclaracaoDAO dao;
 
-	public static DeclaracaoDAO DeclaracaoDAO() {
+	public static DeclaracaoDAO declaracaoDAO() {
 		if (dao == null) {
 			setDao(new DeclaracaoDAO());
 		}
@@ -80,7 +80,7 @@ public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 	@Override
 	public Declaracao add(Declaracao entity) throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
-		EstudanteDAO estdao = EstudanteDAO.EstudanteDAO();
+		EstudanteDAO estdao = EstudanteDAO.estudanteDAO();
 		entity.setEstudante(estdao.add(entity.getEstudante()));
 		try {
 			entityManager.getTransaction().begin();

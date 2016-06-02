@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	private static CidadeDAO dao = null;
 
-	public static CidadeDAO CidadeDAO() {
+	public static CidadeDAO cidadeDAO() {
 		if (dao == null) {
 			setDao(new CidadeDAO());
 		}

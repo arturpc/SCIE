@@ -17,7 +17,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class UsuarioDAO extends DAO<Usuario> {
 	private static UsuarioDAO dao = null;
 
-	public static UsuarioDAO UsuarioDAO() {
+	public static UsuarioDAO usuarioDAO() {
 		if (getDao() == null) {
 			setDao(new UsuarioDAO());
 		}

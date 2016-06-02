@@ -20,7 +20,7 @@ public class PrioridadeDAO extends DAO<Prioridade> {
 	private static PrioridadeDAO dao = null;
 	List<Prioridade> list;
 
-	public static PrioridadeDAO PrioridadeDAO() {
+	public static PrioridadeDAO prioridadeDAO() {
 		if (getDao() == null) {
 			setDao(new PrioridadeDAO());
 		}
@@ -111,7 +111,7 @@ public class PrioridadeDAO extends DAO<Prioridade> {
 		}
 	}
 	
-	public boolean Exists(String cpf){
+	public boolean exists(String cpf){
 		list = get();
 		for (Prioridade p : list){
 			if(p.getCpf().equals(cpf)){

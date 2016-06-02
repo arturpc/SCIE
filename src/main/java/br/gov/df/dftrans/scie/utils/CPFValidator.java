@@ -14,7 +14,7 @@ public class CPFValidator implements Serializable {
 
 	private static final long serialVersionUID = 8856838765083713270L;
 
-	private static final int[] pesoCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+	private static final int[] PESOCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
 	private static final char[] ZEROS = { '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
 
@@ -49,8 +49,8 @@ public class CPFValidator implements Serializable {
 			return false;
 		}
 		try {
-			Integer digit1 = calculateDigit(cpf.substring(0, 9), pesoCPF);
-			Integer digit2 = calculateDigit(cpf.substring(0, 9) + digit1, pesoCPF);
+			Integer digit1 = calculateDigit(cpf.substring(0, 9), PESOCPF);
+			Integer digit2 = calculateDigit(cpf.substring(0, 9) + digit1, PESOCPF);
 			return cpf.equals(cpf.substring(0, 9) + digit1.toString() + digit2.toString());
 		} catch (Exception e) {
 			return false;

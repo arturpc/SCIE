@@ -11,7 +11,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class LogAlteracaoBancoDAO extends DAO<LogAlteracaoBanco> {
 
-	public static LogAlteracaoBancoDAO LogAlteracaoBancoDAO() {
+	public static LogAlteracaoBancoDAO logAlteracaoBancoDAO() {
 		if (getDao() == null) {
 			setDao(new LogAlteracaoBancoDAO());
 		}

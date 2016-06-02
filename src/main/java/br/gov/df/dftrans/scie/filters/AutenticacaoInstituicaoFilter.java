@@ -20,8 +20,7 @@ public class AutenticacaoInstituicaoFilter implements Filter {
      * Default constructor. 
      * @return 
      */
-    public void AutenticacaoFilter() {
-        // TODO Auto-generated constructor stub
+    public void autenticacaoFilter() {
     }
 
 	/**

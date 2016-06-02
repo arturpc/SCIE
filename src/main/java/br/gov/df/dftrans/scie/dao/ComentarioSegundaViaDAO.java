@@ -15,7 +15,7 @@ public class ComentarioSegundaViaDAO extends DAO<Comentario> {
 
 	private static ComentarioSegundaViaDAO dao = null;
 
-	public static ComentarioSegundaViaDAO ComentarioSegundaViaDAO() {
+	public static ComentarioSegundaViaDAO comentarioSegundaViaDAO() {
 		if (getDao() == null) {
 			setDao(new ComentarioSegundaViaDAO());
 		}

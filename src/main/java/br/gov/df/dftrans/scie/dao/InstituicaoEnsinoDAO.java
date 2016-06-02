@@ -23,7 +23,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Serializable {
 	private static InstituicaoEnsinoDAO dao = null;
 
-	public static InstituicaoEnsinoDAO InstituicaoEnsinoDAO() {
+	public static InstituicaoEnsinoDAO instituicaoEnsinoDAO() {
 		if (dao == null) {
 			setDao(new InstituicaoEnsinoDAO());
 		}
@@ -84,8 +84,8 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		Endereco end = entity.getEndereco();
 		Representante rep = entity.getRepresentante();
-		EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
-		RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
+		EnderecoDAO enddao = EnderecoDAO.enderecoDAO();
+		RepresentanteDAO repdao = RepresentanteDAO.representanteDAO();
 		entity.setEndereco(enddao.update(end));
 		entity.setRepresentante(repdao.update(rep));
 		try {

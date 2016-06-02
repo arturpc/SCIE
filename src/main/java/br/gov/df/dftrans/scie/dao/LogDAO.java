@@ -19,7 +19,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class LogDAO extends DAO<LogValidacaoCadastro> {
 	private static LogDAO dao = null;
 
-	public static LogDAO LogDAO() {
+	public static LogDAO logDAO() {
 		if (getDao() == null) {
 			setDao(new LogDAO());
 		}

@@ -16,7 +16,7 @@ public abstract class DAO<T> {
     protected static final Integer EMPTY = 0;
     protected static EntityManagerFactory factory = Persistence.createEntityManagerFactory("sciePU");
     @PersistenceContext(unitName = "scie")
-    protected static LogAlteracaoBancoDAO logdao = LogAlteracaoBancoDAO.LogAlteracaoBancoDAO();
+    protected static LogAlteracaoBancoDAO logdao = LogAlteracaoBancoDAO.logAlteracaoBancoDAO();
 
     public abstract T add(T entity) throws InsertException;
     public abstract T get(Object id) throws EntityNotFoundException;

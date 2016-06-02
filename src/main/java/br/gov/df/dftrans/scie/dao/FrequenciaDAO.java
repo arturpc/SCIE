@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class FrequenciaDAO extends DAO<Frequencia> {
 	private static FrequenciaDAO dao;
 
-	public static FrequenciaDAO FrequenciaDAO() {
+	public static FrequenciaDAO frequenciaDAO() {
 		if (dao == null) {
 			setDao(new FrequenciaDAO());
 		}
@@ -79,7 +79,7 @@ public class FrequenciaDAO extends DAO<Frequencia> {
 	@Override
 	public Frequencia add(Frequencia entity) throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
-		EstudanteDAO estdao = EstudanteDAO.EstudanteDAO();
+		EstudanteDAO estdao = EstudanteDAO.estudanteDAO();
 		entity.setEstudante(estdao.add(entity.getEstudante()));
 		try {
 

@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 public final class HibernateUtil  { 
-	private EntityManagerFactory Factory;
+	private EntityManagerFactory factory;
 	private EntityManager manager;
 	
 	public HibernateUtil() {
@@ -20,11 +20,11 @@ public final class HibernateUtil  {
 	
 	//getteres and setteres
 	public EntityManagerFactory getFactory() {
-		return Factory;
+		return factory;
 	}
 
 	public void setFactory(EntityManagerFactory factory) {
-		Factory = factory;
+		factory = factory;
 	}
 
 	public EntityManager getManager() {

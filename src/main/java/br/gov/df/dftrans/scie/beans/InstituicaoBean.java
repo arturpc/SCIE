@@ -48,9 +48,9 @@ public class InstituicaoBean implements Serializable {
 	private Endereco endereco;
 	private Cidade cidade;
 	private UF uf;
-	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
-	private UFDAO ufdao = UFDAO.UFDAO();
+	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
+	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.autorizacaoRepresentanteDAO();
+	private UFDAO ufdao = UFDAO.uFDAO();
 	private Representante representante = null;
 	private CursoViewBean cursoBean;
 	private String[] contato = new String[5];
@@ -101,7 +101,7 @@ public class InstituicaoBean implements Serializable {
 			setEndereco(instituicao.getEndereco());
 			setCidade(endereco.getCidade());
 			setUf(getCidade().getUf());
-			RepresentanteDAO repDAO = RepresentanteDAO.RepresentanteDAO();
+			RepresentanteDAO repDAO = RepresentanteDAO.representanteDAO();
 			setRepresentante(repDAO.getByCPF(codCPFsemMascara));
 			if (getRepresentante() == null) {
 				setRepresentante(new Representante(null, codCPFsemMascara, 1, null, null));
@@ -127,7 +127,7 @@ public class InstituicaoBean implements Serializable {
 			FacesUtil.addMsggError("Cep informado inválido");
 			return "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=false";
 		}*/
-		InstituicaoEnsinoDAO instituicaoDao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+		InstituicaoEnsinoDAO instituicaoDao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
 		InstituicaoEnsino inst = getInstituicao();
 		inst.setCnpj(removeMascara(inst.getCnpj()));
 		Endereco end = getEndereco();

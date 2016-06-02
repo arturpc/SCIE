@@ -61,7 +61,7 @@ public class FrequenciaBean {
 	private String fileNameUploaded;
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 	private String current = Parametros.getParameter("root_upload");
-	private FrequenciaDAO freqdao = FrequenciaDAO.FrequenciaDAO();
+	private FrequenciaDAO freqdao = FrequenciaDAO.frequenciaDAO();
 	private String chave = "";
 	private boolean erroProcessamento;
 	private String[] nomeMeses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto",
@@ -181,8 +181,8 @@ public class FrequenciaBean {
 
 	public String persistirFrequencias(String[][] temp, String chave, int tipo) {
 		InstituicaoEnsino inst;
-		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-		FrequenciaDAO freqdao = FrequenciaDAO.FrequenciaDAO();
+		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
+		FrequenciaDAO freqdao = FrequenciaDAO.frequenciaDAO();
 		ArrayList<Estudante> listest = new ArrayList<Estudante>();
 		ArrayList<Frequencia> listfreq = new ArrayList<Frequencia>();
 		Set<String> listcpf = new HashSet<String>();

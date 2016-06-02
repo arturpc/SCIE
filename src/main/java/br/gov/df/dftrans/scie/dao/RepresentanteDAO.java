@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class RepresentanteDAO extends DAO<Representante> {
 	private static RepresentanteDAO dao = null;
 
-	public static RepresentanteDAO RepresentanteDAO() {
+	public static RepresentanteDAO representanteDAO() {
 		if (dao == null) {
 			setDao(new RepresentanteDAO());
 		}

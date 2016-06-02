@@ -44,7 +44,7 @@ public class AcessosBean {
 	private String[] path;
 	private String current = Parametros.getParameter("root_upload"), pathAtual;
 	private int documento, origem;
-	private ExtensaoAcessoDAO extdao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
+	private ExtensaoAcessoDAO extdao = ExtensaoAcessoDAO.extensaoAcessoDAO();
 	private ListDataModel<ExtensaoAcesso> extAcessos;
 	private boolean isEscolhida = false;
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");

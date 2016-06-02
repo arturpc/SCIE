@@ -34,12 +34,12 @@ public class SelectCPFDAO {
 	public static final int SEGUNDAVIA = 1;
 	public static final int ACESSOS = 2;
 	private static Date date;
-	private static List<String[]> CPFList = new ArrayList<String[]>();
+	private static List<String[]> cpfList = new ArrayList<String[]>();
 	public static SelectCPFDAO dao;
-	private static SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
-	private static ExtensaoAcessoDAO acedao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
+	private static SolicitacaoDAO soldao = SolicitacaoDAO.solicitacaoDAO();
+	private static ExtensaoAcessoDAO acedao = ExtensaoAcessoDAO.extensaoAcessoDAO();
 
-	public static SelectCPFDAO SelectCPFDAO() throws ClassNotFoundException, SQLException, EntityNotFoundException {
+	public static SelectCPFDAO selectCPFDAO() throws ClassNotFoundException, SQLException, EntityNotFoundException {
 		if (dao == null) {
 			dao = new SelectCPFDAO();
 			getAll();
@@ -111,7 +111,7 @@ public class SelectCPFDAO {
 				}
 			}
 			String[] s;
-			for (String[] temp : CPFList) {
+			for (String[] temp : cpfList) {
 				s = new String[3];
 				s[0] = temp[0];
 				s[1] = solicitados.contains(s[0]) ? "1" : "0";
@@ -125,10 +125,10 @@ public class SelectCPFDAO {
 	/**
 	 * Pesquisa uma solicitação de segunda via pendente para dado cpf
 	 * 
-	 * @param CPF
+	 * @param cpf
 	 * @return boolean
 	 */
-	public static boolean getSegundaVia(String CPF) {
+	public static boolean getSegundaVia(String cpf) {
 		try {
 			getAll();
 		} catch (ClassNotFoundException e) {
@@ -142,8 +142,8 @@ public class SelectCPFDAO {
 			e.printStackTrace();
 		}
 		boolean retorno = false;
-		for (String[] temp : CPFList) {
-			if (temp[0] != null && temp[0].equals(CPF)) {
+		for (String[] temp : cpfList) {
+			if (temp[0] != null && temp[0].equals(cpf)) {
 				if (temp[1].equals("0")) {
 					retorno = true;
 				}
@@ -155,10 +155,10 @@ public class SelectCPFDAO {
 	/**
 	 * Pesquisa uma solicitação de extensão de acesso pendente para dado cpf
 	 * 
-	 * @param CPF
+	 * @param cpf
 	 * @return boolean
 	 */
-	public static boolean getAcessos(String CPF) {
+	public static boolean getAcessos(String cpf) {
 		try {
 			getAll();
 		} catch (ClassNotFoundException e) {
@@ -172,8 +172,8 @@ public class SelectCPFDAO {
 			e.printStackTrace();
 		}
 		boolean retorno = false;
-		for (String[] temp : CPFList) {
-			if (temp[0] != null && temp[0].equals(CPF)) {
+		for (String[] temp : cpfList) {
+			if (temp[0] != null && temp[0].equals(cpf)) {
 				if (temp[2].equals("0")) {
 					retorno = true;
 				}
@@ -215,10 +215,10 @@ public class SelectCPFDAO {
 	 * @param nome
 	 * @return List<String>
 	 */
-	public static boolean getAutenticacaoSITPASS(String CPF, String senhaParametro) {
+	public static boolean getAutenticacaoSITPASS(String cpf, String senhaParametro) {
 		try {
 			Connection con = getConnection();
-			PreparedStatement instrucao = con.prepareStatement(SELECT_SENHA + CPF);
+			PreparedStatement instrucao = con.prepareStatement(SELECT_SENHA + cpf);
 			ResultSet linhas = instrucao.executeQuery();
 			String senha = null;
 			while (linhas.next()) {
@@ -323,7 +323,7 @@ public class SelectCPFDAO {
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
 		}
-		return CPFList;
+		return cpfList;
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class SelectCPFDAO {
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
 		}
-		for (String[] s : CPFList) {
+		for (String[] s : cpfList) {
 			if (s[0] != null && s[0].equals(cpf)) {
 				return true;
 			}
@@ -352,7 +352,7 @@ public class SelectCPFDAO {
 	}
 
 	public static void setCPFList(List<String[]> cPFList) {
-		CPFList = cPFList;
+		cpfList = cPFList;
 	}
 
 	/**

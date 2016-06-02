@@ -34,15 +34,15 @@ import br.gov.df.dftrans.scie.view.FileUploadView;
 @SessionScoped
 public class ConfirmacaoBean {
 	private InstituicaoEnsino instituicao;
-	private InstituicaoEnsinoDAO instensdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+	private InstituicaoEnsinoDAO instensdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
 	private ArrayList<Boolean> exists = new ArrayList<Boolean>(), existsLog = new ArrayList<Boolean>();
 	private String[] path;
 	private String current = Parametros.getParameter("root_upload"), pathAtual;
 	private int documento, origem;
 	private List<InstituicaoCurso> cadastrados;
-	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
-	private LogDAO logdao = LogDAO.LogDAO();
-	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
+	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.instituicaoCursoDAO();
+	private LogDAO logdao = LogDAO.logDAO();
+	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.documentoPendenciaDAO();
 	private Usuario usuario;
 	private ValidadorBean validadorBean;
 

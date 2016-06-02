@@ -48,7 +48,7 @@ public class FileUploadAcessosView {
 	private Date date = Calendar.getInstance().getTime();
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 	private ExtensaoAcesso ext;
-	private ExtensaoAcessoDAO dao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
+	private ExtensaoAcessoDAO dao = ExtensaoAcessoDAO.extensaoAcessoDAO();
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private boolean esconderArquivos[] = { false, true };

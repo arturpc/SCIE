@@ -25,7 +25,7 @@ public class MotivoService {
 	 */
 	public void refresh() {
 		motivos = new ArrayList<Motivo>();
-		MotivoDAO dao = MotivoDAO.MotivoDAO();
+		MotivoDAO dao = MotivoDAO.motivoDAO();
 		try {
 			motivos.addAll(dao.getAll());
 		} catch (EntityNotFoundException e) {

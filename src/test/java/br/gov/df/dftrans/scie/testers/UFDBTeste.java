@@ -15,7 +15,7 @@ public class UFDBTeste {
 	@Ignore
 	public void testAddAll(){
         List<UF> ufs = new ArrayList<UF>();
-        UFDAO ufDao = UFDAO.UFDAO();
+        UFDAO ufDao = UFDAO.uFDAO();
         try {
             ufs.add(new UF("AC"));
             ufs.add(new UF("AL"));
@@ -54,7 +54,7 @@ public class UFDBTeste {
 	@Test
 	public void testAdd(){
 		UF uf = new UF();
-		UFDAO ufdao = UFDAO.UFDAO();
+		UFDAO ufdao = UFDAO.uFDAO();
 		
 		uf.setUf("DF");
 		try {

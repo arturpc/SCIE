@@ -31,14 +31,14 @@ public class CursoViewBean implements Serializable {
 	private List<Curso> cursosMomento;
 	private InstituicaoEnsino instituicao;
 	private InstituicaoCurso instCurso = new InstituicaoCurso();
-	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
+	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.instituicaoCursoDAO();
 	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(false);
 
 	/**
 	 * Inicia variáveis
 	 */
 	public void init() {
-		CursoDAO dao = CursoDAO.CursoDAO();
+		CursoDAO dao = CursoDAO.cursoDAO();
 		setCursosMomento(dao.getAll());
 		setTarget(new ArrayList<Curso>());
 		setCursos(new ArrayList<Curso>());

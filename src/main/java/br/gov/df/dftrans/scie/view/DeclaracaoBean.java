@@ -61,8 +61,8 @@ public class DeclaracaoBean {
 	private Date date = Calendar.getInstance().getTime();
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 	private String chave = "";
-	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
-	private DeclaracaoDAO decdao = DeclaracaoDAO.DeclaracaoDAO();
+	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.instituicaoCursoDAO();
+	private DeclaracaoDAO decdao = DeclaracaoDAO.declaracaoDAO();
 	private List<Curso> cursos;
 	private Set<Declaracao> declaracoes;
 	private boolean erroProcessamento;
@@ -268,8 +268,8 @@ public class DeclaracaoBean {
 	 */
 	public String persistirDeclaracoes(String[][] temp, String chave, int tipo) {
 		InstituicaoEnsino inst;
-		EstudanteDAO estdao = EstudanteDAO.EstudanteDAO();
-		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+		EstudanteDAO estdao = EstudanteDAO.estudanteDAO();
+		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
 		ArrayList<Estudante> listest = new ArrayList<Estudante>();
 		ArrayList<Declaracao> listdecl = new ArrayList<Declaracao>();
 		Set<String> listcpf = new HashSet<String>();

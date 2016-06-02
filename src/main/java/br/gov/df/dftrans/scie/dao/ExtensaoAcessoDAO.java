@@ -17,7 +17,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 	private static ExtensaoAcessoDAO dao = null;
 
-	public static ExtensaoAcessoDAO ExtensaoAcessoDAO() {
+	public static ExtensaoAcessoDAO extensaoAcessoDAO() {
 		if (getDao() == null) {
 			setDao(new ExtensaoAcessoDAO());
 		}

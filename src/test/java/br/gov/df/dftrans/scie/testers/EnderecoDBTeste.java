@@ -11,7 +11,7 @@ public class EnderecoDBTeste {
 	@Test
 	public void testupdate() throws EntityNotFoundException{
 		
-		EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
+		EnderecoDAO enddao = EnderecoDAO.enderecoDAO();
 		Endereco end = enddao.getByCodigo(1);
 		end.setBairro("DOTA2");
 		enddao.update(end);

@@ -22,7 +22,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	private static EstudanteDAO dao;
 
-	public static EstudanteDAO EstudanteDAO() {
+	public static EstudanteDAO estudanteDAO() {
 		if (dao == null) {
 			setDao(new EstudanteDAO());
 		}
@@ -139,16 +139,16 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	/**
 	 * Seleciona um estudante pelo CPF
 	 * 
-	 * @param CPF
+	 * @param cpf
 	 * @return se encontrar o Estudante se não null
 	 * @throws EntityNotFoundException
 	 */
-	public Estudante getByCPF(String CPF) throws EntityNotFoundException {
+	public Estudante getByCPF(String cpf) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<Estudante> typedQuery = entityManager.createNamedQuery(Estudante.ESTUDANTE_FIND_BY_CPF,
 					Estudante.class);
-			return typedQuery.setParameter("cpf", CPF).getSingleResult();
+			return typedQuery.setParameter("cpf", cpf).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {

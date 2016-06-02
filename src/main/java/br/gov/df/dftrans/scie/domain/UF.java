@@ -34,13 +34,13 @@ public class UF implements Serializable {
 	public UF() {
 	}
 
-	public UF(int id, String UF) {
+	public UF(int id, String uf) {
 		this.id = id;
-		this.uf = UF;
+		this.uf = uf;
 	}
 
-	public UF(String UF) {
-		this.uf = UF;
+	public UF(String uf) {
+		this.uf = uf;
 	}
 
 	// sobrescrita toString

@@ -37,10 +37,12 @@ public class ManipuladorArquivos {
 	 *         consiga ler
 	 */
 	public static String[] leitor(String path) {
+		String[] resultado = null;
 		try {
+			resultado = new String[7];
 			BufferedReader buffRead = new BufferedReader(new FileReader(path));
 			String linha = "";
-			String[] resultado = new String[7];
+			
 			linha = buffRead.readLine();
 			for (int i = 0; i < 7; i++) {
 				if (linha != null) {
@@ -54,7 +56,7 @@ public class ManipuladorArquivos {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return resultado;
 	}
 
 	/**
@@ -77,7 +79,6 @@ public class ManipuladorArquivos {
 			buffRead.close();
 			return resultado;
 		} catch (IOException e) {
-			System.out.println("Erro de leitura do arquivo\n");
 			e.printStackTrace();
 		}
 		return null;
@@ -97,7 +98,6 @@ public class ManipuladorArquivos {
 			}
 			buffWrite.close();
 		} catch (IOException e) {
-			System.out.println("Erro de gravação do arquivo\n");
 			e.printStackTrace();
 		}
 	}

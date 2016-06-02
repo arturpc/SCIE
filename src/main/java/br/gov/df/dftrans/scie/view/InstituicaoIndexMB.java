@@ -22,8 +22,8 @@ public class InstituicaoIndexMB {
 	private InstituicaoEnsino instituicao;
 	private Usuario user;
 	private String[] validacao = { "Pendente de Verificação", "Em Análise", "Aprovado", "Não Aprovado" };
-	private LogDAO logdao = LogDAO.LogDAO();
-	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+	private LogDAO logdao = LogDAO.logDAO();
+	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
 
 	/**
 	 * seta instituicao com a istituicao do usuario na sessão seleciona todos os

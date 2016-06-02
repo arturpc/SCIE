@@ -56,7 +56,7 @@ public class FileUploadEstudanteView {
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
 	private StreamedContent fileout;
 	private Solicitacao sol;
-	private SolicitacaoDAO dao = SolicitacaoDAO.SolicitacaoDAO();
+	private SolicitacaoDAO dao = SolicitacaoDAO.solicitacaoDAO();
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 

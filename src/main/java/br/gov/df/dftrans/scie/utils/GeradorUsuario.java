@@ -7,7 +7,7 @@ import br.gov.df.dftrans.scie.dao.UsuarioDAO;
 
 public class GeradorUsuario {
 
-	private static UsuarioDAO usrdao = UsuarioDAO.UsuarioDAO();
+	private static UsuarioDAO usrdao = UsuarioDAO.usuarioDAO();
 
 	/**
 	 * Gera uma senha aleatoria com digitos de 0 a 122

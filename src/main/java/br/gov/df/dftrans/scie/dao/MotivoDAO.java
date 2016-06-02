@@ -17,7 +17,7 @@ public class MotivoDAO extends DAO<Motivo> {
 
 	private static MotivoDAO dao = null;
 
-	public static MotivoDAO MotivoDAO() {
+	public static MotivoDAO motivoDAO() {
 		if (getDao() == null) {
 			setDao(new MotivoDAO());
 		}

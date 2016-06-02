@@ -14,7 +14,7 @@ import br.gov.df.dftrans.scie.service.MotivoService;
 
 @FacesConverter("motivoConverter")
 public class MotivoConverter implements Converter {
-	MotivoDAO dao = MotivoDAO.MotivoDAO();
+	MotivoDAO dao = MotivoDAO.motivoDAO();
 
 	/**
 	 * Converte a string do forumlário em um objeto

@@ -21,9 +21,9 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 
 public class CursoDAO extends DAO<Curso> implements Serializable {
 	private static CursoDAO dao = null;
-	private LogAlteracaoBancoDAO logdao = LogAlteracaoBancoDAO.LogAlteracaoBancoDAO();
+	private LogAlteracaoBancoDAO logdao = LogAlteracaoBancoDAO.logAlteracaoBancoDAO();
 
-	public static CursoDAO CursoDAO() {
+	public static CursoDAO cursoDAO() {
 		if (dao == null) {
 			setDao(new CursoDAO());
 		}

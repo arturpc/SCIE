@@ -40,7 +40,7 @@ public class ConcatenaArquivo {
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private String aux[];
-	private Boolean isUploaded = new Boolean(false);
+	private Boolean isUploaded = false;
 	private DefaultStreamedContent streamedContent;
 	private InputStream is = null;
 	private int origem;
@@ -77,7 +77,7 @@ public class ConcatenaArquivo {
 				}
 			}
 		}
-		isUploaded = new Boolean(false);
+		isUploaded = false;
 		setIconeUploaded();
 	}
 
@@ -140,10 +140,10 @@ public class ConcatenaArquivo {
 																	// as width
 																	// of
 																	// horizontally
-				File final_image = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
+				File finalImage = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "documento." + aux[1]);
 
-				ImageIO.write(img, aux[1], final_image);
+				ImageIO.write(img, aux[1], finalImage);
 			} else {
 				file1.renameTo(new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "documento." + aux[1]));
@@ -173,7 +173,7 @@ public class ConcatenaArquivo {
 		setAux(fileNameUploaded);
 		copiarArquivo(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
 				+ delimitadorDiretorio + "1", uploadedFile);
-		setIsUploaded(new Boolean(true));
+		setIsUploaded(true);
 		setIconeUploaded();
 		if (aux[aux.length - 1].equals("pdf")) {
 			concatenaArquivoPDF(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
@@ -217,7 +217,6 @@ public class ConcatenaArquivo {
 			os.write(uploadedFile.getContents());
 			os.close();
 		} catch (IOException e) {
-			System.out.println("Erro de gravação do arquivo\n");
 			e.printStackTrace();
 		}
 	}

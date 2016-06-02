@@ -20,7 +20,7 @@ public class UFService {
     @PostConstruct
     public void init() {
         ufs = new ArrayList<UF>();
-        UFDAO dao = UFDAO.UFDAO();
+        UFDAO dao = UFDAO.uFDAO();
 		ufs.addAll(dao.get());
     }
      

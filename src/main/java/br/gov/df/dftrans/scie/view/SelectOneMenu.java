@@ -16,8 +16,8 @@ import br.gov.df.dftrans.scie.service.UFService;
 public class SelectOneMenu {
      
     private String option;
-    private UFDAO ufdao = UFDAO.UFDAO();
-    private CidadeDAO ciddao = CidadeDAO.CidadeDAO();
+    private UFDAO ufdao = UFDAO.uFDAO();
+    private CidadeDAO ciddao = CidadeDAO.cidadeDAO();
     private UF uf = ufdao.getByUF("DF"); 
     private List<UF> ufs = new ArrayList<UF>();
     private Cidade cidade = new Cidade(0,"Selecione uma Cidade", uf);

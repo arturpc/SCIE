@@ -17,7 +17,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class SolicitacaoDAO extends DAO<Solicitacao> {
 	private static SolicitacaoDAO dao = null;
 
-	public static SolicitacaoDAO SolicitacaoDAO() {
+	public static SolicitacaoDAO solicitacaoDAO() {
 		if (getDao() == null) {
 			setDao(new SolicitacaoDAO());
 		}

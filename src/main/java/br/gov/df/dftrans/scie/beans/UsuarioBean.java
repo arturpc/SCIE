@@ -17,7 +17,7 @@ import br.gov.df.dftrans.scie.utils.Mail;
 public class UsuarioBean {
 	private Usuario user;
 	private String email, nome;
-	private UsuarioDAO usrdao = UsuarioDAO.UsuarioDAO();
+	private UsuarioDAO usrdao = UsuarioDAO.usuarioDAO();
 	private int perfil;
 
 	/**

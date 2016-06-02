@@ -21,7 +21,7 @@ public class EnderecoDAO extends DAO<Endereco> {
 
 	private static EnderecoDAO dao = null;
 
-	public static EnderecoDAO EnderecoDAO() {
+	public static EnderecoDAO enderecoDAO() {
 		if (dao == null) {
 			setDao(new EnderecoDAO());
 		}

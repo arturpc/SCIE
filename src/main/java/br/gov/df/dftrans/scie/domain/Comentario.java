@@ -35,10 +35,10 @@ public class Comentario implements Serializable {
 	private int taxaValida;
 
 	@Column(name = "st_validacao_doc1")
-	private int DOC1Valido;
+	private int dOC1Valido;
 
 	@Column(name = "st_validacao_doc2")
-	private int DOC2Valido;
+	private int dOC2Valido;
 
 	@Column(name = "st_validacao")
 	private int validacao;
@@ -139,19 +139,19 @@ public class Comentario implements Serializable {
 	}
 
 	public int getDOC1Valido() {
-		return DOC1Valido;
+		return dOC1Valido;
 	}
 
 	public void setDOC1Valido(int dOC1Valido) {
-		DOC1Valido = dOC1Valido;
+		dOC1Valido = dOC1Valido;
 	}
 
 	public int getDOC2Valido() {
-		return DOC2Valido;
+		return dOC2Valido;
 	}
 
 	public void setDOC2Valido(int dOC2Valido) {
-		DOC2Valido = dOC2Valido;
+		dOC2Valido = dOC2Valido;
 	}
 
 	public String getDescricaoDOC1() {

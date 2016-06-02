@@ -17,7 +17,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> implements Serializable {
 	private static AutorizacaoRepresentanteDAO dao = null;
 
-	public static AutorizacaoRepresentanteDAO AutorizacaoRepresentanteDAO() {
+	public static AutorizacaoRepresentanteDAO autorizacaoRepresentanteDAO() {
 		if (dao == null) {
 			setDao(new AutorizacaoRepresentanteDAO());
 		}
@@ -45,6 +45,7 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
+			e.printStackTrace();
 			throw new InsertException(entity.getCpf() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
@@ -65,15 +66,14 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	 */
 	@Override
 	public AutorizacaoRepresentante get(Object id) throws EntityNotFoundException {
-		EntityManager entityManager = factory.createEntityManager();
+		final EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
+			final TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
 					.createNamedQuery(AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, AutorizacaoRepresentante.class);
 			return typedQuery.setParameter("id", ((AutorizacaoRepresentante) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
 		} finally {
 			if (entityManager.isOpen()) {
@@ -86,12 +86,12 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	 * Seleciona um objeto autorizaçãoRepresentante de acordo com o cpf
 	 * informado e o id da instituição
 	 */
-	public AutorizacaoRepresentante getByCpf(String cpf, int id_instituicao) {
+	public AutorizacaoRepresentante getByCpf(String cpf, int instituicao) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
 					.createNamedQuery(AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF, AutorizacaoRepresentante.class);
-			return typedQuery.setParameter("cpf", cpf).setParameter("id_instituicao", id_instituicao).getSingleResult();
+			return typedQuery.setParameter("cpf", cpf).setParameter("id_instituicao", instituicao).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {

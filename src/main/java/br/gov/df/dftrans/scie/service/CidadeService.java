@@ -20,7 +20,7 @@ public class CidadeService {
      
     public void init() {
         cidades = new ArrayList<Cidade>();
-        CidadeDAO ciddao = CidadeDAO.CidadeDAO();
+        CidadeDAO ciddao = CidadeDAO.cidadeDAO();
 		cidades.addAll(ciddao.get());
     }
      

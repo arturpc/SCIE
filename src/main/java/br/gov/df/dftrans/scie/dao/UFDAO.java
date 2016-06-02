@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.utils.StringUtils;
 public class UFDAO extends DAO<UF> {
 	private static UFDAO dao = null;
 
-	public static UFDAO UFDAO() {
+	public static UFDAO uFDAO() {
 		if (dao == null) {
 			setDao(new UFDAO());
 		}

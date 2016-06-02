@@ -54,7 +54,7 @@ public class Estudante implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
-	private InstituicaoEnsino Instituicao;
+	private InstituicaoEnsino instituicao;
 
 	@Column(name = "nm_curso")
 	private String curso;
@@ -166,11 +166,11 @@ public class Estudante implements Serializable {
 	}
 
 	public InstituicaoEnsino getInstituicao() {
-		return Instituicao;
+		return instituicao;
 	}
 
 	public void setInstituicao(InstituicaoEnsino instituicao) {
-		Instituicao = instituicao;
+		instituicao = instituicao;
 	}
 
 	public int getPeriodo() {

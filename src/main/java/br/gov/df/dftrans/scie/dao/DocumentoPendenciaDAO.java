@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Serializable {
 	private static DocumentoPendenciaDAO dao = null;
 
-	public static DocumentoPendenciaDAO DocumentoPendenciaDAO() {
+	public static DocumentoPendenciaDAO documentoPendenciaDAO() {
 		if (dao == null) {
 			setDao(new DocumentoPendenciaDAO());
 		}

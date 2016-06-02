@@ -15,7 +15,7 @@ public class CidadeTest {
 	public void testAddAll(){
         List<Cidade> cidades = new ArrayList<Cidade>();
         UF df = new UF(1, "DF");
-        CidadeDAO cidDao = CidadeDAO.CidadeDAO();
+        CidadeDAO cidDao = CidadeDAO.cidadeDAO();
         cidades.add(new Cidade("SUDOESTE", df));
         cidades.add(new Cidade("GAMA", df));
         cidades.add(new Cidade("RECANTO DAS EMAS", df));

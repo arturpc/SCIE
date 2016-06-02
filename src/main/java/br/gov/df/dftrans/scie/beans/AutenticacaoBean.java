@@ -28,11 +28,11 @@ import br.gov.df.dftrans.scie.utils.FacesUtil;
 public class AutenticacaoBean {
 	private Usuario user;
 	private String novaSenha = "", senhaAntiga = "", novaSenha2 = "";
-	private UsuarioDAO userdao = UsuarioDAO.UsuarioDAO();
-	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-	private LogDAO logdao = LogDAO.LogDAO();
-	private SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
-	private ExtensaoAcessoDAO extdao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
+	private UsuarioDAO userdao = UsuarioDAO.usuarioDAO();
+	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.instituicaoEnsinoDAO();
+	private LogDAO logdao = LogDAO.logDAO();
+	private SolicitacaoDAO soldao = SolicitacaoDAO.solicitacaoDAO();
+	private ExtensaoAcessoDAO extdao = ExtensaoAcessoDAO.extensaoAcessoDAO();
 	private boolean captcha = false;
 	//private boolean captcha = true;
 

@@ -36,7 +36,7 @@ public class SolicitacaoBean {
 	private String[] path;
 	private String current = Parametros.getParameter("root_upload"), pathAtual;
 	private int documento, origem;
-	private SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
+	private SolicitacaoDAO soldao = SolicitacaoDAO.solicitacaoDAO();
 	private ListDataModel<Solicitacao> solicitacoes;
 	private boolean isEscolhida = false;
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");

@@ -23,14 +23,15 @@ public class EstudanteBean {
 	@NotEmpty(message = "CPF é um campo obrigatório!!!")
 	private String codCPF, codCPFsemMascara;
 	private String valorTaxaAtual = Parametros.getParameter("vl_taxa");
-	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
-	private String delimitadorDiretorioREGEX;
+	private static String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
+	private static String delimitadorDiretorioREGEX;
 	private boolean termo = false;
 	private String nome;
 	private String[][] agendamentos;
 	@NotEmpty(message = "Senha é um campo obrigatório!!!")
 	private String senha;
 
+	
 	public EstudanteBean() {
 		setDelimitadorDiretorioREGEX();
 	}
@@ -39,7 +40,7 @@ public class EstudanteBean {
 	 * Método responsável por tratar caracteres reservados em expresões
 	 * regulares
 	 */
-	public void setDelimitadorDiretorioREGEX() {
+	public static void setDelimitadorDiretorioREGEX() {
 		if (".\\dDwW*+?sS^$|".contains(delimitadorDiretorio)) {
 			delimitadorDiretorioREGEX = "\\" + delimitadorDiretorio;
 		} else {
@@ -92,9 +93,9 @@ public class EstudanteBean {
 			FacesUtil.addMsggError("Digite os números no campo abaixo");
 			return "/pages/estudanteNovo.xhtml?faces-redirect=false";
 		}
-		PrioridadeDAO dao = PrioridadeDAO.PrioridadeDAO();
+		PrioridadeDAO dao = PrioridadeDAO.prioridadeDAO();
 		codCPFsemMascara = removeMascara(codCPF);
-		if (dao.Exists(codCPFsemMascara)) {
+		if (dao.exists(codCPFsemMascara)) {
 			FacesUtil.addMsggError(
 					"O CPF " + codCPF + " já possui solicitação pendente! Verifique se o CPF digitado está correto!");
 			return "/pages/estudanteNovo.xhtml?faces-redirect=false";
