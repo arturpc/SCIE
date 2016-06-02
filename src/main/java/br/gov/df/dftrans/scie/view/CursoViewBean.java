@@ -43,7 +43,7 @@ public class CursoViewBean implements Serializable {
 		setTarget(new ArrayList<Curso>());
 		setCursos(new ArrayList<Curso>());
 		setDualListCurso(new DualListModel<Curso>(getCursosMomento(), getTarget()));
-		setDetalharCursos(new Boolean(false));
+		setDetalharCursos(false);
 		setCadastroAnterior(getTarget());
 		updateTarget();
 	}

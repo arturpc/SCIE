@@ -160,9 +160,9 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	 * @throws EntityNotFoundException
 	 */
 	public void add(List<AutorizacaoRepresentante> list) throws InsertException, EntityNotFoundException {
-		for (AutorizacaoRepresentante aut : list) {
-			if (get(aut) == null) {
-				add(aut);
+		for (AutorizacaoRepresentante autRep : list) {
+			if (get(autRep) == null) {
+				add(autRep);
 			}
 		}
 	}
