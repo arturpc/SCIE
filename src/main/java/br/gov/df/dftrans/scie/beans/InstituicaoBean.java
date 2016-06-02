@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.el.ELResolver;
+import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -77,7 +78,8 @@ public class InstituicaoBean implements Serializable {
 			
 		}
 		FacesContext context = FacesContext.getCurrentInstance();
-		ELResolver resolver = context.getApplication().getELResolver();
+		Application app = context.getApplication();
+		ELResolver resolver = app.getELResolver();
 		if (instituicao == null) {
 			setInstituicao(new InstituicaoEnsino());
 			instituicao.setCodInepEmec(codInepEmec);
@@ -107,10 +109,7 @@ public class InstituicaoBean implements Serializable {
 			instituicao.setRepresentante(getRepresentante());
 		}
 		if (!getRepresentante().getTelefone().isEmpty()) {
-			String[] contatos = new String[5];
-			for (int i = 0; i < getRepresentante().getTelefone().toArray().length; i++){
-				contatos[i] = (String) getRepresentante().getTelefone().toArray()[i];
-			}
+			String[] contatos = (String[]) getRepresentante().getTelefone().toArray();
 			setContato(contatos);
 			setContato1(getContato()[0]);
 			setContato2(getContato()[1]);
