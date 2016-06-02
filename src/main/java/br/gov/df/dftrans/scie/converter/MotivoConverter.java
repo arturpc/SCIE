@@ -14,35 +14,38 @@ import br.gov.df.dftrans.scie.service.MotivoService;
 
 @FacesConverter("motivoConverter")
 public class MotivoConverter implements Converter {
-	MotivoDAO dao = MotivoDAO.motivoDAO();
-
+private MotivoDAO dao = MotivoDAO.motivoDAO();
+	public MotivoConverter() {
+	}
 	/**
 	 * Converte a string do forumlário em um objeto
 	 */
 	public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-		if (value != null && value.trim().length() > 0) {
+		MotivoService service = null;
+		if (!value.isEmpty()) {
 			try {
 				FacesContext context = FacesContext.getCurrentInstance();
 				ELResolver resolver = context.getApplication().getELResolver();
-				MotivoService service = (MotivoService) resolver.getValue(context.getELContext(), null, "MotivoService");
-				return service.getMotivoPorNome(value);
+				service = (MotivoService) resolver.getValue(context.getELContext(), null, "MotivoService");
+				
 			} catch (NumberFormatException e) {
 				throw new ConverterException(
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Motivo inválida."));
 			}
-		} else {
-			return null;
 		}
+		return service.getMotivoPorNome(value);
+		
 	}
 
 	/**
 	 * Converte o objeto em uma string
 	 */
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
+		String ret = null;
 		if (object != null) {
-			return String.valueOf(((Motivo) object).getMotivo());
-		}else{
-			return null;
+			ret = String.valueOf(((Motivo) object).getMotivo());
 		}
+		return ret;
+		
 	}
 }

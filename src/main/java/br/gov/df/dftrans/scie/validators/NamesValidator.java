@@ -14,6 +14,9 @@ import org.primefaces.validate.ClientValidator;
 @FacesValidator("namesValidator")
 public class NamesValidator implements Validator, ClientValidator {
 
+	public NamesValidator() {
+		// TODO Auto-generated constructor stub
+	}
 	public Map<String, Object> getMetadata() {
 		// TODO Auto-generated method stub
 		return null;

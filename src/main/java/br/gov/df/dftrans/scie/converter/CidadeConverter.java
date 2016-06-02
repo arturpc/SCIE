@@ -13,26 +13,27 @@ import br.gov.df.dftrans.scie.domain.Cidade;
 @FacesConverter("cidadeConverter")
 public class CidadeConverter implements Converter {
  
+	public CidadeConverter() {
+	}
+	
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        if(value != null && value.trim().length() > 0) {
+    	Object obj = null;
+    	if(!value.isEmpty()) {
             try {
                 CidadeService service = (CidadeService) fc.getExternalContext().getApplicationMap().get("CidadeService");
-                return service.getCidadePorNome(value);
+                obj = service.getCidadePorNome(value);
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Cidade inválida."));
             }
         }
-        else {
-            return null;
-        }
+        return obj;
     }
  
     public String getAsString(FacesContext fc, UIComponent uic, Object object) {
-        if(object != null) {
-            return String.valueOf(((Cidade) object).getNome());
+    	String ret = null;
+    	if(object != null) {
+            ret =  String.valueOf(((Cidade) object).getNome());
         }
-        else {
-            return null;
-        }
+        return ret;
     }   
 }

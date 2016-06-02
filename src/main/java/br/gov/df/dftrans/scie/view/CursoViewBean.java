@@ -32,7 +32,8 @@ public class CursoViewBean implements Serializable {
 	private InstituicaoEnsino instituicao;
 	private InstituicaoCurso instCurso = new InstituicaoCurso();
 	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.instituicaoCursoDAO();
-	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(false);
+	private Boolean detalharCursos = false;
+	private Boolean fimCadastro = false;
 
 	/**
 	 * Inicia variáveis
@@ -98,7 +99,7 @@ public class CursoViewBean implements Serializable {
 			}
 		}
 		// seta detalhar curso para true
-		setDetalharCursos(new Boolean(true));
+		setDetalharCursos(true);
 		// seta o listDataModel
 		setDualListCurso(new DualListModel<Curso>(getCursosMomento(), getTarget()));
 	}
@@ -129,7 +130,7 @@ public class CursoViewBean implements Serializable {
 		}
 		// se tiver acabado os cursos, seta pra true o fim do cadastro
 		if (getTarget().isEmpty()) {
-			setFimCadastro(new Boolean(true));
+			setFimCadastro(true);
 		} else {
 			// Constroi a list de cursos com os restantes
 			detalharCurso();

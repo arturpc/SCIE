@@ -8,21 +8,22 @@ import br.gov.df.dftrans.scie.domain.UF;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class InstituicaoDBTeste {
+	public InstituicaoDBTeste() {
+	}
 	@Test
 	@Ignore
 	public void getAll(){
-		InstituicaoEnsino inst = new InstituicaoEnsino();
-		InstituicaoEnsinoDAO dao = new InstituicaoEnsinoDAO();
-		//inst = dao.consultarPorEmec("9");
+		//InstituicaoEnsino inst = new InstituicaoEnsino();
+		//InstituicaoEnsinoDAO dao = new InstituicaoEnsinoDAO();
+	//	inst = dao.consultarPorEmec("9");
 	}
 	
 	@Test
 	@Ignore
 	public void getByImec(){
-		InstituicaoEnsino inst = new InstituicaoEnsino();
-		InstituicaoEnsinoDAO dao = new InstituicaoEnsinoDAO();
-		inst = dao.getByInepEmec("9");
-		System.out.println(inst.getCnpj());
+		//InstituicaoEnsino inst = new InstituicaoEnsino();
+		//InstituicaoEnsinoDAO dao = new InstituicaoEnsinoDAO();
+		//inst = dao.getByInepEmec("9");
 	}
 	
 	@Test
@@ -43,8 +44,6 @@ public class InstituicaoDBTeste {
 		inst.setNomeInstituicao("SESI");
 		inst.getEndereco().getCidade().setUf(new UF(0,"DF"));
 		dao.update(inst);
-		System.out.println(inst.getEndereco().getCidade().getUf().getUf());
 		inst.getEndereco().getCidade().setUf(new UF(4,"AP"));
-		System.out.println(inst.getEndereco().getCidade().getUf().getUf());
 	}
 }

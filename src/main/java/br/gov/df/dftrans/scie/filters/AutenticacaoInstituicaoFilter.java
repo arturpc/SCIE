@@ -16,6 +16,9 @@ import br.gov.df.dftrans.scie.domain.Usuario;
 
 public class AutenticacaoInstituicaoFilter implements Filter {
 
+	
+	public AutenticacaoInstituicaoFilter() {
+	}
     /**
      * Default constructor. 
      * @return 

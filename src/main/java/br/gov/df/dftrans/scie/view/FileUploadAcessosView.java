@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.el.ELResolver;
 import javax.faces.application.FacesMessage;
@@ -87,20 +88,20 @@ public class FileUploadAcessosView {
 				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + DOC1
 				+ "" + delimitadorDiretorio + "" + nomesArquivos[DOC1] + ".pdf");
 		if (file.exists()) {
-			isUploaded.add(new Boolean(true));
+			isUploaded.add(true);
 			iconeDOC1 = "//resources//images//checked-icon.png";
 		} else {
-			isUploaded.add(new Boolean(false));
+			isUploaded.add(false);
 			iconeDOC1 = "//resources//images//" + (esconderArquivos[0] ? "dis" : "un") + "checked-icon.png";
 		}
 		file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + DOC2 + ""
 				+ delimitadorDiretorio + "" + nomesArquivos[DOC2] + ".pdf");
 		if (file.exists()) {
-			isUploaded.add(new Boolean(true));
+			isUploaded.add(true);
 			iconeDOC2 = "//resources//images//checked-icon.png";
 		} else {
-			isUploaded.add(new Boolean(false));
+			isUploaded.add(false);
 			iconeDOC2 = "//resources//images//" + (esconderArquivos[1] ? "dis" : "un") + "checked-icon.png";
 		}
 
@@ -167,7 +168,7 @@ public class FileUploadAcessosView {
 					+ delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + documento + ""
 					+ delimitadorDiretorio + "" + nomesArquivos[documento], uploadedFile, documento);
 		}
-		setIsUploaded(new Boolean(true), documento);
+		setIsUploaded(true, documento);
 		setIconeUploaded(documento);
 		// ler o arquivo
 		String files[] = ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
@@ -216,7 +217,6 @@ public class FileUploadAcessosView {
 			contentStream.close();
 			doc.save(current + path + "." + aux[aux.length - 1]);
 		} catch (IOException e) {
-			System.out.println("Erro de gravação do arquivo\n");
 			e.printStackTrace();
 		} catch (COSVisitorException e) {
 			e.printStackTrace();
@@ -254,7 +254,6 @@ public class FileUploadAcessosView {
 			contentStream.close();
 			doc.save(current + path + ".pdf");
 		} catch (IOException e) {
-			System.out.println("Erro de gravação do arquivo\n");
 			e.printStackTrace();
 		} catch (COSVisitorException e) {
 			e.printStackTrace();
@@ -267,19 +266,19 @@ public class FileUploadAcessosView {
 	 */
 	public void atualizarCampos() {
 		switch (getExt().getMotivo()) {
-		case (1):
+		case 1:
 			descricaoArquivos[2] = Parametros.getParameter("doc_decl_ie");
 			descricaoArquivos[3] = "";
 			break;
-		case (2):
+		case 2:
 			descricaoArquivos[2] = Parametros.getParameter("doc_decl_estagio");
 			descricaoArquivos[3] = Parametros.getParameter("doc_grade");
 			break;
-		case (3):
+		case 3:
 			descricaoArquivos[2] = "Neste caso serão confrontados os arquivos já anexados do comprovante de residência do estudante e o endereço de sua Instituição de Ensino no cadastro já realizado. NÃO HÁ NECESSIDADE DE ENVIO DE ARQUIVO!!!";
 			descricaoArquivos[3] = "";
 			break;
-		case (4):
+		case 4:
 			descricaoArquivos[2] = Parametros.getParameter("doc_end");
 			descricaoArquivos[3] = Parametros.getParameter("doc_end_ie");
 			break;
@@ -319,10 +318,10 @@ public class FileUploadAcessosView {
 	 */
 	public void setIconeUploaded(int documento) {
 		switch (documento) {
-		case (2):
+		case 2:
 			setIconeDOC1("//resources//images//checked-icon.png");
 			break;
-		case (3):
+		case 3:
 			setIconeDOC2("//resources//images//checked-icon.png");
 			break;
 		}
@@ -346,12 +345,12 @@ public class FileUploadAcessosView {
 	}
 
 	// getteres and setteres
-	public ArrayList<Boolean> getIsUploaded() {
+	public List<Boolean> getIsUploaded() {
 		return isUploaded;
 	}
 
-	public void setIsUploaded(ArrayList<Boolean> isUploaded) {
-		this.isUploaded = isUploaded;
+	public void setIsUploaded(List<Boolean> isUploaded) {
+		this.isUploaded = (ArrayList<Boolean>) isUploaded;
 	}
 
 	public Boolean getIsUploaded(int documento) {
@@ -403,14 +402,14 @@ public class FileUploadAcessosView {
 	}
 
 	public String[] getDescricaoArquivos() {
-		return descricaoArquivos;
+		return descricaoArquivos.clone();
 	}
 
 	public boolean[] getEsconderArquivos() {
-		return esconderArquivos;
+		return esconderArquivos.clone();
 	}
 
-	public void setEsconderArquivos(boolean[] esconderArquivos) {
+	public void setEsconderArquivos(boolean... esconderArquivos) {
 		this.esconderArquivos = esconderArquivos;
 	}
 }

@@ -8,14 +8,14 @@ import javax.faces.bean.ManagedBean;
 
 import br.gov.df.dftrans.scie.dao.UFDAO;
 import br.gov.df.dftrans.scie.domain.UF;
-import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
-import br.gov.df.dftrans.scie.exceptions.InsertException;
  
 @ManagedBean(name="UFService", eager = true)
 @ApplicationScoped
 public class UFService {
-     
-    private List<UF> ufs;
+	private List<UF> ufs;
+
+	public UFService() {
+	}
      
     @PostConstruct
     public void init() {
@@ -29,11 +29,14 @@ public class UFService {
     } 
     
    public UF getUfPorSigla(String sigla){
+	  UF ret = null;
 	   for(UF uf:ufs){
 		   if(uf.getUf().equals(sigla)){
-			   return uf;
+			   ret = uf;
+			   break;
+			   //return uf;
 		   }
 	   }
-	   return null;
+	   return ret;
    }
 }

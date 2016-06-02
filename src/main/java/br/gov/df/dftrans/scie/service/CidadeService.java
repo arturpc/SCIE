@@ -1,5 +1,6 @@
 package br.gov.df.dftrans.scie.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,16 +9,18 @@ import javax.faces.bean.ManagedBean;
 
 import br.gov.df.dftrans.scie.dao.CidadeDAO;
 import br.gov.df.dftrans.scie.domain.Cidade;
-import br.gov.df.dftrans.scie.domain.UF;
 
 
 @ManagedBean(name="CidadeService", eager = true)
 @ApplicationScoped
-public class CidadeService {
-     
-    private List<Cidade> cidades;
-    private UF df = new UF(1,"DF");
-     
+public class CidadeService implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private List<Cidade> cidades;
+	public CidadeService() {
+	}
     public void init() {
         cidades = new ArrayList<Cidade>();
         CidadeDAO ciddao = CidadeDAO.cidadeDAO();
@@ -29,12 +32,15 @@ public class CidadeService {
     }
     
     public Cidade getCidadePorNome(String nome){
+    	Cidade cidade = null;
     	for(Cidade cid: cidades){
     		if(cid.getNome().equals(nome)){
-    			return cid;
+    			cidade = cid;
+    			//return cid;
+    			break;
     		}
     	}
-    	return null;
+    	return cidade;
     }
    
 }

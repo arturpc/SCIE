@@ -40,12 +40,14 @@ public class MotivoService {
 	 * @return se encontrar o Motivo se não null
 	 */
 	public Motivo getMotivoPorNome(String nome) {
+		Motivo ret = null;
 		for (Motivo mot : getMotivos()) {
 			if (mot.getMotivo().equals(nome)) {
-				return mot;
+				ret = mot;
+				//return mot;
 			}
 		}
-		return null;
+		return ret;
 	}
 
 	// getteres and setteres

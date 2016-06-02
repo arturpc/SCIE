@@ -13,14 +13,16 @@ import br.gov.df.dftrans.scie.domain.Curso;
 @FacesConverter(value = "cursoConverter")
 public class CursoConverter implements Converter {
 
-	
+	public CursoConverter() {
+		// TODO Auto-generated constructor stub
+	}
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Object ret = null;
 		if (arg1 instanceof PickList) {
 			Object dualList = ((PickList) arg1).getValue();
 			DualListModel<Curso> dl = (DualListModel<Curso>) dualList;
 			for (Object o : dl.getSource()) {
-				String id = "" + ((Curso) o).getId();
+				String id = String.valueOf(((Curso) o).getId());
 				if (arg2.equals(id)) {
 					ret = o;
 					break;
@@ -28,7 +30,7 @@ public class CursoConverter implements Converter {
 			}
 			if (ret == null)
 				for (Object o : dl.getTarget()) {
-					String id = "" + ((Curso) o).getId();
+					String id = String.valueOf(((Curso) o).getId());
 					if (arg2.equals(id)) {
 						ret = o;
 						break;
@@ -39,11 +41,11 @@ public class CursoConverter implements Converter {
 	}
 
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
-	    String str = "";
+	    StringBuilder str = new StringBuilder();
 	    if (arg2 instanceof Curso) {
-	        str = "" + ((Curso) arg2).getId();
+	        str.append(((Curso) arg2).getId());
 	    }
-	    return str;
+	    return str.toString();
 	}
 	
 	

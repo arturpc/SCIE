@@ -8,7 +8,7 @@ package br.gov.df.dftrans.scie.exceptions;
  */
 public class DAOExcpetion extends RuntimeException {
 
-	String msg;
+	private String msg;
 
 	public DAOExcpetion(String msg) {
 		super(msg);

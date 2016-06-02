@@ -11,6 +11,8 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class CidadeTest {
+	public CidadeTest() {
+	}
 	@Test
 	public void testAddAll(){
         List<Cidade> cidades = new ArrayList<Cidade>();

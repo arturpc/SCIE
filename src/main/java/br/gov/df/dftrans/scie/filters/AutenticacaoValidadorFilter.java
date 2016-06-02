@@ -16,6 +16,10 @@ import br.gov.df.dftrans.scie.domain.Usuario;
 
 public class AutenticacaoValidadorFilter implements Filter {
 
+	public AutenticacaoValidadorFilter() {
+		// TODO Auto-generated constructor stub
+	}
+	
     /**
      * Default constructor. 
      * @return 

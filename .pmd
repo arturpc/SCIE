@@ -126,10 +126,6 @@
             <ruleset>Optimization</ruleset>
         </rule>
         <rule>
-            <name>AvoidLiteralsInIfCondition</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
             <name>AvoidLosingExceptionInformation</name>
             <ruleset>Strict Exceptions</ruleset>
         </rule>
@@ -140,10 +136,6 @@
         <rule>
             <name>AvoidPrefixingMethodParameters</name>
             <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
-            <name>AvoidPrintStackTrace</name>
-            <ruleset>Java Logging</ruleset>
         </rule>
         <rule>
             <name>AvoidProtectedFieldInFinalClass</name>
@@ -212,10 +204,6 @@
         <rule>
             <name>BadComparison</name>
             <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>BeanMembersShouldSerialize</name>
-            <ruleset>JavaBeans</ruleset>
         </rule>
         <rule>
             <name>BigIntegerInstantiation</name>
@@ -294,10 +282,6 @@
             <ruleset>Comments</ruleset>
         </rule>
         <rule>
-            <name>CommentRequired</name>
-            <ruleset>Comments</ruleset>
-        </rule>
-        <rule>
             <name>CommentSize</name>
             <ruleset>Comments</ruleset>
         </rule>
@@ -324,10 +308,6 @@
         <rule>
             <name>CouplingBetweenObjects</name>
             <ruleset>Coupling</ruleset>
-        </rule>
-        <rule>
-            <name>CyclomaticComplexity</name>
-            <ruleset>Code Size</ruleset>
         </rule>
         <rule>
             <name>CyclomaticComplexity</name>
@@ -662,10 +642,6 @@
             <ruleset>Migration</ruleset>
         </rule>
         <rule>
-            <name>LawOfDemeter</name>
-            <ruleset>Coupling</ruleset>
-        </rule>
-        <rule>
             <name>LocalHomeNamingConvention</name>
             <ruleset>J2EE</ruleset>
         </rule>
@@ -830,10 +806,6 @@
             <ruleset>Controversial</ruleset>
         </rule>
         <rule>
-            <name>OnlyOneReturn</name>
-            <ruleset>Controversial</ruleset>
-        </rule>
-        <rule>
             <name>OptimizableToArrayCall</name>
             <ruleset>Design</ruleset>
         </rule>
@@ -856,10 +828,6 @@
         <rule>
             <name>PrematureDeclaration</name>
             <ruleset>Optimization</ruleset>
-        </rule>
-        <rule>
-            <name>PreserveStackTrace</name>
-            <ruleset>Design</ruleset>
         </rule>
         <rule>
             <name>ProperCloneImplementation</name>
@@ -1018,10 +986,6 @@
             <ruleset>Code Size</ruleset>
         </rule>
         <rule>
-            <name>TooManyStaticImports</name>
-            <ruleset>Import Statements</ruleset>
-        </rule>
-        <rule>
             <name>TO_DATEWithoutDateFormat</name>
             <ruleset>PLSQL DATETIME</ruleset>
         </rule>
@@ -1032,14 +996,6 @@
         <rule>
             <name>TO_TIMESTAMPWithoutDateFormat</name>
             <ruleset>PLSQL DATETIME</ruleset>
-        </rule>
-        <rule>
-            <name>UncommentedEmptyConstructor</name>
-            <ruleset>Design</ruleset>
-        </rule>
-        <rule>
-            <name>UncommentedEmptyMethodBody</name>
-            <ruleset>Design</ruleset>
         </rule>
         <rule>
             <name>UnconditionalIfStatement</name>
@@ -1056,10 +1012,6 @@
         <rule>
             <name>UnnecessaryCaseChange</name>
             <ruleset>String and StringBuffer</ruleset>
-        </rule>
-        <rule>
-            <name>UnnecessaryConstructor</name>
-            <ruleset>Controversial</ruleset>
         </rule>
         <rule>
             <name>UnnecessaryConversionTemporary</name>

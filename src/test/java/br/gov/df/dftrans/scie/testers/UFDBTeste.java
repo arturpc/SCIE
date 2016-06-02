@@ -11,6 +11,8 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class UFDBTeste {
+	public UFDBTeste() {
+	}
 	@Test
 	@Ignore
 	public void testAddAll(){

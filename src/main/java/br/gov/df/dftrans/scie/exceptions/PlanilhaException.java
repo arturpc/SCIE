@@ -8,7 +8,7 @@ package br.gov.df.dftrans.scie.exceptions;
  */
 public class PlanilhaException extends RuntimeException {
 
-	String msg;
+	private String msg;
 
 	public PlanilhaException(String msg) {
 		super(msg);
