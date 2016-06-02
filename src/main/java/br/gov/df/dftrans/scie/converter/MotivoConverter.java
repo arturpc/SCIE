@@ -8,13 +8,11 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import br.gov.df.dftrans.scie.dao.MotivoDAO;
 import br.gov.df.dftrans.scie.domain.Motivo;
 import br.gov.df.dftrans.scie.service.MotivoService;
 
 @FacesConverter("motivoConverter")
 public class MotivoConverter implements Converter {
-private MotivoDAO dao = MotivoDAO.motivoDAO();
 	public MotivoConverter() {
 	}
 	/**
