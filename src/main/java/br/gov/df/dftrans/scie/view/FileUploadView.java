@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.el.ELResolver;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,6 +22,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.hibernate.TransientObjectException;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -91,15 +93,17 @@ public class FileUploadView implements Serializable {
 	 * faz upload do ato
 	 * 
 	 * @param fileUploadEvent
+	 * @throws InsertException 
 	 */
-	public void doUploadAto(FileUploadEvent fileUploadEvent) {
+	public void doUploadAto(FileUploadEvent fileUploadEvent){
 		doUpload(fileUploadEvent, ATO_RECONHECIMENTO);
+		DocumentoPendencia doc = null;
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ATO_RECONHECIMENTO]);
-			log = logdao.get(getInst(), doc);
+			doc = docdao.getByDesc(descricaoArquivos[ATO_RECONHECIMENTO]);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, ATO_RECONHECIMENTO);
 			}
@@ -119,10 +123,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, INSCRICAO_CNPJ);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[INSCRICAO_CNPJ]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, INSCRICAO_CNPJ);
 			}
@@ -142,10 +146,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, ATO_DESIGNACAO_DIRETOR_SECRETARIO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ATO_DESIGNACAO_DIRETOR_SECRETARIO]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, ATO_DESIGNACAO_DIRETOR_SECRETARIO);
 			}
@@ -165,10 +169,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, COMPROVANTE_ENDERECO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[COMPROVANTE_ENDERECO]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, COMPROVANTE_ENDERECO);
 			}
@@ -188,10 +192,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, AUTORIZACAO_CURSO_SUPERIOR);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[AUTORIZACAO_CURSO_SUPERIOR]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, AUTORIZACAO_CURSO_SUPERIOR);
 			}
@@ -211,10 +215,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, ESTATUTO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ESTATUTO]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, ESTATUTO);
 			}
@@ -234,10 +238,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, CONVENIO_ESTADO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[CONVENIO_ESTADO]);
-			log = logdao.get(getInst(), doc);
+			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(null, getInst(), doc, null));
+				logdao.add(new LogValidacaoCadastro(getInst(), doc));
 			} else {
 				logdao.update(log, CONVENIO_ESTADO);
 			}
@@ -261,8 +265,8 @@ public class FileUploadView implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
 		// seta InstituiçãoEnsino com a da sessao
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		setInst((InstituicaoEnsino) session.getAttribute("instituicao"));
+		//HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		//setInst((InstituicaoEnsino) session.getAttribute("instituicao"));
 		if (inst == null) {
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("instituicaoHome.xhtml");
@@ -531,6 +535,14 @@ public class FileUploadView implements Serializable {
 			// se o arquivo não existir, reseta o upload
 			resetUploaded();
 		}
+	}
+	
+	public String concatenaArquivos() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ELResolver resolver = context.getApplication().getELResolver();
+		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.getValue(context.getELContext(), null, "fileUploadConcatenaView");
+		bean.setOrigem(3);
+		return "/pages/concatenaArquivos.xhtml?faces-redirect=true";
 	}
 
 	// getteres and setteres

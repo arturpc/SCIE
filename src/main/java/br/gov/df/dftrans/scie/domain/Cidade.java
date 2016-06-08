@@ -2,6 +2,7 @@ package br.gov.df.dftrans.scie.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +43,7 @@ public class Cidade implements Serializable {
 	@Column(name="nm_cidade")
 	private String nome;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_uf",referencedColumnName="id_uf")
 	private UF uf;
 	

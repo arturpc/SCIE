@@ -75,13 +75,6 @@
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="bairroEnd" display = "text" />
-					<p:outputLabel value="Número"/>
-					<p:inputText size="5" id = "nroEnd"
-						value="#{InstituicaoMB.endereco.numeroEndereco}"
-						validatorMessage="Número de Endereço Inválido! Preencha apenas números!">
-						<f:validator validatorId="namesValidator" />
-					</p:inputText>
-					<p:message for="nroEnd" display = "text" />
 					<p:outputLabel value="Logradouro"/>
 					<p:inputText id = "logEnd" size="50" value="#{InstituicaoMB.endereco.logradouro}"
 						validatorMessage="Logradouro de Endereço inválido!">
@@ -99,7 +92,6 @@
 					<p:selectOneMenu id = "cidEnd" value="#{InstituicaoMB.cidade}" 
 						converter="cidadeConverter" var="c" filter="true"
 						filterMatchMode="contains" editable="false" style="width: 400px">
-						<p:ajax listener="#{InstituicaoMB.printCidade}"/>
 						<f:selectItems value="#{selectOneMenu.cidades}" var="cidade"
 							itemLabel="#{cidade.nome} - #{cidade.uf.uf}" itemValue="#{cidade}" effect="fold" />
 						<p:column>
@@ -135,24 +127,24 @@
 					<p:message for="emailRep" display = "text" />
 					<p:outputLabel value="Telefone para Contato (1)"/>
 					<p:inputMask value="#{InstituicaoMB.contato1}"
-						id="inputTelefone1" mask="(99) 9999-9999?9" required = "true"
+						id="inputTelefone1" mask="(99) ?99999-9999" required = "true"
 						requiredMessage="Telefone é um campo obrigatório!"/>
 					<p:message for="inputTelefone1" display = "text" />
 					<p:outputLabel value="Telefone para Contato (2)"/>
 					<p:inputMask value="#{InstituicaoMB.contato2}"
-						id="inputTelefone2" mask="(99) 9999-9999?9"/>
+						id="inputTelefone2" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone2" display = "text" />
 					<p:outputLabel value="Telefone para Contato (3)"/>
 					<p:inputMask value="#{InstituicaoMB.contato3}"
-						id="inputTelefone3" mask="(99) 9999-9999?9"/>
+						id="inputTelefone3" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone3" display = "text" />
 					<p:outputLabel value="Telefone para Contato (4)"/>
 					<p:inputMask value="#{InstituicaoMB.contato4}"
-						id="inputTelefone4" mask="(99) 9999-9999?9" />
+						id="inputTelefone4" mask="(99) ?99999-9999" />
 					<p:message for="inputTelefone4" display = "text" />
 					<p:outputLabel value="Telefone para Contato (5)"/>
 					<p:inputMask value="#{InstituicaoMB.contato5}"
-						id="inputTelefone5" mask="(99) 9999-9999?9"/>
+						id="inputTelefone5" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone5" display = "text" />
 				</h:panelGrid>
 			</p:panel>

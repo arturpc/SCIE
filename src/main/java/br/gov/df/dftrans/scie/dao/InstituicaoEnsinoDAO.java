@@ -204,20 +204,15 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 	 * @param entity
 	 * @return a InstituicaoEnsino atualizada
 	 */
-	public boolean update(InstituicaoEnsino entity) {
+	public InstituicaoEnsino update(InstituicaoEnsino entity) {
 		String operacao = entity.getId() != 0 ? "UPDATE" : "INSERT";
 		EntityManager entityManager = factory.createEntityManager();
-		boolean flag = false;
 		try {
-			if (entity.getId() == 0) {
-				add(entity);
-			} else {
-				StringUtils.parserObject(entity);
-				entityManager.getTransaction().begin();
-				entity = entityManager.merge(entity);
-				entityManager.getTransaction().commit();
-			}
-			flag = true;
+			StringUtils.parserObject(entity);
+			entityManager.getTransaction().begin();
+			entity = entityManager.merge(entity);
+			entityManager.getTransaction().commit();
+			logdao.add(new LogAlteracaoBanco(operacao, "TB_INSTITUICAO_ENSINO", entity.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			entityManager.getTransaction().rollback();
@@ -227,12 +222,7 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 				entityManager.close();
 			}
 		}
-		try {
-			logdao.add(new LogAlteracaoBanco(operacao, "TB_INSTITUICAO_ENSINO", entity.getId()));
-		} catch (InsertException e) {
-			e.printStackTrace();
-		}
-		return flag;
+		return entity;
 	}
 
 	public static InstituicaoEnsinoDAO getDao() {

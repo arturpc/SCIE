@@ -59,10 +59,6 @@
 					<p:inputText id="bairroEnd" size="50"
 						value="#{confirmacaoMB.instituicao.endereco.bairro}"
 						readonly="true" />
-					<p:outputLabel value="Número"></p:outputLabel>
-					<p:inputText size="5" id="nroEnd"
-						value="#{confirmacaoMB.instituicao.endereco.numeroEndereco}"
-						readonly="true" />
 					<p:outputLabel value="Logradouro" />
 					<p:inputText id="logEnd" size="50"
 						value="#{confirmacaoMB.instituicao.endereco.logradouro}"
@@ -107,7 +103,7 @@
 			<p:panel header="Arquivos de Comprovação dos Dados Cadastrais" toggleable="true" closable="false">
 				<p:outputLabel for="documento" value="Documento: " />
 				<p:selectOneListbox id="documento"
-					value="#{confirmacaoMB.documento}" scrollHeight="50"
+					value="#{confirmacaoMB.documento}" scrollHeight="100"
 					style="width: 400px;">
 					<f:selectItem itemLabel="#{fileUploadView.descricaoArquivos[0]}"
 						itemValue="0" itemDisabled="#{!confirmacaoMB.exists[0]}"/>

@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static br.gov.df.dftrans.scie.utils.MessageUtils.ALREADY_EXISTS_EXCEPTION_KEY;
@@ -17,7 +18,7 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.utils.StringUtils;
 
-public class UFDAO extends DAO<UF> {
+public class UFDAO extends DAO<UF> implements Serializable{
 	private static UFDAO dao = null;
 
 	public static UFDAO UFDAO() {

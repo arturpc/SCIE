@@ -368,7 +368,7 @@ public class FileUploadEstudanteView {
 		ELResolver resolver = context.getApplication().getELResolver();
 		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.getValue(context.getELContext(), null, "fileUploadConcatenaView");
 		bean.setOrigem(1);
-		return "/pages/estudante/concatenaArquivos.xhtml?faces-redirect=true";
+		return "/pages/concatenaArquivos.xhtml?faces-redirect=true";
 	}
 
 	// getteres and setteres

@@ -2,6 +2,7 @@ package br.gov.df.dftrans.scie.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -66,11 +67,11 @@ public class InstituicaoEnsino implements Serializable {
 	@Column(name = "st_privada")
 	int privada;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_representante", referencedColumnName = "id_representante")
 	private Representante representante;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
 	private Endereco endereco;
 

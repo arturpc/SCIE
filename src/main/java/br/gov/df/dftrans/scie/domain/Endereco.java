@@ -2,6 +2,7 @@ package br.gov.df.dftrans.scie.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,11 +33,11 @@ public class Endereco implements Serializable {
 	@Column(name = "id_endereco")
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_cidade", referencedColumnName = "id_cidade")
 	private Cidade cidade;
 
-	@Column(name = "nr_cep")
+	@Column(name = "nr_cep", unique = true)
 	private String cep;
 
 	@StringUpperCase

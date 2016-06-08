@@ -79,7 +79,7 @@ public class ExtensaoAcesso implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date atualizacao;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
 	private Usuario usuario;
 

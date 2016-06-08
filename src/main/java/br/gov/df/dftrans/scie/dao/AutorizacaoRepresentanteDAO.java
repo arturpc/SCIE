@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import br.gov.df.dftrans.scie.domain.AutorizacaoRepresentante;
 import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
+import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
@@ -126,6 +127,59 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 				entityManager.close();
 			}
 		}
+	}
+	
+	/**
+	 * Seleciona um objeto autorizaçãoRepresentante pelo cpf informado sem instituicao associada
+	 * 
+	 * @param cpf
+	 * @return Se a autorização existir a autorização caso não null
+	 */
+	public AutorizacaoRepresentante getByCpfInstNull(String cpf) {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager.createNamedQuery(
+					AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_INST_NULL, AutorizacaoRepresentante.class);
+			return typedQuery.setParameter("cpf", cpf).getResultList().get(0);
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Autorizacao por CPF");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+	}
+	
+	/**
+	 * Autaliza uma autorizacao
+	 * 
+	 * @param entity
+	 * @return a autorizacao atualizada
+	 */
+	public AutorizacaoRepresentante update(AutorizacaoRepresentante entity) {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			entity = entityManager.merge(entity);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao atualizar AutorizacaoRepresentante cpf = "+ entity.getCpf());
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+		try {
+			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_AUTORIZACAO_REPRESENTANTE", entity.getId()));
+		} catch (InsertException e) {
+			e.printStackTrace();
+		}
+		return entity;
 	}
 
 	/**

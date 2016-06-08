@@ -30,16 +30,180 @@
 				</p:inputMask>
 				<p:message for="inputInepEmec" display="text" />
 			</h:panelGrid>
-			<br/>
-			<applet code="Captcha.class" codebase="https://dl.dropboxusercontent.com/u/16897691/" archive="Captcha.jar" width="500" height="500">
-				Habilite o java do seu navegador!
-			</applet>
-			<br/>
-			<br/>
 			<p:commandButton value="Pesquisar"
 				action="#{InstituicaoMB.pesquisar}"
 				update=":pesquisaInepEmecForm MsgGlobal" />
 			<br />
+		</h:form>
+		<h:form id="frmCaptcha">
+			<br />
+			<hr />
+			<div align="center">
+				<h1>
+					<h:outputLabel value="Captcha" />
+				</h1>
+				<img id="validate" /> <br /> <img id="img1" /> <img id="img2" />
+				<img id="img3" /> <img id="img4" /> <img id="img5" /> <img
+					id="img6" /><br /> <br />
+				<p id="label">Digite aqui os números acima e clique em OK:</p>
+				<input id="input" type="text" /> <br /> <br />
+				<table>
+					<tr>
+						<td></td>
+						<td><button id="button1" type="button"
+								style="width: 100px; height: 80px" onclick="ouvir()">
+								<img src="ouvir.png" />
+							</button></td>
+						<td></td>
+						<td><button id="button2" type="button"
+								style="width: 100px; height: 80px" onclick="gerarCodigo()">
+								<img src="refresh.png" />
+							</button></td>
+						<td></td>
+						<td><button id="button3" type="button" onclick="test()"
+								style="width: 100px; height: 80px">
+								<img src="go.png" />
+							</button></td>
+						<td></td>
+					</tr>
+				</table>
+				<br />
+			</div>
+			<p:remoteCommand name="setCaptcha"
+				actionListener="#{loginBean.setCaptcha(true)}" />
+			<p:outputLabel
+				value="***Para acesso da funcionalidade ouvir em dispositivos móveis recomendamos o uso do navegador Mozilla Firefox"
+				style="font-size: 11px !important;line-height: 0.5 !important; color: gray !important;" />
+			<script type="text/javascript">
+				//Declaração das variáveis que representam o código gerado;
+				var codigo1 = Math.floor(Math.random() * 10).toString();
+				var codigo2 = Math.floor(Math.random() * 10).toString();
+				var codigo3 = Math.floor(Math.random() * 10).toString();
+				var codigo4 = Math.floor(Math.random() * 10).toString();
+				var codigo5 = Math.floor(Math.random() * 10).toString();
+				var codigo6 = Math.floor(Math.random() * 10).toString();
+				var codigo = codigo1 + codigo2 + codigo3 + codigo4 + codigo5
+						+ codigo6;
+				var captcha = '#{loginBean.captcha}';
+				var audio1;
+				var audio2;
+				var audio3;
+				var audio4;
+				var audio5;
+				var audio6;
+				//alert(captcha);
+				//Funcão quue gera 6 números aleatórios e seta as figuras correspondentes a este código;
+				function gerarCodigo() {
+					//Se o captcha já foi resolvido, não é necessário resolvê-lo novamente
+					if (captcha == "true") {
+						document.getElementById("img1").style.display = "none";
+						document.getElementById("img2").style.display = "none";
+						document.getElementById("img3").style.display = "none";
+						document.getElementById("img4").style.display = "none";
+						document.getElementById("img5").style.display = "none";
+						document.getElementById("img6").style.display = "none";
+						document.getElementById("label").style.display = "none";
+						document.getElementById("input").style.display = "none";
+						document.getElementById("button1").style.display = "none";
+						document.getElementById("button2").style.display = "none";
+						document.getElementById("button3").style.display = "none";
+						document.getElementById("validate").src = "check.gif";
+					} else {
+						codigo1 = Math.floor(Math.random() * 10).toString();
+						codigo2 = Math.floor(Math.random() * 10).toString();
+						codigo3 = Math.floor(Math.random() * 10).toString();
+						codigo4 = Math.floor(Math.random() * 10).toString();
+						codigo5 = Math.floor(Math.random() * 10).toString();
+						codigo6 = Math.floor(Math.random() * 10).toString();
+						codigo = codigo1 + codigo2 + codigo3 + codigo4
+								+ codigo5 + codigo6;
+						document.getElementById('img1').src = getValor(codigo1)
+								+ ".png";
+						document.getElementById('img2').src = getValor(codigo2)
+								+ ".png";
+						document.getElementById('img3').src = getValor(codigo3)
+								+ ".png";
+						document.getElementById('img4').src = getValor(codigo4)
+								+ ".png";
+						document.getElementById('img5').src = getValor(codigo5)
+								+ ".png";
+						document.getElementById('img6').src = getValor(codigo6)
+								+ ".png";
+						document.getElementById('input').value = '';
+					}
+				}
+				gerarCodigo();
+
+				//função que toca o som referente ao primeiro dígito do código e desabilita o botão de ouvir o código;
+				function ouvir1() {
+					audio1 = new Audio(getValor(codigo1) + ".mp3");
+					audio1.play();
+					disableButton1(true);
+				}
+				//função que toca o som referente ao segundo dígito do código;
+				function ouvir2() {
+					audio2 = new Audio(getValor(codigo2) + ".mp3");
+					audio2.play();
+				}
+				//função que toca o som referente ao terceiro dígito do código;
+				function ouvir3() {
+					audio3 = new Audio(getValor(codigo3) + ".mp3");
+					audio3.play();
+				}
+				//função que toca o som referente ao quarto dígito do código;
+				function ouvir4() {
+					audio4 = new Audio(getValor(codigo4) + ".mp3");
+					audio4.play();
+				}
+				//função que toca o som referente ao quinto dígito do código;
+				function ouvir5() {
+					audio5 = new Audio(getValor(codigo5) + ".mp3");
+					audio5.play();
+				}
+				//função que toca o som referente ao sexto dígito do código e reabilita o botão de ouvir o código;
+				function ouvir6() {
+					audio6 = new Audio(getValor(codigo6) + ".mp3");
+					audio6.play();
+					disableButton1(false);
+				}
+				//Função que habilita/desabilita o botão de ouvir o código;
+				function disableButton1(p1) {
+					document.getElementById('button1').disabled = p1;
+				}
+
+				//Agrupa o player de todos os áudios;
+				function ouvir() {
+					ouvir1();
+					setTimeout(ouvir2, 2000);
+					setTimeout(ouvir3, 4000);
+					setTimeout(ouvir4, 6000);
+					setTimeout(ouvir5, 8000);
+					setTimeout(ouvir6, 10000);
+				}
+
+				//Testa o código escrito com o código gerado;
+				function test() {
+					var input = document.getElementById("input").value;
+					if (input == codigo) {
+						document.getElementById("img1").style.display = "none";
+						document.getElementById("img2").style.display = "none";
+						document.getElementById("img3").style.display = "none";
+						document.getElementById("img4").style.display = "none";
+						document.getElementById("img5").style.display = "none";
+						document.getElementById("img6").style.display = "none";
+						document.getElementById("label").style.display = "none";
+						document.getElementById("input").style.display = "none";
+						document.getElementById("button1").style.display = "none";
+						document.getElementById("button2").style.display = "none";
+						document.getElementById("button3").style.display = "none";
+						document.getElementById("validate").src = "check.gif";
+						setCaptcha();
+					} else {
+						gerarCodigo();
+					}
+				}
+			</script>
+			<hr />
 		</h:form>
 	</ui:define>
 

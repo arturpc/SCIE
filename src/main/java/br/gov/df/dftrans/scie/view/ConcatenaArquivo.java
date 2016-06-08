@@ -27,7 +27,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-
+import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.utils.Parametros;
 
 @ManagedBean(name = "fileUploadConcatenaView")
@@ -62,10 +62,13 @@ public class ConcatenaArquivo {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		setCpf((String) session.getAttribute("estudante"));
 		if (getCpf() == null) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("estudanteHome.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
+			setCpf(""+((InstituicaoEnsino) session.getAttribute("instituicao")).getId());
+			if(getCpf().isEmpty()){
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		for(String temp1: documentos){
@@ -247,6 +250,9 @@ public class ConcatenaArquivo {
 		}
 		if (getOrigem() == 2) {
 			return "/pages/estudante/estudanteAcessosArquivos.xhtml?faces-redirect=true";
+		}
+		if (getOrigem() == 3) {
+			return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 		}
 		return null;
 	}

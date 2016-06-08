@@ -18,7 +18,7 @@ public class CidadeService {
     private List<Cidade> cidades;
     private UF df = new UF(1,"DF");
      
-    public void init() {
+    public CidadeService() {
         cidades = new ArrayList<Cidade>();
         CidadeDAO ciddao = CidadeDAO.CidadeDAO();
 		cidades.addAll(ciddao.get());

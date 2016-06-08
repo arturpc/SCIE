@@ -16,6 +16,7 @@ import br.gov.df.dftrans.scie.dao.DocumentoPendenciaDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoCursoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.LogDAO;
+import br.gov.df.dftrans.scie.domain.Comentario;
 import br.gov.df.dftrans.scie.domain.InstituicaoCurso;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
@@ -95,7 +96,7 @@ public class ConfirmacaoBean {
 					} else {
 						exists.add(true);
 					}
-					existsLog.add(logdao.existsLog(instituicao, docdao.getByNro(cont)));
+					existsLog.add(logdao.existsLog(instituicao.getId(), docdao.getByNro(cont).getId()));
 					cont++;
 				}
 				setPathAtual(getPath()[0]);
@@ -103,10 +104,11 @@ public class ConfirmacaoBean {
 				setOrigem(2);
 				prepararArquivo();
 				setCadastrados(instdao.getCursos(getInstituicao()));
+				System.out.println(instituicao.getId());
 				LogValidacaoCadastro log;
 				for (int i = 0; i < existsLog.size(); i++) {
 					if (existsLog.get(i)) {
-						log = logdao.get(instituicao, docdao.getByNro(i));
+						log = logdao.get(instituicao.getId(), docdao.getByNro(i).getId());
 						if (log != null) {
 							log.setUsuario(getUsuario());
 							logdao.update(log, 1);
@@ -266,7 +268,9 @@ public class ConfirmacaoBean {
 		String[] comentario = validadorBean.getComentario();
 		boolean[] arquivoValido = validadorBean.getArquivoValido();
 		boolean validado = true;
+		System.out.println(existsLog.size());
 		for (int i = 0; i <= existsLog.size(); i++) {
+			System.out.println("i = "+ i);
 			if (i == 7) {
 				log = new LogValidacaoCadastro(getUsuario(), getInstituicao(), comentario[i], arquivoValido[i] ? 2 : 3);
 				try {

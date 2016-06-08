@@ -305,7 +305,7 @@ public class AutenticacaoBean {
 			switch (user.getPerfil()) {
 			case (0):
 				session.setAttribute("instituicao", instdao.getByRepNome(user.getNome()));
-				return "/pages/notyet.xhtml?faces-redirect=true";
+				return "/pages/autenticado/instituicao/instituicaoIndex.xhtml?faces-redirect=true";
 			case (2):
 				session.setAttribute("usuario", getUser());
 				return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
@@ -374,7 +374,7 @@ public class AutenticacaoBean {
 	}
 	
 	public String concatenaArquivos() {
-		return "/pages/estudante/concatenaArquivos.xhtml?faces-redirect=true";
+		return "/pages/concatenaArquivos.xhtml?faces-redirect=true";
 	}
 
 	///////////////////////////////////////////////////////////////////////////

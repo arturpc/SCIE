@@ -169,5 +169,4 @@ public class Comentario implements Serializable {
 	public void setDescricaoDOC2(String descricaoDOC2) {
 		this.descricaoDOC2 = descricaoDOC2;
 	}
-
 }

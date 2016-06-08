@@ -1,5 +1,6 @@
 package br.gov.df.dftrans.scie.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,8 @@ import javax.persistence.TypedQuery;
 
 import br.gov.df.dftrans.scie.domain.DocumentoPendencia;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
+import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
+import br.gov.df.dftrans.scie.dao.DocumentoPendenciaDAO;
 import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
 import br.gov.df.dftrans.scie.domain.Usuario;
@@ -16,7 +19,7 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.utils.StringUtils;
 
-public class LogDAO extends DAO<LogValidacaoCadastro> {
+public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	private static LogDAO dao = null;
 
 	public static LogDAO LogDAO() {
@@ -44,10 +47,11 @@ public class LogDAO extends DAO<LogValidacaoCadastro> {
 		try {
 			StringUtils.parserObject(entity);
 			entityManager.getTransaction().begin();
-			entityManager.persist(entity);
+			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
+			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao persistir Log");
 		} finally {
 			if (entityManager.isOpen()) {
@@ -361,14 +365,19 @@ public class LogDAO extends DAO<LogValidacaoCadastro> {
 	 * @return um object LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public LogValidacaoCadastro get(InstituicaoEnsino instituicao, DocumentoPendencia documento)
+	public LogValidacaoCadastro get(int id_inst, int id_documento)
 			throws EntityNotFoundException {
+		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+		InstituicaoEnsino instituicao = instdao.getById(id_inst);
+		DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
+		DocumentoPendencia documento = docdao.get(id_documento);
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro.LOG_FIND_BY_DADOS, LogValidacaoCadastro.class);
-			return typedQuery.setParameter("instituicao", instituicao).setParameter("documento", documento)
+			LogValidacaoCadastro log = typedQuery.setParameter("instituicao", instituicao).setParameter("documento", documento)
 					.getSingleResult();
+			return log;
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -444,9 +453,9 @@ public class LogDAO extends DAO<LogValidacaoCadastro> {
 	 * @param documento
 	 * @return true ou false
 	 */
-	public boolean existsLog(InstituicaoEnsino instituicao, DocumentoPendencia documento) {
+	public boolean existsLog(int id_inst, int id_documento) {
 		try {
-			if (get(instituicao, documento) != null) {
+			if (get(id_inst, id_documento) != null) {
 				return true;
 			}
 		} catch (EntityNotFoundException e) {

@@ -1,5 +1,7 @@
 package br.gov.df.dftrans.scie.domain;
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,8 @@ import org.hibernate.validator.constraints.br.CPF;
     	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf and a.instituicao.id = :id_instituicao"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_ONLY, 
 	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf"),
+    @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_INST_NULL, 
+	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf and a.instituicao = null"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.id = :id")
 })
 public class AutorizacaoRepresentante implements Serializable{
@@ -28,6 +32,7 @@ public class AutorizacaoRepresentante implements Serializable{
 	public static final String AUTORIZACAO_GET_ALL = "AutorizacaoRepresentante.getAll";
 	public static final String AUTORIZACAO_FIND_BY_CPF = "AutorizacaoRepresentante.consultarPorCPF";
 	public static final String AUTORIZACAO_FIND_BY_CPF_ONLY = "AutorizacaoRepresentante.consultarPorCPFApenas";
+	public static final String AUTORIZACAO_FIND_BY_CPF_INST_NULL = "AutorizacaoRepresentante.consultarPorCPFInstNula";
 	public static final String AUTORIZACAO_FIND_BY_ID = "AutorizacaoRepresentante.consultarPorCodigo";
 	
 	@Id
@@ -39,7 +44,7 @@ public class AutorizacaoRepresentante implements Serializable{
 	@CPF
 	private String cpf;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_instituicao",referencedColumnName="id_instituicao")
 	private InstituicaoEnsino instituicao;
 

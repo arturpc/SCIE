@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,11 +35,11 @@ public class Declaracao implements Serializable {
 	@Column(name = "id_declaracao")
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_estudante", referencedColumnName = "id_estudante")
 	private Estudante estudante;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
 	private InstituicaoEnsino instituicao;
 

@@ -3,6 +3,7 @@ package br.gov.df.dftrans.scie.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,11 +51,11 @@ public class LogValidacaoCadastro implements Serializable {
 	@Column(name = "id_log")
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
 	private Usuario usuario;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
 	private InstituicaoEnsino instituicao;
 
@@ -62,7 +63,7 @@ public class LogValidacaoCadastro implements Serializable {
 	@Temporal(value = TemporalType.DATE)
 	private Date atualizacao;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_documento", referencedColumnName = "id_documento")
 	private DocumentoPendencia documento;
 
@@ -72,7 +73,7 @@ public class LogValidacaoCadastro implements Serializable {
 	// Validacao = 3 (Não Aprovado)
 
 	@Column(name = "st_validacao")
-	int validacao = 0;
+	int validacao;
 
 	@Column(name = "ds_comentario")
 	String comentario;
@@ -88,6 +89,12 @@ public class LogValidacaoCadastro implements Serializable {
 		setDocumento(documento);
 		setAtualizacao(new Date());
 		setComentario(comentario);
+	}
+	
+	public LogValidacaoCadastro(InstituicaoEnsino instituicao, DocumentoPendencia documento) {
+		setInstituicao(instituicao);
+		setDocumento(documento);
+		setAtualizacao(new Date());
 	}
 
 	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, String comentario, int validacao) {

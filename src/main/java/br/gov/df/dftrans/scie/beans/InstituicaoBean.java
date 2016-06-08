@@ -19,6 +19,7 @@ import br.gov.df.dftrans.scie.dao.EnderecoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.RepresentanteDAO;
 import br.gov.df.dftrans.scie.dao.UFDAO;
+import br.gov.df.dftrans.scie.domain.AutorizacaoRepresentante;
 import br.gov.df.dftrans.scie.domain.CEP;
 import br.gov.df.dftrans.scie.domain.Cidade;
 import br.gov.df.dftrans.scie.domain.Endereco;
@@ -32,6 +33,7 @@ import br.gov.df.dftrans.scie.utils.FacesUtil;
 import br.gov.df.dftrans.scie.utils.Parametros;
 import br.gov.df.dftrans.scie.utils.ValidadorCEP;
 import br.gov.df.dftrans.scie.view.CursoViewBean;
+import br.gov.df.dftrans.scie.view.FileUploadView;
 
 import javax.servlet.http.HttpSession;
 
@@ -58,15 +60,23 @@ public class InstituicaoBean implements Serializable {
 	private String topMessage = Parametros.getParameter("atualizar_cadastro_top");
 	private String obsMessage = Parametros.getParameter("atualizar_cadastro_obs");
 	private boolean cpfEncontrado = false;
+	private FileUploadView fileUploader;
 
 	public void init (){
 		//DBService.init();
 	}
 	
 	public String pesquisar() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ELResolver resolver = context.getApplication().getELResolver();
+		AutenticacaoBean meuBeanAut = (AutenticacaoBean) resolver.getValue(context.getELContext(), null, "loginBean");
+		if (!meuBeanAut.isCaptcha()) {
+			FacesUtil.addMsggError("Digite os números no campo abaixo");
+			return "/pages/instituicaoHome.xhtml?faces-redirect=false";
+		}
+		codCPFsemMascara = removeMascara(getCodCPF());
 		if (getCodInepEmec().equals("")) {
 			try {
-				codCPFsemMascara = removeMascara(getCodCPF());
 				setInstituicao(getAutDAO().getByCpf(codCPFsemMascara).getInstituicao());
 			} catch (DAOExcpetion e) {
 				FacesUtil.addMsggError("O cpf " + codCPF + " não está autorizado.");
@@ -74,10 +84,7 @@ public class InstituicaoBean implements Serializable {
 			}
 		} else {
 			setInstituicao(instdao.getByInepEmec(codInepEmec));
-			
 		}
-		FacesContext context = FacesContext.getCurrentInstance();
-		ELResolver resolver = context.getApplication().getELResolver();
 		if (instituicao == null) {
 			setInstituicao(new InstituicaoEnsino());
 			instituicao.setCodInepEmec(codInepEmec);
@@ -90,8 +97,8 @@ public class InstituicaoBean implements Serializable {
 				setUf(getCidade().getUf());
 			}
 			setRepresentante(new Representante(null, codCPFsemMascara, 1, null, null));
+			instituicao.setRepresentante(getRepresentante());
 		} else {
-			codCPFsemMascara = removeMascara(codCPF);
 			if (autdao.getByCpf(codCPFsemMascara, instituicao.getId()) == null) {
 				FacesUtil.addMsggError("O cpf " + codCPF + " não está autorizado.");
 				return "instituicaoHome.xhtml?faces-redirect=false";
@@ -128,7 +135,6 @@ public class InstituicaoBean implements Serializable {
 			FacesUtil.addMsggError("Cep informado inválido");
 			return "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=false";
 		}*/
-		InstituicaoEnsinoDAO instituicaoDao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 		InstituicaoEnsino inst = getInstituicao();
 		inst.setCnpj(removeMascara(inst.getCnpj()));
 		Endereco end = getEndereco();
@@ -150,14 +156,23 @@ public class InstituicaoBean implements Serializable {
 		rep.setTelefone(telefones);
 		inst.setRepresentante(rep);
 		inst.setEndereco(end);
-		instituicaoDao.update(inst);
+		setInstituicao(instdao.update(inst));
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		session.setAttribute("instituicao", instituicao);
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
+		fileUploader = (FileUploadView) resolver.getValue(context.getELContext(), null, "fileUploadView");
+		fileUploader.setInst(instituicao);
 		cursoBean = (CursoViewBean) resolver.getValue(context.getELContext(), null, "MBCursoView");
 		cursoBean.setInstituicao(instituicao);
 		cursoBean.updateTarget();
+		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(getInstituicao().getRepresentante().getCpf());
+		if(autrep != null){
+			autrep.setInstituicao(getInstituicao());
+			autdao.update(autrep);
+		}else{
+			
+		}
 		return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 	}
 	
@@ -285,10 +300,6 @@ public class InstituicaoBean implements Serializable {
 				}
 			}
 		}*/
-	}
-	
-	public void printCidade(){
-		System.out.println(getCidade());
 	}
 
 	public String[] getContato() {

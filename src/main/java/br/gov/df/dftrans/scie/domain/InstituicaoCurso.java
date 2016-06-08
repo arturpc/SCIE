@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,11 +49,11 @@ public class InstituicaoCurso implements Serializable {
 	@Column(name = "id_instituicao_curso")
 	private int id;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
 	private InstituicaoEnsino instituicao;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
 	private Curso curso;
 

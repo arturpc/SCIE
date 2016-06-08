@@ -135,6 +135,27 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 			}
 		}
 	}
+	
+	/**
+	 * Seleciona um documentoPendencia pelo id
+	 */
+	public DocumentoPendencia get(int id) throws EntityNotFoundException {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<DocumentoPendencia> typedQuery = entityManager
+					.createNamedQuery(DocumentoPendencia.DOCUMENTO_FIND_BY_ID, DocumentoPendencia.class);
+			return typedQuery.setParameter("id", id).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Documento por código");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+	}
 
 	/**
 	 * Seleciona uma lista de DocumentoPendencia

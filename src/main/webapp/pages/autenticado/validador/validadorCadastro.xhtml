@@ -56,10 +56,6 @@
 							<p:inputText id="bairroEnd" size="50"
 								value="#{confirmacaoMB.instituicao.endereco.bairro}"
 								readonly="true" />
-							<p:outputLabel value="Número"></p:outputLabel>
-							<p:inputText size="5" id="nroEnd"
-								value="#{confirmacaoMB.instituicao.endereco.numeroEndereco}"
-								readonly="true" />
 							<p:outputLabel value="Logradouro" />
 							<p:inputText id="logEnd" size="50"
 								value="#{confirmacaoMB.instituicao.endereco.logradouro}"
@@ -124,7 +120,7 @@
 							<p:column headerText="Turno">
 								<h:outputText value="#{rowCurso.turno}" />
 							</p:column>
-							
+
 							<p:column headerText="Periodos/Ano">
 								<h:outputText value="#{rowCurso.ano}" />
 							</p:column>
@@ -184,137 +180,137 @@
 						<h:panelGrid columns="5">
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[0]}"
-								rendered="#{confirmacaoMB.existsLog[0]}" />
+								rendered="#{confirmacaoMB.exists.get(0)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[0]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[0]}">
+								rendered="#{confirmacaoMB.exists.get(0)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textAto"
 								value="#{validadorMB.comentario[0]}" rows="5" cols="30"
 								counter="display0" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[0]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(0)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textAto"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[0]}" />
+								rendered="#{confirmacaoMB.exists.get(0)}" />
 							<h:outputText id="display0"
-								rendered="#{confirmacaoMB.existsLog[0]}" />
+								rendered="#{confirmacaoMB.exists.get(0)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[1]}"
-								rendered="#{confirmacaoMB.existsLog[1]}" />
+								rendered="#{confirmacaoMB.exists.get(1)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[1]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[1]}">
+								rendered="#{confirmacaoMB.exists.get(1)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textCNPJ"
 								value="#{validadorMB.comentario[1]}" rows="5" cols="30"
 								counter="display1" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[1]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(1)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textCNPJ"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[1]}" />
+								rendered="#{confirmacaoMB.exists.get(1)}" />
 							<h:outputText id="display1"
-								rendered="#{confirmacaoMB.existsLog[1]}" />
+								rendered="#{confirmacaoMB.exists.get(1)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[2]}"
-								rendered="#{confirmacaoMB.existsLog[2]}" />
+								rendered="#{confirmacaoMB.exists.get(2)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[2]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[2]}">
+								rendered="#{confirmacaoMB.exists.get(2)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textDiretor"
 								value="#{validadorMB.comentario[2]}" rows="5" cols="30"
 								counter="display2" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[2]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(2)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textDiretor"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[2]}" />
+								rendered="#{confirmacaoMB.exists.get(2)}" />
 							<h:outputText id="display2"
-								rendered="#{confirmacaoMB.existsLog[2]}" />
+								rendered="#{confirmacaoMB.exists.get(2)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[3]}"
-								rendered="#{confirmacaoMB.existsLog[3]}" />
+								rendered="#{confirmacaoMB.exists.get(3)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[3]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[3]}">
+								rendered="#{confirmacaoMB.exists.get(3)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textEndereco"
 								value="#{validadorMB.comentario[3]}" rows="5" cols="30"
 								counter="display3" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[3]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(3)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textEndereco"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[3]}" />
+								rendered="#{confirmacaoMB.exists.get(3)}" />
 							<h:outputText id="display3"
-								rendered="#{confirmacaoMB.existsLog[3]}" />
+								rendered="#{confirmacaoMB.exists.get(3)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[4]}"
-								rendered="#{confirmacaoMB.existsLog[4]}" />
+								rendered="#{confirmacaoMB.exists.get(4)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[4]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[4]}">
+								rendered="#{confirmacaoMB.exists.get(4)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textCurso"
 								value="#{validadorMB.comentario[4]}" rows="5" cols="30"
 								counter="display4" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[4]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(4)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textCurso"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[4]}" />
+								rendered="#{confirmacaoMB.exists.get(4)}" />
 							<h:outputText id="display4"
-								rendered="#{confirmacaoMB.existsLog[4]}" />
+								rendered="#{confirmacaoMB.exists.get(4)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[5]}"
-								rendered="#{confirmacaoMB.existsLog[5]}" />
+								rendered="#{confirmacaoMB.exists.get(5)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[5]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[5]}">
+								rendered="#{confirmacaoMB.exists.get(5)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textEstatuto"
 								value="#{validadorMB.comentario[5]}" rows="5" cols="30"
 								counter="display5" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[5]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(5)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textEstatuto"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[5]}" />
+								rendered="#{confirmacaoMB.exists.get(5)}" />
 							<h:outputText id="display5"
-								rendered="#{confirmacaoMB.existsLog[5]}" />
+								rendered="#{confirmacaoMB.exists.get(5)}" />
 							<p:outputLabel
 								value="Arquivo: #{fileUploadView.descricaoArquivos[6]}"
-								rendered="#{confirmacaoMB.existsLog[6]}" />
+								rendered="#{confirmacaoMB.exists.get(6)}" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[6]}"
 								onLabel="Válido" offLabel="Inválido"
-								rendered="#{confirmacaoMB.existsLog[6]}">
+								rendered="#{confirmacaoMB.exists.get(6)}">
 								<p:ajax />
 							</p:inputSwitch>
 							<p:inputTextarea id="textConvenio"
 								value="#{validadorMB.comentario[6]}" rows="5" cols="30"
 								counter="display6" maxlength="200" counterTemplate="{0}/200."
-								autoResize="false" rendered="#{confirmacaoMB.existsLog[6]}">
+								autoResize="false" rendered="#{confirmacaoMB.exists.get(6)}">
 								<p:poll interval="5" />
 							</p:inputTextarea>
 							<p:watermark for="textConvenio"
 								value="Escreva aqui o motivo da validade/invalidade..."
-								rendered="#{confirmacaoMB.existsLog[6]}" />
+								rendered="#{confirmacaoMB.exists.get(6)}" />
 							<h:outputText id="display6"
-								rendered="#{confirmacaoMB.existsLog[6]}" />
+								rendered="#{confirmacaoMB.exists.get(6)}" />
 							<p:outputLabel value="Validação Cadastro"
 								style="font-weight: bold;font-size: 16px !important;" />
 							<p:inputSwitch value="#{validadorMB.arquivoValido[7]}"
@@ -332,18 +328,26 @@
 							<h:outputText id="display7" />
 						</h:panelGrid>
 					</p:panel>
+					<h:outputText id="nota"
+						value="*Atenção!!! Apenas marque como válido o campo Validação Cadastro se todos os outros campos estiverem válidos!"
+						style="color: gray !important; font-size: 11px !important;line-height: 0.5 !important;" />
+					<p:separator />
 				</h:panelGrid>
 			</h:panelGrid>
 			<br />
 			<p:commandButton value="Concluir"
 				action="#{confirmacaoMB.terminarValidacao}" styleClass="left">
-				<p:confirm header="Confirmação" message="Deseja confirmar a validação?" icon="ui-icon-alert" />
+				<p:confirm header="Confirmação"
+					message="Deseja confirmar a validação?" icon="ui-icon-alert" />
 			</p:commandButton>
-				
-			<p:confirmDialog id = "dialog" global="true" showEffect="fade" hideEffect="fade">
-        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-    		</p:confirmDialog>
+
+			<p:confirmDialog id="dialog" global="true" showEffect="fade"
+				hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>
