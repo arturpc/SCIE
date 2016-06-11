@@ -40,7 +40,9 @@ public class LogAlteracaoBancoDAO extends DAO<LogAlteracaoBanco> {
 			return entity;
 
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			if(entityManager.getTransaction().isActive()){
+				entityManager.getTransaction().rollback();
+			}
 			throw new DAOExcpetion("Erro ao persistir Log");
 		} finally {
 			if (entityManager.isOpen()) {

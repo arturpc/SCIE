@@ -19,6 +19,11 @@ public class ValidadorBean {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         setUser((Usuario) session.getAttribute("usuario"));
 	}
+	
+	public void reset(){
+		arquivoValido = new boolean[8];
+		comentario = new String[8];
+	}
 
 	//getteres and setteres
 	

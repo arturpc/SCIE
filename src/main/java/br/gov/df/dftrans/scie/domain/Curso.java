@@ -19,12 +19,14 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @NamedQueries({ @NamedQuery(name = Curso.CURSO_GET_ALL, query = "SELECT c FROM Curso c"),
 		@NamedQuery(name = Curso.CURSO_FIND_BY_EMEC, query = "SELECT c FROM Curso c WHERE c.codEmec = :codEmec"),
 		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO, query = "SELECT c FROM Curso c WHERE c.curso = :curso"),
+		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO_NIVEL, query = "SELECT c FROM Curso c WHERE c.curso = :curso and c.nivel = :nivel"),
 		@NamedQuery(name = Curso.CURSO_FIND_BY_ID, query = "SELECT c FROM Curso c WHERE c.id = :id") })
 public class Curso implements Serializable {
 
 	public static final String CURSO_GET_ALL = "Curso.getAll";
 	public static final String CURSO_FIND_BY_EMEC = "Curso.consultarPorEMEC";
 	public static final String CURSO_FIND_BY_CURSO = "Curso.consultarPorCurso";
+	public static final String CURSO_FIND_BY_CURSO_NIVEL = "Curso.consultarPorCursoNivel";
 	public static final String CURSO_FIND_BY_ID = "Curso.consultarPorCodigo";
 
 	@Id

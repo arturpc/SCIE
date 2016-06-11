@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import org.infinispan.notifications.cachelistener.annotation.TransactionCompleted;
+
 import static br.gov.df.dftrans.scie.utils.MessageUtils.ALREADY_EXISTS_EXCEPTION_KEY;
 import static br.gov.df.dftrans.scie.utils.MessageUtils.getString;
 
@@ -19,6 +21,7 @@ import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
 import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
+import br.gov.df.dftrans.scie.dao.CursoDAO;
 
 public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serializable {
 	private static InstituicaoCursoDAO dao = null;
@@ -44,7 +47,10 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 	@Override
 	public InstituicaoCurso add(InstituicaoCurso entity) throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
+	//	CursoDAO curdao = CursoDAO.CursoDAO();
 		try {
+			//Curso c = curdao.get(entity.getCurso().getId());
+			//entity.setCurso(c);
 			entityManager.getTransaction().begin();
 			entityManager.persist(entity);
 			entityManager.getTransaction().commit();
@@ -74,7 +80,9 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 	 */
 	public InstituicaoCurso update(InstituicaoCurso entity) {
 		EntityManager entityManager = factory.createEntityManager();
+		CursoDAO curdao = CursoDAO.CursoDAO();
 		try {
+			entity.setCurso(curdao.update(entity.getCurso()));
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();

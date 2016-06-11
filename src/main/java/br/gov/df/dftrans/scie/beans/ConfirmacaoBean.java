@@ -24,6 +24,7 @@ import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.utils.AutenticacaoDocumentos;
+import br.gov.df.dftrans.scie.utils.FacesUtil;
 import br.gov.df.dftrans.scie.utils.Mail;
 import br.gov.df.dftrans.scie.utils.ManipuladorArquivos;
 import br.gov.df.dftrans.scie.utils.Parametros;
@@ -74,6 +75,7 @@ public class ConfirmacaoBean {
 
 	public void reset() {
 		exists.clear();
+		existsLog.clear();
 		path = null;
 		documento = -1;
 		if (getCadastrados() != null) {
@@ -104,11 +106,14 @@ public class ConfirmacaoBean {
 				setOrigem(2);
 				prepararArquivo();
 				setCadastrados(instdao.getCursos(getInstituicao()));
-				System.out.println(instituicao.getId());
 				LogValidacaoCadastro log;
 				for (int i = 0; i < existsLog.size(); i++) {
 					if (existsLog.get(i)) {
-						log = logdao.get(instituicao.getId(), docdao.getByNro(i).getId());
+						if (docdao.getByNro(i) != null){
+							log = logdao.get(instituicao.getId(), docdao.getByNro(i).getId());
+						}else{
+							log = null;
+						}
 						if (log != null) {
 							log.setUsuario(getUsuario());
 							logdao.update(log, 1);
@@ -267,10 +272,23 @@ public class ConfirmacaoBean {
 		validadorBean = (ValidadorBean) resolver.getValue(context.getELContext(), null, "validadorMB");
 		String[] comentario = validadorBean.getComentario();
 		boolean[] arquivoValido = validadorBean.getArquivoValido();
-		boolean validado = true;
-		System.out.println(existsLog.size());
+		boolean validado = true, controle = true;
+		
+		for(int i = 0; i < existsLog.size(); i++){
+			if (existsLog.get(i) && i != 7) {
+				if(controle){
+					controle = arquivoValido[i];
+				}
+			}
+			if(!controle && arquivoValido[7]){
+				FacesUtil.addMsggError("Marque a validação cadastro como \"Inválida\"!");
+				return "/pages/autenticado/validador/validadorCadastro.xhtml?faces-redirect=true";
+			}
+		}
+		
+		
+		
 		for (int i = 0; i <= existsLog.size(); i++) {
-			System.out.println("i = "+ i);
 			if (i == 7) {
 				log = new LogValidacaoCadastro(getUsuario(), getInstituicao(), comentario[i], arquivoValido[i] ? 2 : 3);
 				try {
@@ -305,7 +323,7 @@ public class ConfirmacaoBean {
 			session.setAttribute("instituicao", getInstituicao());
 		}
 		Mail.sendEmailValidation(getInstituicao().getRepresentante());
-		
+		validadorBean.reset();
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
 

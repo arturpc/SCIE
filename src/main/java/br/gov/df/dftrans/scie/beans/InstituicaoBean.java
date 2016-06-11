@@ -3,6 +3,7 @@ package br.gov.df.dftrans.scie.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Scanner;
 
 import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.gov.df.dftrans.scie.dao.AutorizacaoRepresentanteDAO;
+import br.gov.df.dftrans.scie.dao.CidadeDAO;
 import br.gov.df.dftrans.scie.dao.EnderecoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.RepresentanteDAO;
@@ -52,6 +54,7 @@ public class InstituicaoBean implements Serializable {
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
 	private UFDAO ufdao = UFDAO.UFDAO();
+	private CidadeDAO ciddao = CidadeDAO.CidadeDAO();
 	private Representante representante = null;
 	private CursoViewBean cursoBean;
 	private String[] contato = new String[5];
@@ -140,10 +143,10 @@ public class InstituicaoBean implements Serializable {
 		Endereco end = getEndereco();
 		if(getCidade() == null){
 			setCidade(new Cidade());
+			setUf(ufdao.getByUF("DF"));
+			getCidade().setUf(getUf());
 		}
 		Cidade cid = getCidade();
-		setUf(ufdao.getByUF("DF"));
-		cid.setUf(getUf());
 		end.setCidade(cid);
 		Representante rep = getRepresentante();
 		rep.setCpf(removeMascara(rep.getCpf()));

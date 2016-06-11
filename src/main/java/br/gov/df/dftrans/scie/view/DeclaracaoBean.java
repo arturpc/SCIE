@@ -290,7 +290,7 @@ public class DeclaracaoBean {
 			}
 			// verifica se o cnpj coincide com os dados da instituição
 			campo = temp[3][3].replaceAll("\\.", "").replaceAll(delimitadorDiretorioREGEX, "").replaceAll("-", "")
-					.replaceAll(" ", "").trim();
+					.replaceAll(" ", "").replaceAll("/", "").trim();
 			if (campo == null || campo.equals("null") || campo.isEmpty() || !inst.getCnpj().equals(campo)) {
 				throw new PlanilhaException("CNPJ não confere com o cadastrado ( " + inst.getCnpj() + " )!");
 			}

@@ -31,7 +31,7 @@ public class CidadeService {
     public Cidade getCidadePorNome(String nome){
     	for(Cidade cid: cidades){
     		if(cid.getNome().equals(nome)){
-    			return cid;
+    				return cid;
     		}
     	}
     	return null;

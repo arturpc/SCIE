@@ -215,7 +215,9 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 			logdao.add(new LogAlteracaoBanco(operacao, "TB_INSTITUICAO_ENSINO", entity.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
-			entityManager.getTransaction().rollback();
+			if(entityManager.getTransaction().isActive()){
+				entityManager.getTransaction().rollback();
+			}
 			throw new DAOExcpetion("Erro ao modificar Instituicao");
 		} finally {
 			if (entityManager.isOpen()) {

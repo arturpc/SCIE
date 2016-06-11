@@ -49,11 +49,11 @@ public class InstituicaoCurso implements Serializable {
 	@Column(name = "id_instituicao_curso")
 	private int id;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
 	private InstituicaoEnsino instituicao;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "id_curso", referencedColumnName = "id_curso")
 	private Curso curso;
 

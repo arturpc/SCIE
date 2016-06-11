@@ -140,7 +140,12 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager.createNamedQuery(
 					AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_INST_NULL, AutorizacaoRepresentante.class);
-			return typedQuery.setParameter("cpf", cpf).getResultList().get(0);
+			List<AutorizacaoRepresentante> retorno = typedQuery.setParameter("cpf", cpf).getResultList();
+			if(retorno.isEmpty()){
+				return null;
+			}else{
+			return retorno.get(0);
+			}
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {

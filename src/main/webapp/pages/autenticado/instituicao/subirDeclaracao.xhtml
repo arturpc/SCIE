@@ -87,7 +87,7 @@
 				</p:column>
 			</h:panelGrid>
 			<p:separator />
-			<p:fieldset legend="Declarações" toggleable="true" toggleSpeed="500"
+			<p:fieldset legend="Declarações (Histórico)" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:dataTable id="declaracoesTab" var="declaracao"
 					value="#{DeclaracaoMB.declaracoes}" editable="false"
@@ -125,9 +125,9 @@
 				</p:dataTable>
 			</p:fieldset>
 			<br />
-			<p:commandButton value="Voltar" action="#{loginBean.instituicaoHome}"
-				styleClass="left" />
 		</h:form>
+		<p:commandButton value="Voltar" action="#{loginBean.instituicaoHome}"
+			styleClass="left" />
 	</ui:define>
 	<ui:define name="rodape">
 	</ui:define>

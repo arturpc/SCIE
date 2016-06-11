@@ -69,7 +69,7 @@
 								value="#{confirmacaoMB.instituicao.endereco.cidade.nome}"
 								readonly="true" />
 							<p:outputLabel value="Estado" />
-							<p:inputText size="2" id="estEnd"
+							<p:inputText size="20" id="estEnd"
 								value="#{confirmacaoMB.instituicao.endereco.cidade.uf.uf}"
 								readonly="true" />
 						</h:panelGrid>
@@ -336,7 +336,7 @@
 			</h:panelGrid>
 			<br />
 			<p:commandButton value="Concluir"
-				action="#{confirmacaoMB.terminarValidacao}" styleClass="left">
+				action="#{confirmacaoMB.terminarValidacao}" styleClass="left" update="MsgGlobal">
 				<p:confirm header="Confirmação"
 					message="Deseja confirmar a validação?" icon="ui-icon-alert" />
 			</p:commandButton>

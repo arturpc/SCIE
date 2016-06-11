@@ -27,7 +27,7 @@
 			<br/>
 			<p:panel header="Dados da Instituição">
 				<h:panelGrid columns="3">
-					<p:outputLabel value="Nome da Instituição"/>
+					<p:outputLabel value="Nome da Instituição" for="nmInst"/>
 					<p:inputText id = "nmInst" size="50"
 						value="#{InstituicaoMB.instituicao.nomeInstituicao}"
 						required="true" requiredMessage="Nome da Instituição é um campo obrigatório!" 
@@ -35,11 +35,11 @@
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="nmInst" display = "text" />
-					<p:outputLabel value="Número do CNPJ"></p:outputLabel>
+					<p:outputLabel value="Número do CNPJ" for="cnpjInst"/>
 					<p:inputMask id = "cnpjInst" size="20" value="#{InstituicaoMB.instituicao.cnpj}"
 						mask="99.999.999/9999-99" required="true" requiredMessage="CNPJ é um campo obrigatório!"/>
 					<p:message for="cnpjInst" display = "text" />
-					<p:outputLabel value="Razão Social"></p:outputLabel>
+					<p:outputLabel value="Razão Social" for="rzscInst"/>
 					<p:inputText size="50" id = "rzscInst"
 						value="#{InstituicaoMB.instituicao.razaoSocial}" required="true" 
 						requiredMessage="Razão Social é um campo obrigatório!"
@@ -47,7 +47,7 @@
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="rzscInst" display = "text" />
-					<p:outputLabel value="Código INEP/E-mec"/>
+					<p:outputLabel value="Código INEP/E-mec" for="inepInst"/>
 					<p:inputText size="20" id = "inepInst"
 						value="#{InstituicaoMB.instituicao.codInepEmec}" 
 						required="true" requiredMessage="Inep/E-mec é um campo obrigatório!"
@@ -59,7 +59,7 @@
 			</p:panel>
 			<p:panel header="Dados do Endereço Comercial da Instituição">
 				<h:panelGrid columns="3">
-					<p:outputLabel value="Número do CEP"></p:outputLabel>
+					<p:outputLabel value="Número do CEP" for="cepInst"/>
 					<p:inputMask id = "cepInst" size="10" value="#{InstituicaoMB.endereco.cep}"
 						mask="99.999-999" required="true" 
 						requiredMessage="CEP é um campo obrigatório!">
@@ -69,26 +69,26 @@
                                         update=":MsgGlobal" />
                     </p:inputMask>
 					<p:message id="cepMSG" for="cepInst" display = "text" />
-					<p:outputLabel value="Nome do Bairro"/>
+					<p:outputLabel value="Nome do Bairro" for="bairroEnd"/>
 					<p:inputText id = "bairroEnd" size="50" value="#{InstituicaoMB.endereco.bairro}"
 					validatorMessage="Nome de Bairro inválido!">
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="bairroEnd" display = "text" />
-					<p:outputLabel value="Logradouro"/>
+					<p:outputLabel value="Logradouro" for="logEnd"/>
 					<p:inputText id = "logEnd" size="50" value="#{InstituicaoMB.endereco.logradouro}"
 						validatorMessage="Logradouro de Endereço inválido!">
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="logEnd" display = "text" />
-					<p:outputLabel value="Complemento"/>
+					<p:outputLabel value="Complemento" for="complEnd"/>
 					<p:inputText size="100" id = "complEnd"
 						value="#{InstituicaoMB.endereco.complemento}"
 						validatorMessage="Complemento de Endereço inválido!">
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="complEnd" display = "text" />
-					<p:outputLabel value="Cidade"/>
+					<p:outputLabel value="Cidade" for="cidEnd"/>
 					<p:selectOneMenu id = "cidEnd" value="#{InstituicaoMB.cidade}" 
 						converter="cidadeConverter" var="c" filter="true"
 						filterMatchMode="contains" editable="false" style="width: 400px">
@@ -103,46 +103,46 @@
 			</p:panel>
 			<p:panel header="Dados do Representante da Instituição">
 				<h:panelGrid columns="3">
-					<p:outputLabel value="Nome do Representante"/>
+					<p:outputLabel value="Nome do Representante" for="nmRep"/>
 					<p:inputText id = "nmRep" size="50" value="#{InstituicaoMB.representante.nome}"
 						required="true" requiredMessage="Nome do Representante é um campo obrigatório!"
 						validatorMessage="Nome de Representante inválido">
 						<f:validator validatorId="namesValidator" />
 					</p:inputText>
 					<p:message for="nmRep" display = "text" />
-					<p:outputLabel value="CPF do representante" />
+					<p:outputLabel value="CPF do representante" for="inputCPF"/>
 					<p:inputMask value="#{InstituicaoMB.representante.cpf}"
 						id="inputCPF" mask="999.999.999-99" disabled="true"/>
 					<p:message for="inputCPF" display = "text" />
-					<p:outputLabel value="Cargo do Representante"/>
+					<p:outputLabel value="Cargo do Representante" for="cargoRep"/>
 					<p:selectOneMenu id="cargoRep" value="#{InstituicaoMB.representante.cargo}" 
 					required="true" requiredMessage="Cargo do Representante é um campo obrigatório!">
             			<f:selectItem itemLabel="Diretor" itemValue="1" />
             			<f:selectItem itemLabel="Secretário" itemValue="2" />
        				</p:selectOneMenu>
 					<p:message for="cargoRep" display = "text" />
-					<p:outputLabel value="Email para Contato"/>
+					<p:outputLabel value="Email para Contato" for="emailRep"/>
 					<p:inputText id = "emailRep" size="50" value="#{InstituicaoMB.representante.email}"
 						required="true" requiredMessage="E-mail é um campo obrigatório!"/>
 					<p:message for="emailRep" display = "text" />
-					<p:outputLabel value="Telefone para Contato (1)"/>
+					<p:outputLabel value="Telefone para Contato (1)" for="inputTelefone1"/>
 					<p:inputMask value="#{InstituicaoMB.contato1}"
 						id="inputTelefone1" mask="(99) ?99999-9999" required = "true"
 						requiredMessage="Telefone é um campo obrigatório!"/>
 					<p:message for="inputTelefone1" display = "text" />
-					<p:outputLabel value="Telefone para Contato (2)"/>
+					<p:outputLabel value="Telefone para Contato (2)" for="inputTelefone2"/>
 					<p:inputMask value="#{InstituicaoMB.contato2}"
 						id="inputTelefone2" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone2" display = "text" />
-					<p:outputLabel value="Telefone para Contato (3)"/>
+					<p:outputLabel value="Telefone para Contato (3)" for="inputTelefone3"/>
 					<p:inputMask value="#{InstituicaoMB.contato3}"
 						id="inputTelefone3" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone3" display = "text" />
-					<p:outputLabel value="Telefone para Contato (4)"/>
+					<p:outputLabel value="Telefone para Contato (4)" for="inputTelefone4"/>
 					<p:inputMask value="#{InstituicaoMB.contato4}"
 						id="inputTelefone4" mask="(99) ?99999-9999" />
 					<p:message for="inputTelefone4" display = "text" />
-					<p:outputLabel value="Telefone para Contato (5)"/>
+					<p:outputLabel value="Telefone para Contato (5)" for="inputTelefone5"/>
 					<p:inputMask value="#{InstituicaoMB.contato5}"
 						id="inputTelefone5" mask="(99) ?99999-9999"/>
 					<p:message for="inputTelefone5" display = "text" />

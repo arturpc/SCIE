@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 and l.instituicao.id = :id"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECTED, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 and l.instituicao.id = :id"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_ID, query = "SELECT l FROM LogValidacaoCadastro l WHERE l.id = :id"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_DADOS, query = "SELECT l FROM LogValidacaoCadastro l WHERE l.instituicao = :instituicao and l.documento = :documento") })
+		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_DADOS, query = "SELECT l FROM LogValidacaoCadastro l WHERE l.instituicao = :instituicao and l.documento = :documento and l.validacao in (0,1)") })
 public class LogValidacaoCadastro implements Serializable {
 
 	public static final String LOG_GET_ALL = "LogValidacaoCadastro.getAll";

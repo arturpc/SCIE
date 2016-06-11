@@ -24,6 +24,8 @@ import br.gov.df.dftrans.scie.dao.UFDAO;
     @NamedQuery(name = Cidade.CIDADE_GET_ALL, query = "SELECT c FROM Cidade c"),
     @NamedQuery(name = Cidade.CIDADE_FIND_BY_NOME, 
     	query = "SELECT c FROM Cidade c WHERE c.nome = :nome"),
+    @NamedQuery(name = Cidade.CIDADE_FIND_BY_NOME_UF, 
+	query = "SELECT c FROM Cidade c WHERE c.nome = :nome and c.uf.uf = :uf"),
     @NamedQuery(name = Cidade.CIDADE_FIND_BY_ID, query = "SELECT c FROM Cidade c WHERE c.id = :id")
 })
 public class Cidade implements Serializable {
@@ -31,6 +33,7 @@ public class Cidade implements Serializable {
 
 	public static final String CIDADE_GET_ALL = "Cidade.getAll";
 	public static final String CIDADE_FIND_BY_NOME = "Cidade.consultarPorNome";
+	public static final String CIDADE_FIND_BY_NOME_UF = "Cidade.consultarPorNomeUf";
 	public static final String CIDADE_FIND_BY_ID = "Cidade.consultarPorCodigo";
 	
 	@Id

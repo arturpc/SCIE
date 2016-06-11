@@ -124,6 +124,30 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 			entityManager.close();
 		}
 	}
+	
+	/**
+	 * Seleciona todos as cidades persistidas no banco
+	 * 
+	 * @return lista de cidades
+	 */
+	public Cidade get(String nome, String uf) {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_GET_ALL, Cidade.class);
+			List<Cidade> cid = typedQuery.setParameter("nome", nome).setParameter("uf", uf).getResultList();
+			if(cid.isEmpty()){
+				return null;
+			}
+			return cid.get(0);
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar UF por código");
+		} finally {
+			entityManager.close();
+		}
+	}
 
 	/**
 	 * Atualiza uma cidade

@@ -13,6 +13,7 @@ import static br.gov.df.dftrans.scie.utils.MessageUtils.ALREADY_EXISTS_EXCEPTION
 import static br.gov.df.dftrans.scie.utils.MessageUtils.getString;
 
 import br.gov.df.dftrans.scie.domain.Curso;
+import br.gov.df.dftrans.scie.domain.InstituicaoCurso;
 import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
 import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
@@ -89,6 +90,39 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 		logdao.add(new LogAlteracaoBanco("INSERT", "TB_CURSO", entity.getId()));
 		return entity;
 	}
+	
+	
+	/**
+	 * Altera uma Curso
+	 * 
+	 * @param entity
+	 * @return o Curso atualizado
+	 */
+	public Curso update(Curso entity) {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			entityManager.getTransaction().begin();
+			entityManager.merge(entity);
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			if (entityManager.getTransaction().isActive()) {
+				entityManager.getTransaction().rollback();
+			}
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao modificar Curso");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+		try {
+			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_CURSO", entity.getId()));
+		} catch (InsertException e) {
+			e.printStackTrace();
+		}
+		return entity;
+
+	}
 
 	/**
 	 * Seleciona um curso pelo id
@@ -99,6 +133,46 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 		try {
 			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_ID, Curso.class);
 			return typedQuery.setParameter("id", ((Curso) id).getId()).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+	}
+	
+	/**
+	 * Seleciona um curso pelo id
+	 */
+	public Curso get(int id) throws EntityNotFoundException {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_ID, Curso.class);
+			return typedQuery.setParameter("id", id).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+	}
+	
+	/**
+	 * Seleciona um curso pelo id
+	 */
+	public Curso get(String curso, String nivel) throws EntityNotFoundException {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_CURSO_NIVEL, Curso.class);
+			return typedQuery.setParameter("curso", curso).setParameter("nivel", nivel).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {

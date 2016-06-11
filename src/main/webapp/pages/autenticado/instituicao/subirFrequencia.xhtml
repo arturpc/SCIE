@@ -32,7 +32,7 @@
 			<br />
 			<b><p:outputLabel
 					value="Código da Instituição: #{FrequenciaMB.instituicao.id}" /> </b>
-			<br/>
+			<br />
 			<br />
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Exemplo xls :" />
@@ -57,12 +57,13 @@
 			<br />
 			<h:panelGrid columns="4">
 				<p:outputLabel value="Mês de Referência: " />
-				<p:selectOneMenu value="#{FrequenciaMB.valorMes}" converter="mesReferenciaConverter">
-					<p:ajax listener="#{FrequenciaMB.mostrarMes}"/>	
-					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione um Mes" />
+				<p:selectOneMenu value="#{FrequenciaMB.valorMes}"
+					converter="mesReferenciaConverter">
+					<p:ajax listener="#{FrequenciaMB.mostrarMes}" />
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um Mes" />
 					<f:selectItems value="#{FrequenciaMB.meses}" var="mesSelecionado"
-						itemLabel="#{mesSelecionado.display}" itemValue="#{mesSelecionado.value} "/>
+						itemLabel="#{mesSelecionado.display}"
+						itemValue="#{mesSelecionado.value} " />
 				</p:selectOneMenu>
 				<p:outputLabel />
 				<p:outputLabel />
@@ -84,7 +85,7 @@
 				</p:column>
 			</h:panelGrid>
 			<p:separator />
-			<p:fieldset legend="Frequências" toggleable="true" toggleSpeed="500"
+			<p:fieldset legend="Frequências (Histórico)" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:dataTable id="freqTab" var="rowFreq"
 					value="#{FrequenciaMB.frequencias}" editable="false"
@@ -113,8 +114,8 @@
 				</p:dataTable>
 			</p:fieldset>
 			<br />
-			<p:commandButton value="Voltar" action="#" />
 		</h:form>
+		<p:commandButton value="Voltar" action="#{loginBean.instituicaoHome}" />
 	</ui:define>
 	<ui:define name="rodape" />
 </ui:composition>

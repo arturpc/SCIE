@@ -231,7 +231,7 @@ public class AcessosBean {
 		// válido como inválido
 		if (getArquivoValido()[2] && (!getArquivoValido()[0] || !getArquivoValido()[1])) {
 			FacesUtil.addMsggError("Marque a validação da solicitação como \"Inválida\"!");
-			return "/pages/autenticado/validadorAcessos.xhtml?faces-redirect=false";
+			return "/pages/autenticado/validadorAcessos.xhtml?faces-redirect=true";
 		}
 
 		for (int i = 0; i < 3; i++) {

@@ -416,7 +416,7 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_INSTITUICAO_ENSINO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_LOG_VALIDACAO_CADASTRO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}

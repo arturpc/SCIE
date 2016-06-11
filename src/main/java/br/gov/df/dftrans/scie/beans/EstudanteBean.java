@@ -23,6 +23,7 @@ public class EstudanteBean {
 	@NotEmpty(message = "CPF é um campo obrigatório!!!")
 	private String codCPF, codCPFsemMascara;
 	private String valorTaxaAtual = Parametros.getParameter("vl_taxa");
+	private String valorContaAtual = Parametros.getParameter("nr_conta");
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private boolean termo = false;
@@ -328,5 +329,13 @@ public class EstudanteBean {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getValorContaAtual() {
+		return valorContaAtual;
+	}
+
+	public void setValorContaAtual(String valorContaAtual) {
+		this.valorContaAtual = valorContaAtual;
 	}
 }
