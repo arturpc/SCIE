@@ -11,13 +11,10 @@ import br.gov.df.dftrans.scie.domain.CEP;
 
 public class ValidadorCEP {
 	
-	public static final String URL = Parametros.getParameter("bd_url");
-	public static final String USER = Parametros.getParameter("bd_user_name");
-	public static final String PASS = Parametros.getParameter("bd_password");
-	public static final String SELECT = "SELECT uf.sg_uf, cid.nm_cidade, end.nm_bairro, end.ds_logradouro, end.ds_complemento FROM TB_ENDERECO end"
-			+ "LEFT JOIN TB_CIDADE cid ON end.id_cidade = cid. id_cidade "
-			+ "LEFT JOIN TB_UF uf ON cid.id_uf = uf.id_uf "
-			+ "WHERE end.NR_CEP = ?";
+	public static final String URL = "jdbc:mysql://localhost:3306/scie";
+	public static final String USER = "root";
+	public static final String PASS = "root";
+	public static final String SELECT = "SELECT uf.sg_uf, cid.nm_cidade, end.nm_bairro, end.ds_logradouro, end.ds_complemento FROM TB_ENDERECO end LEFT JOIN TB_CIDADE cid ON end.id_cidade = cid. id_cidade LEFT JOIN TB_UF uf ON cid.id_uf = uf.id_uf WHERE end.NR_CEP = ?";
 	
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Connection con = null;
@@ -32,7 +29,7 @@ public class ValidadorCEP {
 		try{
 			Connection con = getConnection();
 			PreparedStatement instrucao = con.prepareStatement(SELECT);
-			instrucao.setString(2, cep);
+			instrucao.setString(1, cep);
 			ResultSet linhas = instrucao.executeQuery();
 			retorno = new CEP();
 			while (linhas.next()) {

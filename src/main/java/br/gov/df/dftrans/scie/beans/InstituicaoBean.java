@@ -64,11 +64,15 @@ public class InstituicaoBean implements Serializable {
 	private String obsMessage = Parametros.getParameter("atualizar_cadastro_obs");
 	private boolean cpfEncontrado = false;
 	private FileUploadView fileUploader;
+	private String cep;
+	private String bairro;
+	private String logradouro;
+	private String complemento;
 
-	public void init (){
-		//DBService.init();
+	public void init() {
+		// DBService.init();
 	}
-	
+
 	public String pesquisar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
@@ -93,9 +97,9 @@ public class InstituicaoBean implements Serializable {
 			instituicao.setCodInepEmec(codInepEmec);
 			setEndereco(new Endereco());
 			CidadeService meuBean = (CidadeService) resolver.getValue(context.getELContext(), null, "CidadeService");
-			if(!meuBean.getCidades().isEmpty()){
+			if (!meuBean.getCidades().isEmpty()) {
 				setCidade(meuBean.getCidades().get(0));
-			}else{
+			} else {
 				setCidade(new Cidade());
 				setUf(getCidade().getUf());
 			}
@@ -107,6 +111,9 @@ public class InstituicaoBean implements Serializable {
 				return "instituicaoHome.xhtml?faces-redirect=false";
 			}
 			setEndereco(instituicao.getEndereco());
+			setBairro(getEndereco().getBairro());
+			setLogradouro(getEndereco().getLogradouro());
+			setComplemento(getEndereco().getComplemento());
 			setCidade(endereco.getCidade());
 			setUf(getCidade().getUf());
 			RepresentanteDAO repDAO = RepresentanteDAO.RepresentanteDAO();
@@ -118,7 +125,7 @@ public class InstituicaoBean implements Serializable {
 		}
 		if (!getRepresentante().getTelefone().isEmpty()) {
 			String[] contatos = new String[5];
-			for (int i = 0; i < getRepresentante().getTelefone().toArray().length; i++){
+			for (int i = 0; i < getRepresentante().getTelefone().toArray().length; i++) {
 				contatos[i] = (String) getRepresentante().getTelefone().toArray()[i];
 			}
 			setContato(contatos);
@@ -134,14 +141,17 @@ public class InstituicaoBean implements Serializable {
 	}
 
 	public String atualizar() {
-		/*if (!ValidadorCEP.existeCEP(removeMascara(getInstituicao().getEndereco().getCep()))) {
-			FacesUtil.addMsggError("Cep informado inválido");
-			return "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=false";
-		}*/
+		/*
+		 * if
+		 * (!ValidadorCEP.existeCEP(removeMascara(getInstituicao().getEndereco()
+		 * .getCep()))) { FacesUtil.addMsggError("Cep informado inválido");
+		 * return
+		 * "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=false"; }
+		 */
 		InstituicaoEnsino inst = getInstituicao();
 		inst.setCnpj(removeMascara(inst.getCnpj()));
 		Endereco end = getEndereco();
-		if(getCidade() == null){
+		if (getCidade() == null) {
 			setCidade(new Cidade());
 			setUf(ufdao.getByUF("DF"));
 			getCidade().setUf(getUf());
@@ -170,15 +180,15 @@ public class InstituicaoBean implements Serializable {
 		cursoBean.setInstituicao(instituicao);
 		cursoBean.updateTarget();
 		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(getInstituicao().getRepresentante().getCpf());
-		if(autrep != null){
+		if (autrep != null) {
 			autrep.setInstituicao(getInstituicao());
 			autdao.update(autrep);
-		}else{
-			
+		} else {
+
 		}
 		return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 	}
-	
+
 	public InstituicaoEnsino getInstituicao() {
 		return instituicao;
 	}
@@ -287,22 +297,40 @@ public class InstituicaoBean implements Serializable {
 	}
 
 	public void consultarCEP() {
-		/*if (getInstituicao() != null && getInstituicao().getEndereco() != null && getInstituicao().getEndereco().getCep() != null 
-				&&!getInstituicao().getEndereco().getCep().isEmpty()) {
+		if(getInstituicao() == null){
+			setInstituicao(new InstituicaoEnsino());
+		}
+		if(getInstituicao().getEndereco() == null){
+			getInstituicao().setEndereco(new Endereco());
+		}
+		getInstituicao().getEndereco().setCep(removeMascara(cep));
+		if (getInstituicao() != null && getInstituicao().getEndereco() != null
+				&& getInstituicao().getEndereco().getCep() != null
+				&& !getInstituicao().getEndereco().getCep().isEmpty()) {
 			String cep = removeMascara(getInstituicao().getEndereco().getCep());
-			boolean b = ValidadorCEP.existeCEP(removeMascara(getInstituicao().getEndereco().getCep()));
-			if (!b) {
-				FacesUtil.addMsggError("O cep " + getInstituicao().getEndereco().getCep() + " está incorreto.");
-			}else{
-				CEP struct = ValidadorCEP.getEndereco(removeMascara(getInstituicao().getEndereco().getCep()));
-				if(getInstituicao().getEndereco().getBairro() == null){
-					getInstituicao().getEndereco().setBairro(struct.getBairro());
+			CEP c = ValidadorCEP.getEndereco(cep);
+			if (c != null) {
+				if (getInstituicao().getEndereco().getBairro() == null) {
+					setBairro(c.getBairro());
+					getInstituicao().getEndereco().setBairro(c.getBairro());
+					getEndereco().setBairro(c.getBairro());
 				}
-				if(getInstituicao().getEndereco().getLogradouro() == null){
-					getInstituicao().getEndereco().setLogradouro(struct.getLogradouro());
+				if (getInstituicao().getEndereco().getLogradouro() == null) {
+					setLogradouro(c.getLogradouro());
+					getInstituicao().getEndereco().setLogradouro(c.getLogradouro());
+					getEndereco().setLogradouro(c.getLogradouro());
+				}
+				if (getInstituicao().getEndereco().getComplemento() == null) {
+					setComplemento(c.getComplemento());
+					getInstituicao().getEndereco().setComplemento(c.getComplemento());
+					getEndereco().setComplemento(c.getComplemento());
+				}
+				Cidade cid = ciddao.get(c.getCidade(), c.getUf());
+				if(cid != null){
+					setCidade(ciddao.get(c.getCidade(), c.getUf()));
 				}
 			}
-		}*/
+		}
 	}
 
 	public String[] getContato() {
@@ -359,6 +387,38 @@ public class InstituicaoBean implements Serializable {
 
 	public void setContato5(String contato5) {
 		this.contato5 = contato5;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 }

@@ -133,7 +133,7 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	public Cidade get(String nome, String uf) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_GET_ALL, Cidade.class);
+			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_FIND_BY_NOME_UF, Cidade.class);
 			List<Cidade> cid = typedQuery.setParameter("nome", nome).setParameter("uf", uf).getResultList();
 			if(cid.isEmpty()){
 				return null;
