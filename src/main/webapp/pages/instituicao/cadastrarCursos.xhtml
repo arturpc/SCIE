@@ -29,7 +29,7 @@
 		</div>
 		<p:separator />
 		<h:form>
-			<h:outputLabel>Utilize os espaços abaixo para cadastrar os cursos oferecidos pela sua Instituição de Ensino: </h:outputLabel>
+			<h:outputLabel>Utilize os espaços abaixo para cadastrar os cursos (PRESENCIAIS) oferecidos pela sua Instituição de Ensino: </h:outputLabel>
 			<br />
 			<br />
 			<p:panel header="Cadastrar Cursos">
@@ -52,43 +52,49 @@
 					<p:commandButton id="detalharCursos" value="Detalhar Cursos"
 						action="#{MBCursoView.detalharCurso}"
 						update="detalheCursos nmCurso 
-					turnoCurso dtInicio dtFim cursosPickList detalharCursos"
+					turnoCurso cursosPickList detalharCursos"
 						disabled="#{MBCursoView.detalharCursos}" />
 					<p:panel id="detalheCursos" header="Detalhes de Oferta do Curso"
 						autoUpdate="true">
 						<p:panelGrid columns="2" autoUpdate="true">
-							<p:outputLabel value="Nome do Curso" />
-							<p:inputText id="nmCurso" size="30"
-								value="#{MBCursoView.instCurso.curso.curso}" disabled="true"
-								autoUpdate="true" />
-							<p:outputLabel value="Turno" />
-							<p:selectOneMenu id="turnoCurso"
-								disabled="#{!MBCursoView.detalharCursos}"
-								value="#{MBCursoView.instCurso.turno}" autoUpdate="true">
-								<f:selectItem itemLabel="Matutino" itemValue="MATUTINO" />
-								<f:selectItem itemLabel="Vespertino" itemValue="VESPERTINO" />
-								<f:selectItem itemLabel="Noturno" itemValue="NOTURNO" />
-								<f:selectItem itemLabel="Misto" itemValue="MISTO" />
-								<f:selectItem itemLabel="Integral" itemValue="INTEGRAL" />
-							</p:selectOneMenu>
-							<p:outputLabel for="periodoAno"
-								value="Quantidade de Anos (Ensino Fundamental e Médio) ou Semestres" />
-							<p:spinner id="periodoAno" value="#{MBCursoView.instCurso.ano}"
-								disabled="#{!MBCursoView.detalharCursos}" min="0" max="20" />
-							<p:outputLabel for="dtInicio"
-								value="Data de Inicio de oferta do Curso" />
-							<p:calendar id="dtInicio" value="#{MBCursoView.instCurso.inicio}"
-								showOn="button" pattern="dd/MM/yyyy"
-								disabled="#{!MBCursoView.detalharCursos}" locale="pt" />
-							<p:outputLabel for="dtFim" value="Data de Fim de oferta do Curso" />
-							<p:calendar id="dtFim" value="#{MBCursoView.instCurso.fim}"
-								showOn="button" pattern="dd/MM/yyyy"
-								disabled="#{!MBCursoView.detalharCursos}" locale="pt" />
+							<p:column>
+								<p:outputLabel value="Nome do Curso" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nmCurso" size="30"
+									value="#{MBCursoView.instCurso.curso.curso}" disabled="true"
+									autoUpdate="true" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Turno" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="turnoCurso"
+									disabled="#{!MBCursoView.detalharCursos}"
+									value="#{MBCursoView.instCurso.turno}" autoUpdate="true">
+									<f:selectItem itemLabel="Matutino" itemValue="MATUTINO" />
+									<f:selectItem itemLabel="Vespertino" itemValue="VESPERTINO" />
+									<f:selectItem itemLabel="Noturno" itemValue="NOTURNO" />
+									<f:selectItem itemLabel="Misto" itemValue="MISTO" />
+									<f:selectItem itemLabel="Integral" itemValue="INTEGRAL" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<p:outputLabel for="periodoAno"
+									value="Quantidade de Anos (Ensino"/>
+								<br/>
+								<p:outputLabel for="periodoAno"
+									value="Fundamental e Médio) ou Semestres" />
+							</p:column>
+							<p:column>
+								<p:spinner id="periodoAno" value="#{MBCursoView.instCurso.ano}"
+									disabled="#{!MBCursoView.detalharCursos}" min="1" max="20" />
+							</p:column>
 						</p:panelGrid>
 						<br />
 						<p:commandButton value="Cadastrar Detalhe"
 							action="#{MBCursoView.cadastrarCurso}"
-							update="cursosPickList detalheCursos nmCurso turnoCurso dtInicio dtFim cursoTab"
+							update="cursosPickList detalheCursos nmCurso turnoCurso cursoTab"
 							disabled="#{MBCursoView.fimCadastro}" />
 					</p:panel>
 				</p:panelGrid>

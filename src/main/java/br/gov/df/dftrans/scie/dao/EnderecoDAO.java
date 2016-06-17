@@ -39,7 +39,25 @@ public class EnderecoDAO extends DAO<Endereco> {
 		try {
 			TypedQuery<Endereco> typedQuery = entityManager.createNamedQuery(Endereco.ENDERECO_FIND_BY_CEP,
 					Endereco.class);
-			return typedQuery.setParameter("cep", chave).getSingleResult();
+			List<Endereco> endlist = typedQuery.setParameter("cep", chave).getResultList();
+			int count1 = 0, count2 = 0;
+			Endereco end = null;
+			if(!endlist.isEmpty()){
+				end = new Endereco();
+				for(Endereco temp: endlist){
+					if(temp.getBairro() != null && temp.getBairro().length() > count1){
+						end.setBairro(temp.getBairro());
+						count1 = temp.getBairro().length();
+					}if(temp.getLogradouro() != null && temp.getLogradouro().length() > count2){
+						end.setLogradouro(temp.getLogradouro());
+						count2 = temp.getLogradouro().length();
+					}
+					end.setCidade(temp.getCidade());
+				}
+				end.setCep(chave);
+				end.setComplemento("");
+			}
+			return end;
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {

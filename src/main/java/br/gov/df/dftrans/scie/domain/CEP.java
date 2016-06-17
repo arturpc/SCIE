@@ -6,7 +6,6 @@ public class CEP{
 	private String cidade;
 	private String bairro;
 	private String logradouro;
-	private String complemento;
 	
 
 	//sobrescrita toString
@@ -18,7 +17,6 @@ public class CEP{
 			sb.append("Cidade : "+getCidade()+"\n");
 			sb.append("Bairro : "+getBairro()+"\n");
 			sb.append("Logradouro : "+getLogradouro()+"\n");
-			sb.append("Complemento : "+getComplemento()+"\n");
 		return sb.toString();
 	}
 	
@@ -47,14 +45,6 @@ public class CEP{
 	}
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
 	}
 	
 	

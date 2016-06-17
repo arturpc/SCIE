@@ -20,10 +20,10 @@ import br.gov.df.dftrans.scie.utils.GeradorUsuario;
 @Entity
 @Table(name = "tb_usuario")
 @NamedQueries({
-		@NamedQuery(name = Usuario.USUARIO_FIND_BY_AUTENTICACAO, query = "SELECT u FROM Usuario u WHERE u.login = :login and u.senha = :senha "),
-		@NamedQuery(name = Usuario.USUARIO_GET_ALL, query = "SELECT u FROM Usuario u"),
-		@NamedQuery(name = Usuario.USUARIO_FIND_BY_EMAIL, query = "SELECT u FROM Usuario u where u.email = :email"),
-		@NamedQuery(name = Usuario.USUARIO_FIND_BY_LOGIN, query = "SELECT u FROM Usuario u where u.login = :login") })
+		@NamedQuery(name = Usuario.USUARIO_FIND_BY_AUTENTICACAO, query = "SELECT u FROM Usuario u WHERE u.login = :login and u.senha = :senha and u.ativo = 1"),
+		@NamedQuery(name = Usuario.USUARIO_GET_ALL, query = "SELECT u FROM Usuario u where u.ativo = 1"),
+		@NamedQuery(name = Usuario.USUARIO_FIND_BY_EMAIL, query = "SELECT u FROM Usuario u where u.email = :email and u.ativo = 1"),
+		@NamedQuery(name = Usuario.USUARIO_FIND_BY_LOGIN, query = "SELECT u FROM Usuario u where u.login = :login and u.ativo = 1") })
 public class Usuario implements Serializable {
 
 	public static final String USUARIO_FIND_BY_AUTENTICACAO = "Usuario.getByAutenticacao";
@@ -59,6 +59,9 @@ public class Usuario implements Serializable {
 
 	@Column(name = "st_reset_senha")
 	private int reset = 0;
+	
+	@Column(name = "st_ativo")
+	private int ativo = 1;
 
 	// construtores
 	public Usuario() {

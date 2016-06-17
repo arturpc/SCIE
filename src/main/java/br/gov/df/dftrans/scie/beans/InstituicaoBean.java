@@ -55,6 +55,7 @@ public class InstituicaoBean implements Serializable {
 	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
 	private UFDAO ufdao = UFDAO.UFDAO();
 	private CidadeDAO ciddao = CidadeDAO.CidadeDAO();
+	private EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
 	private Representante representante = null;
 	private CursoViewBean cursoBean;
 	private String[] contato = new String[5];
@@ -116,6 +117,7 @@ public class InstituicaoBean implements Serializable {
 			setComplemento(getEndereco().getComplemento());
 			setCidade(endereco.getCidade());
 			setUf(getCidade().getUf());
+			setCep(getEndereco().getCep());
 			RepresentanteDAO repDAO = RepresentanteDAO.RepresentanteDAO();
 			setRepresentante(repDAO.getByCPF(codCPFsemMascara));
 			if (getRepresentante() == null) {
@@ -293,43 +295,44 @@ public class InstituicaoBean implements Serializable {
 		resultado = resultado.replace(")", "");
 		resultado = resultado.replace(" ", "");
 		resultado = resultado.replace("/", "");
+		resultado = resultado.replace("_", "");
 		return resultado;
 	}
 
 	public void consultarCEP() {
-		if(getInstituicao() == null){
-			setInstituicao(new InstituicaoEnsino());
-		}
-		if(getInstituicao().getEndereco() == null){
-			getInstituicao().setEndereco(new Endereco());
-		}
-		getInstituicao().getEndereco().setCep(removeMascara(cep));
-		if (getInstituicao() != null && getInstituicao().getEndereco() != null
-				&& getInstituicao().getEndereco().getCep() != null
-				&& !getInstituicao().getEndereco().getCep().isEmpty()) {
-			String cep = removeMascara(getInstituicao().getEndereco().getCep());
+		if (!removeMascara(cep).isEmpty() && removeMascara(cep).length() == 8) {
+			if (getInstituicao() == null) {
+				setInstituicao(new InstituicaoEnsino());
+			}
+			if (getInstituicao().getEndereco() == null) {
+				getInstituicao().setEndereco(new Endereco());
+				getInstituicao().getEndereco().setCep(removeMascara(cep));
+			} else {
+				getInstituicao().setEndereco(enddao.getByCEP(removeMascara(cep)));
+			}
+			setBairro(getInstituicao().getEndereco().getBairro());
+			setLogradouro(getInstituicao().getEndereco().getLogradouro());
+			setComplemento("");
+			Cidade cid = ciddao.get(getInstituicao().getEndereco().getCidade().getNome(), getInstituicao().getEndereco().getCidade().getUf().getUf());
+			if (cid != null) {
+				setCidade(ciddao.get(getInstituicao().getEndereco().getCidade().getNome(), getInstituicao().getEndereco().getCidade().getUf().getUf()));
+			}
+			/*String cep = removeMascara(getInstituicao().getEndereco().getCep());
 			CEP c = ValidadorCEP.getEndereco(cep);
 			if (c != null) {
-				if (getInstituicao().getEndereco().getBairro() == null) {
-					setBairro(c.getBairro());
-					getInstituicao().getEndereco().setBairro(c.getBairro());
-					getEndereco().setBairro(c.getBairro());
-				}
-				if (getInstituicao().getEndereco().getLogradouro() == null) {
-					setLogradouro(c.getLogradouro());
-					getInstituicao().getEndereco().setLogradouro(c.getLogradouro());
-					getEndereco().setLogradouro(c.getLogradouro());
-				}
-				if (getInstituicao().getEndereco().getComplemento() == null) {
-					setComplemento(c.getComplemento());
-					getInstituicao().getEndereco().setComplemento(c.getComplemento());
-					getEndereco().setComplemento(c.getComplemento());
-				}
+				setBairro(c.getBairro());
+				getInstituicao().getEndereco().setBairro(c.getBairro());
+				getEndereco().setBairro(c.getBairro());
+				setLogradouro(c.getLogradouro());
+				getInstituicao().getEndereco().setLogradouro(c.getLogradouro());
+				getEndereco().setLogradouro(c.getLogradouro());
+				setComplemento("");
 				Cidade cid = ciddao.get(c.getCidade(), c.getUf());
-				if(cid != null){
+				if (cid != null) {
 					setCidade(ciddao.get(c.getCidade(), c.getUf()));
 				}
 			}
+			*/
 		}
 	}
 

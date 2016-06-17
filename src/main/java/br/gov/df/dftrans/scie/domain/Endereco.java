@@ -20,7 +20,7 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @Entity
 @Table(name = "tb_endereco")
 @NamedQueries({ @NamedQuery(name = Endereco.ENDERECO_GET_ALL, query = "SELECT e FROM Endereco e"),
-		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_CEP, query = "SELECT e FROM Endereco e WHERE e.cep = :cep"),
+		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_CEP, query = "SELECT e FROM Endereco e WHERE e.cep = :cep order by e.id desc"),
 		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_ID, query = "SELECT e FROM Endereco e WHERE e.id = :id") })
 public class Endereco implements Serializable {
 
