@@ -1,5 +1,6 @@
 package br.gov.df.dftrans.scie.beans;
 
+import java.io.File;
 import java.util.Locale;
 
 import javax.el.ELResolver;
@@ -42,6 +43,15 @@ public class SolicitacaoBean {
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private String cpf = "00000000000";
+	private String[] files;
+
+	public String[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 
 	// inicia solicitacões
 	public void start() {
@@ -111,6 +121,13 @@ public class SolicitacaoBean {
 			// arquivo presente no destino informado
 			setPath(ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
 					+ delimitadorDiretorio + "" + getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
+			setFiles(new String[2]);
+			int flag = 0;
+			for(String tmp : getPath()){
+				if(flag < 2){
+					files[flag++] = tmp;
+				}
+			}
 			// seta pathAtual com a primeira linha do arquivo
 			setPathAtual(getPath()[0]);
 			// seta o tipo do documento
@@ -199,7 +216,6 @@ public class SolicitacaoBean {
 		aux1 = aux[1].split(delimitadorDiretorioREGEX);
 		chave += aux1[2];
 		chave += getDocumento();
-		chave = chave.replaceAll(delimitadorDiretorioREGEX, "").replaceAll(" ", "").replaceAll("-", "");
 		return AutenticacaoDocumentos.getChaveSeguranca(chave);
 		} catch (Exception e){
 			return "Não foi possivel calcular a autenticacao";
@@ -241,7 +257,7 @@ public class SolicitacaoBean {
 		}
 		// Envia um email informando a situação do cadastro
 		// ple.dftrans@gmail.com
-		Mail.sendEmail2ViaValidacao(getSolicitacao(), getArquivoValido(), getComentario(), getNomes());
+		Mail.sendEmail2ViaValidacao(getSolicitacao(), getArquivoValido(), getComentario(), getNomes(),getFiles());
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
 

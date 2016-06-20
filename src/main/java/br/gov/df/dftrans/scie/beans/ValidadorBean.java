@@ -1,4 +1,6 @@
 package br.gov.df.dftrans.scie.beans;
+import java.io.File;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -13,7 +15,7 @@ public class ValidadorBean {
 	private Usuario user;
 	private boolean[] arquivoValido = new boolean[8];
 	private String[] comentario = new String[8];
-	
+	private File[] aquivos = new File[8];
 	//inicia o usuário com o usuário da sessão
 	public void init(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -49,6 +51,14 @@ public class ValidadorBean {
 
 	public void setComentario(String[] comentario) {
 		this.comentario = comentario;
+	}
+
+	public File[] getAquivos() {
+		return aquivos;
+	}
+
+	public void setAquivos(File[] aquivos) {
+		this.aquivos = aquivos;
 	}
 	
 	

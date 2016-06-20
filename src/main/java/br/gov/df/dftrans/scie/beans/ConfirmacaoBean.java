@@ -226,7 +226,6 @@ public class ConfirmacaoBean {
 		aux1 = aux[1].split("\\\\");
 		chave += aux1[2];
 		chave += getDocumento();
-		chave = chave.replaceAll("/", "").replaceAll(" ", "").replaceAll("-", "");
 		return AutenticacaoDocumentos.getChaveSeguranca(chave);
 	}
 

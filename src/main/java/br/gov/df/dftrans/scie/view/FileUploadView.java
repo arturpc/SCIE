@@ -363,7 +363,6 @@ public class FileUploadView implements Serializable {
 			chave += inst.getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += documento;
-			chave = chave.replaceAll(delimitadorDiretorioREGEX, "").replaceAll(" ", "").replaceAll("-", "");
 			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
@@ -407,7 +406,6 @@ public class FileUploadView implements Serializable {
 			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			chave += fmt.format(new Date());
 			chave += documento;
-			chave = chave.replaceAll(delimitadorDiretorioREGEX, "").replaceAll(" ", "").replaceAll("-", "");
 			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();

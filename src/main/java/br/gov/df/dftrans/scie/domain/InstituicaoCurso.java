@@ -69,7 +69,7 @@ public class InstituicaoCurso implements Serializable {
 	private Date fim;
 
 	@Column(name = "ds_ano_periodo")
-	private int ano;
+	private int ano = 1;
 
 	// construtores
 	public InstituicaoCurso(InstituicaoEnsino ie, Curso curso, String turno, int ano) {

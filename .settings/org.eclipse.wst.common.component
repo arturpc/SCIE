@@ -6,6 +6,6 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/webapp"/>
         <property name="java-output-path" value="/SCIE/target/classes"/>
-        <property name="context-root" value="SCIE"/>
+        <property name="context-root" value="2Via"/>
     </wb-module>
 </project-modules>

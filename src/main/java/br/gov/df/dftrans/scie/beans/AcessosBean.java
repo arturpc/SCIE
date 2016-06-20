@@ -1,5 +1,6 @@
 package br.gov.df.dftrans.scie.beans;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +51,18 @@ public class AcessosBean {
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private String cpf = "00000000000";
+	private String[] files;
+
+	public String[] getFiles() {
+		return files;
+	}
+	
+	public AcessosBean() {
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+	}
 
 	/**
 	 * Inicia a variável extAcesso com um ListDataModel de todas as extensões
@@ -140,9 +153,17 @@ public class AcessosBean {
 			// seta path com array de string que representam as linhas do
 			// arquivo presente no destino informado
 			if (temArquivos()) {
+				setFiles(new String[2]);
 				setPath(ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
 						+ delimitadorDiretorio + "" + getExtAcesso().getCpf() + "" + delimitadorDiretorio + "files"));
-
+				
+				int flag = 0;
+				for(String tmp : getPath()){
+					if (flag > 1 && flag < 4){
+						files[flag-2] = tmp;
+					}
+					flag++;
+				}
 				// seta pathAtual com a primeira linha do arquivo
 				setPathAtual(getPath()[getDocumento()]);
 
@@ -227,6 +248,7 @@ public class AcessosBean {
 
 	public String terminarValidacao() {
 		boolean validado = true;
+		
 		// Caso tenha um arquivo valido e os outros não, é necessário setar o
 		// válido como inválido
 		if (getArquivoValido()[2] && (!getArquivoValido()[0] || !getArquivoValido()[1])) {
@@ -261,7 +283,7 @@ public class AcessosBean {
 		}
 		// Envia um email informando a situação do cadastro
 		// ple.dftrans@gmail.com
-		Mail.sendEmailAcessosValidacao(getExtAcesso(), getArquivoValido(), getComentario(), getNomes());
+		Mail.sendEmailAcessosValidacao(getExtAcesso(), getArquivoValido(), getComentario(), getNomes(),getFiles());
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
 

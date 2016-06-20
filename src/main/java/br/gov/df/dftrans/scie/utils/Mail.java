@@ -1,14 +1,23 @@
 package br.gov.df.dftrans.scie.utils;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import br.gov.df.dftrans.scie.domain.ExtensaoAcesso;
 import br.gov.df.dftrans.scie.domain.Representante;
@@ -20,6 +29,8 @@ public class Mail implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
+	private static String delimitadorDiretorioREGEX;
 
 	/**
 	 * Envia email para o usuário informando sua senha
@@ -27,7 +38,6 @@ public class Mail implements Serializable {
 	 * @param usuario
 	 */
 	public static void sendEmailUser(Usuario usuario) {
-
 		String titulo = "Cadastro SCIE - Usuário";
 		String mensagem = "<b>Mensagem gerada automaticamente pelo sistema, n&atilde;o &eacute; necess&aacute;rio responder.</b>"
 				+ "<br/>" + "<br/>" + "<br/>" + "Prezado(a) " + usuario.getNome() + ",<br/>"
@@ -40,7 +50,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>" + "Excelente Navega&ccedil;&atilde;o! =)<br/>" + "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(usuario.getEmail(), titulo, mensagem, false);
+		sendEmail(usuario.getEmail(), titulo, mensagem, false, null,null);
 	}
 
 	/**
@@ -60,7 +70,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>" + "Excelente Navega&ccedil;&atilde;o! =)<br/>" + "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(rep.getEmail(), titulo, mensagem, true);
+		sendEmail(rep.getEmail(), titulo, mensagem, true,null,null);
 
 	}
 
@@ -81,7 +91,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(email, titulo, content, true);
+		sendEmail(email, titulo, content, true,null,null);
 	}
 
 	/**
@@ -101,7 +111,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(email, titulo, content, true);
+		sendEmail(email, titulo, content, true, null, null);
 	}
 
 	/**
@@ -114,8 +124,9 @@ public class Mail implements Serializable {
 	 * @param nomes
 	 */
 	public static void sendEmail2ViaValidacao(Solicitacao sol, boolean[] validados, String[] comentario,
-			String[] nomes) {
+			String[] nomes,String[] files) {
 		String titulo = "RESULTADO Solicitação 2 Via Cartão PLE - Validação";
+		boolean[] b = new boolean[2];
 		String content = "";
 		content += "<b>Mensagem gerada automaticamente pelo sistema, n&atilde;o &eacute; necess&aacute;rio responder.</b>"
 				+ "<br/>" + "<br/>" + "<br/>" + "Prezado(a) estudante,<br/>"
@@ -130,6 +141,7 @@ public class Mail implements Serializable {
 				content += "Arquivo: <br/><b>" + nomes[i] + "</b><br/><br/>";
 				content += "Avalia&ccedil;&atilde;o do Arquivo: <br/><b>" + (validados[i] ? "Aprovado" : "Reprovado")
 						+ "</b><br/><br/>";
+				b[i] = !validados[i];
 			}
 			content += "Justificativa:<br/>" + (comentario[i].equals("") ? "(Sem coment&aacute;rios)" : comentario[i])
 					+ "<br/><br/>";
@@ -140,7 +152,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(sol.getEmail(), titulo, content, true);
+		sendEmail(sol.getEmail(), titulo, content, true,files, b);
 	}
 
 	/**
@@ -153,8 +165,9 @@ public class Mail implements Serializable {
 	 * @param nomes
 	 */
 	public static void sendEmailAcessosValidacao(ExtensaoAcesso ext, boolean[] validados, String[] comentario,
-			String[] nomes) {
+			String[] nomes, String[] files) {
 		String content = "";
+		boolean[] b = new boolean[2];
 		content += "<b>Mensagem gerada automaticamente pelo sistema, n&atilde;o &eacute; necess&aacute;rio responder.</b>"
 				+ "<br/>" + "<br/>" + "<br/>" + "Prezado(a) estudante,<br/>"
 				// linha diferente
@@ -169,6 +182,7 @@ public class Mail implements Serializable {
 				content += "Arquivo: <br/><b>" + nomes[i] + "</b><br/><br/>";
 				content += "Avalia&ccedil;&atilde;o do Arquivo: <br/><b>" + (validados[i] ? "Aprovado" : "Reprovado")
 						+ "</b><br/><br/>";
+				b[i] = !validados[i];
 			}
 			content += "Justificativa:<br/>" + (comentario[i].equals("") ? "(Sem coment&aacute;rios)" : comentario[i])
 					+ "<br/><br/>";
@@ -179,7 +193,7 @@ public class Mail implements Serializable {
 				+ "Sua opini&atilde;o &eacute; muito importante para o aperfei&ccedil;oamento cont&iacute;nuo da presta&ccedil;&atilde;o dos nossos servi&ccedil;os.<br/>"
 				+ "<br/>"
 				+ "Transporte Urbano do Distrito Federal (DFTRANS) - Diretoria de Tecnologia da Informa&ccedil;&atilde;o (DTI)<br/>";
-		sendEmail(ext.getEmail(), "RESULTADO Solicitação Extensão de Acessos Cartão PLE - Validação", content, true);
+		sendEmail(ext.getEmail(), "RESULTADO Solicitação Extensão de Acessos Cartão PLE - Validação", content, true,files, b);
 	}
 
 	/**
@@ -190,7 +204,7 @@ public class Mail implements Serializable {
 	 * @param mensagem
 	 * @param copiaEmail
 	 */
-	public static void sendEmail(String destinatario, String titulo, String mensagem, boolean copiaEmail) {
+	public static void sendEmail(String destinatario, String titulo, String mensagem, boolean copiaEmail,String[] files, boolean[] isAnexo) {
 		// Abstração de propriedades de conexão
 		Properties props = new Properties();
 		// seta o protocolo de transferência que está em um arquivo de
@@ -204,7 +218,14 @@ public class Mail implements Serializable {
 		props.setProperty("mail.user", Parametros.getParameter("mail_user"));
 		props.setProperty("mail.password", Parametros.getParameter("mail_password"));
 		// API EMAIL, estabelece conexão com a máquina informada
-		Session mailSession = Session.getDefaultInstance(props, null);
+		Session mailSession = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                     protected PasswordAuthentication getPasswordAuthentication() 
+                     {
+                           return new PasswordAuthentication(Parametros.getParameter("mail_user"), Parametros.getParameter("mail_password"));
+                     }
+                });
+		
 		mailSession.setDebug(new Boolean(Parametros.getParameter("debug")));
 		Transport transport = null;
 		try {
@@ -225,14 +246,26 @@ public class Mail implements Serializable {
 					.replaceAll("Õ", "&Otilde;").replaceAll("â", "&acirc;").replaceAll("Â", "&UAcirc;")
 					.replaceAll("ê", "&ecirc;").replaceAll("Ê", "&Ecirc;").replaceAll("ô", "&ocirc;")
 					.replaceAll("Ô", "&Ocirc;");
+			
+			Multipart multipart = new MimeMultipart();
+			BodyPart messageBodyPart = new MimeBodyPart();
+			messageBodyPart.setContent(content, "text/html");
+			multipart.addBodyPart(messageBodyPart);
+			if(files != null){
+				for(int i = 0; i < files.length; i++){
+					if(isAnexo[i]){
+					addAttachment(multipart, files[i]);
+					}
+				}
+			}
 
-			message.setContent(content, "text/html");
+	        message.setContent(multipart);
 
 			// seta o destinatário
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
 			// envia uma cópia do email
 			if (copiaEmail) {
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress("ple@dftrans.df.gov.br"));
+				//message.addRecipient(Message.RecipientType.TO, new InternetAddress("ple@dftrans.df.gov.br"));
 			}
 			transport.connect();
 			transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
@@ -240,6 +273,36 @@ public class Mail implements Serializable {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static void addAttachment(Multipart multipart, String filename) throws MessagingException {
+	    DataSource source = new FileDataSource(filename);
+	    BodyPart messageBodyPart = new MimeBodyPart();        
+	    messageBodyPart.setDataHandler(new DataHandler(source));
+		setDelimitadorDiretorioREGEX();
+		String aux[] = filename.split(getDelimitadorDiretorioREGEX());
+	    messageBodyPart.setFileName(aux[aux.length-1]);
+	    multipart.addBodyPart(messageBodyPart);
+	}
+	
+	/**
+	 * Método responsável por tratar caracteres reservados em expresões
+	 * regulares
+	 */
+	private static void setDelimitadorDiretorioREGEX() {
+		if (".\\dDwW*+?sS^$|".contains(delimitadorDiretorio)) {
+			delimitadorDiretorioREGEX = "\\" + delimitadorDiretorio;
+		} else {
+			delimitadorDiretorioREGEX = delimitadorDiretorio;
+		}
+	}
+
+	public static String getDelimitadorDiretorioREGEX() {
+		return delimitadorDiretorioREGEX;
+	}
+
+	public static void setDelimitadorDiretorioREGEX(String delimitadorDiretorioREGEX) {
+		Mail.delimitadorDiretorioREGEX = delimitadorDiretorioREGEX;
 	}
 
 }
