@@ -105,12 +105,12 @@
 			<ui:insert name="menu" />
 			<h:form>
 				<p:slideMenu backLabel="Voltar">
-					<p:submenu label="Instituição">
-						<p:submenu label="Cadastro">
+					<p:submenu label="Instituição" rendered="false">
+						<p:submenu label="Cadastro" rendered="false">
 							<p:menuitem value="Atualizar Cadastro"
-								action="#{loginBean.atualizarCadastro}" />
+								action="#{loginBean.atualizarCadastro}" rendered="false"/>
 							<p:menuitem value="Verificar Pendências"
-								action="#{loginBean.instituicaoHome}" />
+								action="#{loginBean.instituicaoHome}" rendered="false"/>
 						</p:submenu>
 					</p:submenu>
 					<p:submenu label="Estudante">

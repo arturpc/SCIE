@@ -54,6 +54,9 @@ public class Endereco implements Serializable {
 	@StringFormatter
 	@Column(name = "ds_complemento")
 	private String complemento;
+	
+	@Column(name = "nr_endereco")
+	private int nr_endereco = 0;
 
 	// construtores
 	public Endereco() {
