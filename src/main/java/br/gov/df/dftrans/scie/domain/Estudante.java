@@ -26,9 +26,12 @@ import br.gov.df.dftrans.scie.utils.CPFValidator;
 
 @Entity
 @Table(name = "tb_estudante")
-@NamedQueries({ @NamedQuery(name = Estudante.ESTUDANTE_GET_ALL, query = "SELECT e FROM Estudante e"),
-		@NamedQuery(name = Estudante.ESTUDANTE_FIND_BY_ID, query = "SELECT e FROM Estudante e WHERE e.id = :id"),
-		@NamedQuery(name = Estudante.ESTUDANTE_FIND_BY_CPF, query = "SELECT e FROM Estudante e WHERE e.cpf = :cpf") })
+@NamedQueries({ @NamedQuery(name = Estudante.ESTUDANTE_GET_ALL, 
+		query = "SELECT e FROM Estudante e"),
+		@NamedQuery(name = Estudante.ESTUDANTE_FIND_BY_ID, 
+		query = "SELECT e FROM Estudante e WHERE e.id = :id"),
+		@NamedQuery(name = Estudante.ESTUDANTE_FIND_BY_CPF, 
+		query = "SELECT e FROM Estudante e WHERE e.cpf = :cpf") })
 public class Estudante implements Serializable {
 
 	public static final String ESTUDANTE_GET_ALL = "Estudante.getAll";
@@ -89,18 +92,25 @@ public class Estudante implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Estudante other = (Estudante) obj;
 		if (matricula == null) {
-			if (other.matricula != null)
+			if (other.matricula != null){
 				return false;
-		} else if (!matricula.equals(other.matricula))
-			return false;
+			}
+		} else{
+			if (!matricula.equals(other.matricula)){
+				return false;
+			}
+		}
 		return true;
 	}
 

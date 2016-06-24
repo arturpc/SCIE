@@ -27,9 +27,12 @@ public class SelectCPFDAO {
 	public static final String SELECT = "SELECT NUMEROCPF FROM DB_PLE.VW_CPF_ALUNOS_APROVADOS";
 	public static final String SELECT_SENHA = "SELECT U.SENHA "+
 			"FROM DB_PLE.VW_CA_USUARIO_PORTAL U "+
-			"INNER JOIN DB_PLE.VW_CA_PARCEIRO_PROTOCOLO PAR ON PAR.ID = U.PARCEIROPROTOCOLO_ID "+
-			"INNER JOIN DB_PLE.VW_CA_PESSOA_PROTOCOLO PES ON PES.ID = PAR.PESSOAPROTOCOLO_ID "+
-			"INNER JOIN DB_PLE.VW_CA_PESSOA_FISICA_PROTOCOLO PF ON PF.ID = PES.PESSOAFISICAPROTOCOLO_ID "+
+			"INNER JOIN DB_PLE.VW_CA_PARCEIRO_PROTOCOLO PAR "
+			+ "ON PAR.ID = U.PARCEIROPROTOCOLO_ID "+
+			"INNER JOIN DB_PLE.VW_CA_PESSOA_PROTOCOLO PES "
+			+ "ON PES.ID = PAR.PESSOAPROTOCOLO_ID "+
+			"INNER JOIN DB_PLE.VW_CA_PESSOA_FISICA_PROTOCOLO PF "
+			+ "ON PF.ID = PES.PESSOAFISICAPROTOCOLO_ID "+
 			"WHERE PF.NUMEROCPF = ";
 	public static final int SEGUNDAVIA = 1;
 	public static final int ACESSOS = 2;
@@ -39,7 +42,8 @@ public class SelectCPFDAO {
 	private static SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
 	private static ExtensaoAcessoDAO acedao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
 
-	public static SelectCPFDAO SelectCPFDAO() throws ClassNotFoundException, SQLException, EntityNotFoundException {
+	public static SelectCPFDAO SelectCPFDAO() 
+			throws ClassNotFoundException, SQLException, EntityNotFoundException {
 		if (dao == null) {
 			dao = new SelectCPFDAO();
 			getAll();
@@ -47,7 +51,8 @@ public class SelectCPFDAO {
 		return dao;
 	}
 
-	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+	public static Connection getConnection() 
+			throws ClassNotFoundException, SQLException {
 		Connection con = null;
 		Class.forName("oracle.jdbc.OracleDriver");
 		con = DriverManager.getConnection(URL, USER, PASS);
@@ -64,12 +69,14 @@ public class SelectCPFDAO {
 	 * @throws ClassNotFoundException
 	 * @throws EntityNotFoundException
 	 */
-	public static void getAll() throws SQLException, ClassNotFoundException, EntityNotFoundException {
+	public static void getAll() 
+			throws SQLException, ClassNotFoundException, EntityNotFoundException {
 		if (date == null || (new Date()).getTime() - date.getTime() > (long) 900000) {
 			date = new Date();
 			Connection con = getConnection();
 			List<String[]> retorno = new ArrayList<String[]>();
-			List<String> solicitados = new ArrayList<String>(), acessos = new ArrayList<String>();
+			List<String> solicitados = new ArrayList<String>();
+			List<String> acessos = new ArrayList<String>();
 			PreparedStatement instrucao = con.prepareStatement(SELECT);
 			ResultSet linhas = instrucao.executeQuery();
 			String[] s;
@@ -97,16 +104,19 @@ public class SelectCPFDAO {
 			setCPFList(retorno);
 		} else {
 			List<String[]> retorno = new ArrayList<String[]>();
-			List<String> solicitados = new ArrayList<String>(), acessos = new ArrayList<String>();
+			List<String> solicitados = new ArrayList<String>();
+			List<String> acessos = new ArrayList<String>();
 			List<Solicitacao> list = soldao.get();
 			for (Solicitacao temp : list) {
-				if (temp.getStatus() == 0 || temp.getStatus() == 1 || temp.getStatus() == 2 || temp.getStatus() == 4) {
+				if (temp.getStatus() == 0 || temp.getStatus() == 1 
+						|| temp.getStatus() == 2 || temp.getStatus() == 4) {
 					solicitados.add(temp.getCpf());
 				}
 			}
 			List<ExtensaoAcesso> listAcesso = acedao.get();
 			for (ExtensaoAcesso temp : listAcesso) {
-				if (temp.getStatus() == 0 || temp.getStatus() == 1 || temp.getStatus() == 2 || temp.getStatus() == 4) {
+				if (temp.getStatus() == 0 || temp.getStatus() == 1 
+						|| temp.getStatus() == 2 || temp.getStatus() == 4) {
 					acessos.add(temp.getCpf());
 				}
 			}
@@ -194,8 +204,10 @@ public class SelectCPFDAO {
 		try {
 			Connection con = getConnection();
 			PreparedStatement instrucao = con.prepareStatement(
-					"SELECT DISTINCT DS_NOME FROM AGE_TB_ESTUDANTE WHERE UTL_MATCH.EDIT_DISTANCE_SIMILARITY(SUBSTR(DS_NOME,0,"
-							+ nome.length() + "), UPPER('" + nome + "')) > 80");
+					"SELECT DISTINCT DS_NOME FROM AGE_TB_ESTUDANTE WHERE "
+					+ "UTL_MATCH.EDIT_DISTANCE_SIMILARITY(SUBSTR(DS_NOME,0,"
+							+ nome.length() + "), UPPER('" 
+					+ nome + "')) > 80");
 			ResultSet linhas = instrucao.executeQuery();
 			while (linhas.next()) {
 				results.add(linhas.getString(1));
@@ -246,10 +258,19 @@ public class SelectCPFDAO {
 		try {
 			Connection con = getConnection();
 			PreparedStatement instrucao = con.prepareStatement(
-					"SELECT DISTINCT EST.DS_NOME, EST.NR_CPF, TUR.ANO_MES_DIA, TUR.DS_HORARIO, TUR.DS_TURNO, TUR.DS_LOCAL FROM AGE_TB_ESTUDANTE EST "
-							+ "LEFT JOIN AGE_TB_AGENDAMENTO AGE ON EST.ID_ESTUDANTE = AGE.ID_ESTUDANTE LEFT JOIN AGE_TB_TURNO TUR ON "
-							+ "TUR.ID_TURNO = AGE.ID_TURNO WHERE EST.ST_AGENDADO = 1 AND EST.ST_CARTAO_NOVO = 1 AND NR_CPF = ? AND EST.DS_NOME = ? ORDER BY ANO_MES_DIA",
-					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					"SELECT DISTINCT EST.DS_NOME, EST.NR_CPF, "
+					+ "TUR.ANO_MES_DIA, TUR.DS_HORARIO, TUR.DS_TURNO, "
+					+ "TUR.DS_LOCAL FROM AGE_TB_ESTUDANTE EST "
+							+ "LEFT JOIN AGE_TB_AGENDAMENTO AGE "
+							+ "ON EST.ID_ESTUDANTE = AGE.ID_ESTUDANTE "
+							+ "LEFT JOIN AGE_TB_TURNO TUR ON "
+							+ "TUR.ID_TURNO = AGE.ID_TURNO "
+							+ "WHERE EST.ST_AGENDADO = 1 AND "
+							+ "EST.ST_CARTAO_NOVO = 1 AND "
+							+ "NR_CPF = ? AND EST.DS_NOME = ? "
+							+ "ORDER BY ANO_MES_DIA",
+					ResultSet.TYPE_SCROLL_INSENSITIVE, 
+					ResultSet.CONCUR_UPDATABLE);
 			instrucao.setString(1, cpf);
 			instrucao.setString(2, nome);
 			ResultSet linhas = instrucao.executeQuery();
@@ -285,9 +306,12 @@ public class SelectCPFDAO {
 		try {
 			Connection con = getConnection();
 			PreparedStatement instrucao = con.prepareStatement(
-					"SELECT DISTINCT DS_NOME, NR_CARTAO, NR_CPF FROM AGE_TB_ESTUDANTE WHERE ST_CARTAO_NOVO = 0 AND "
+					"SELECT DISTINCT DS_NOME, NR_CARTAO, "
+					+ "NR_CPF FROM AGE_TB_ESTUDANTE "
+					+ "WHERE ST_CARTAO_NOVO = 0 AND "
 							+ "DS_NOME = ? AND NR_CPF = ?",
-					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+					ResultSet.TYPE_SCROLL_INSENSITIVE, 
+					ResultSet.CONCUR_UPDATABLE);
 			instrucao.setString(2, cpf);
 			instrucao.setString(1, nome);
 			ResultSet linhas = instrucao.executeQuery();

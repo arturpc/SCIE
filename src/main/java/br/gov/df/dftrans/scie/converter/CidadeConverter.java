@@ -16,10 +16,13 @@ public class CidadeConverter implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
-                CidadeService service = (CidadeService) fc.getExternalContext().getApplicationMap().get("CidadeService");
+                CidadeService service = (CidadeService) fc
+                		.getExternalContext().getApplicationMap().get("CidadeService");
                 return service.getCidadePorNome(value);
             } catch(NumberFormatException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Cidade inválida."));
+                throw new ConverterException(
+                		new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                				"Conversion Error", "Cidade inválida."));
             }
         }
         else {

@@ -16,8 +16,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_comentario_validacao")
-@NamedQueries({ @NamedQuery(name = Comentario.COMENTARIO_GET_ALL, query = "SELECT c FROM Comentario c"),
-		@NamedQuery(name = Comentario.COMENTARIO_FIND_BY_ID, query = "SELECT c FROM Comentario c WHERE c.id = :id") })
+@NamedQueries({ @NamedQuery(name = Comentario.COMENTARIO_GET_ALL, 
+query = "SELECT c FROM Comentario c"),
+		@NamedQuery(name = Comentario.COMENTARIO_FIND_BY_ID, 
+		query = "SELECT c FROM Comentario c WHERE c.id = :id") })
 public class Comentario implements Serializable {
 
 	public static final String COMENTARIO_GET_ALL = "ComentarioSegundaVia.getAll";

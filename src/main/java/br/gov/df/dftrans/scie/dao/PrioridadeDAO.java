@@ -73,7 +73,9 @@ public class PrioridadeDAO extends DAO<Prioridade> {
 	public Prioridade getById(int id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Prioridade> typedQuery = entityManager.createNamedQuery(Prioridade.PRIORIDADE_FIND_BY_ID,
+			TypedQuery<Prioridade> typedQuery = entityManager
+					.createNamedQuery(Prioridade
+							.PRIORIDADE_FIND_BY_ID,
 					Prioridade.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
@@ -96,7 +98,9 @@ public class PrioridadeDAO extends DAO<Prioridade> {
 	public List<Prioridade> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Prioridade> typedQuery = entityManager.createNamedQuery(Prioridade.PRIORIDADE_GET_ALL,
+			TypedQuery<Prioridade> typedQuery = entityManager
+					.createNamedQuery(Prioridade
+							.PRIORIDADE_GET_ALL,
 					Prioridade.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {

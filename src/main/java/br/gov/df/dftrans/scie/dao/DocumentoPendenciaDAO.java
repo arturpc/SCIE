@@ -37,7 +37,9 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
-					.createNamedQuery(DocumentoPendencia.DOCUMENTO_FIND_BY_DESC, DocumentoPendencia.class);
+					.createNamedQuery(DocumentoPendencia
+							.DOCUMENTO_FIND_BY_DESC,
+							DocumentoPendencia.class);
 			return typedQuery.setParameter("descricao", chave).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -60,7 +62,9 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
-					.createNamedQuery(DocumentoPendencia.DOCUMENTO_FIND_BY_NUMBER, DocumentoPendencia.class);
+					.createNamedQuery(DocumentoPendencia
+							.DOCUMENTO_FIND_BY_NUMBER, 
+							DocumentoPendencia.class);
 			return typedQuery.setParameter("documento", documento).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -86,7 +90,8 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getDescricao() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getDescricao() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			throw new InsertException();
@@ -95,7 +100,8 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_DOCUMENTO_PENDENCIA", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT",
+				"TB_DOCUMENTO_PENDENCIA", entity.getId()));
 		return entity;
 	}
 
@@ -106,7 +112,8 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 	 * @throws InsertException
 	 * @throws EntityNotFoundException
 	 */
-	public void add(List<DocumentoPendencia> list) throws InsertException, EntityNotFoundException {
+	public void add(List<DocumentoPendencia> list) 
+			throws InsertException, EntityNotFoundException {
 		for (DocumentoPendencia doc : list) {
 			if (get(doc) == null) {
 				add(doc);
@@ -122,8 +129,11 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
-					.createNamedQuery(DocumentoPendencia.DOCUMENTO_FIND_BY_ID, DocumentoPendencia.class);
-			return typedQuery.setParameter("id", ((DocumentoPendencia) id).getId()).getSingleResult();
+					.createNamedQuery(DocumentoPendencia
+							.DOCUMENTO_FIND_BY_ID, 
+							DocumentoPendencia.class);
+			return typedQuery.setParameter("id", ((DocumentoPendencia) id)
+					.getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -143,7 +153,9 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
-					.createNamedQuery(DocumentoPendencia.DOCUMENTO_FIND_BY_ID, DocumentoPendencia.class);
+					.createNamedQuery(DocumentoPendencia
+							.DOCUMENTO_FIND_BY_ID,
+							DocumentoPendencia.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -166,7 +178,9 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
-					.createNamedQuery(DocumentoPendencia.DOCUMENTO_GET_ALL, DocumentoPendencia.class);
+					.createNamedQuery(DocumentoPendencia
+							.DOCUMENTO_GET_ALL, 
+							DocumentoPendencia.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;

@@ -38,15 +38,18 @@ public class GeradorUsuario {
 		String resultado = "";
 		String iterador = "";
 		int i = 1;
-		resultado += Normalizer.normalize(aux[0].toLowerCase(), Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+		resultado += Normalizer.normalize(aux[0].toLowerCase(), Normalizer.Form.NFD)
+				.replaceAll("[^\\p{ASCII}]", "");
 		resultado += ".";
-		iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(), Normalizer.Form.NFD)
+		iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(),
+				Normalizer.Form.NFD)
 				.replaceAll("[^\\p{ASCII}]", "");
 		while (usrdao.getByLogin(resultado + iterador) != null) {
 			// Caso login tenha no banco, ele pega nome.sobrenome, invés de
 			// ultimo nome, ate chegar nome.nome
 			i++;
-			iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(), Normalizer.Form.NFD)
+			iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(),
+					Normalizer.Form.NFD)
 					.replaceAll("[^\\p{ASCII}]", "");
 		}
 		resultado += iterador;

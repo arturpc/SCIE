@@ -42,8 +42,10 @@ public class FileUploadAcessosView {
 	public final int DOC1 = 2;
 	public final int DOC2 = 3;
 	public final String nomesArquivos[] = { "", "", "documento1", "documento2" };
-	public final String descricaoArquivos[] = { "", "", Parametros.getParameter("doc_decl_ie"), "" };
-	public final boolean arquivos[][] = { { false, true }, { false, false }, { true, true }, { false, false } };
+	public final String descricaoArquivos[] = { "", "", Parametros
+			.getParameter("doc_decl_ie"), "" };
+	public final boolean arquivos[][] = { { false, true }, { false, false },
+			{ true, true }, { false, false } };
 	private String current = Parametros.getParameter("root_upload");
 	private Date date = Calendar.getInstance().getTime();
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
@@ -54,9 +56,13 @@ public class FileUploadAcessosView {
 	private boolean esconderArquivos[] = { false, true };
 
 	// construtor
+	/**
+	 * Método construtor
+	 */
 	public FileUploadAcessosView() {
 		setDelimitadorDiretorioREGEX();
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setCpf((String) session.getAttribute("estudante"));
 		// seta a situação do arquivo e i ícone que sera setada pro usuário
 		setUpload();
@@ -83,29 +89,40 @@ public class FileUploadAcessosView {
 	 */
 	public void setUpload() {
 		isUploaded = new ArrayList<Boolean>();
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + DOC1
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) 
+				+ "" + delimitadorDiretorio + "" + DOC1
 				+ "" + delimitadorDiretorio + "" + nomesArquivos[DOC1] + ".pdf");
 		if (file.exists()) {
 			isUploaded.add(new Boolean(true));
 			iconeDOC1 = "//resources//images//checked-icon.png";
 		} else {
 			isUploaded.add(new Boolean(false));
-			iconeDOC1 = "//resources//images//" + (esconderArquivos[0] ? "dis" : "un") + "checked-icon.png";
+			iconeDOC1 = "//resources//images//" + (esconderArquivos[0] ? 
+					"dis" : "un") + "checked-icon.png";
 		}
-		file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
-				+ "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + DOC2 + ""
+		file = new File(current + "" + delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + getCpf()
+				+ "" + delimitadorDiretorio + "" + fmt.format(date) 
+				+ "" + delimitadorDiretorio + "" + DOC2 + ""
 				+ delimitadorDiretorio + "" + nomesArquivos[DOC2] + ".pdf");
 		if (file.exists()) {
 			isUploaded.add(new Boolean(true));
 			iconeDOC2 = "//resources//images//checked-icon.png";
 		} else {
 			isUploaded.add(new Boolean(false));
-			iconeDOC2 = "//resources//images//" + (esconderArquivos[1] ? "dis" : "un") + "checked-icon.png";
+			iconeDOC2 = "//resources//images//" + (esconderArquivos[1] ? 
+					"dis" : "un") + "checked-icon.png";
 		}
 
 	}
 
+	/**
+	 * Método que trata o upload de arquivos de acordo com um parâmetro de documento;
+	 * @param fileUploadEvent
+	 * @param documento
+	 */
 	public void doUpload(FileUploadEvent fileUploadEvent, int documento) {
 		ArrayList<String> conteudo;
 		// trata o arquvo que o usuário subiu
@@ -114,26 +131,32 @@ public class FileUploadAcessosView {
 		setFileNameUploaded(uploadedFile.getFileName());
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
-		String infoAboutFile = "<br/> Arquivo recebido: <b>" + fileNameUploaded + "</b><br/>"
+		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
+		+ fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
 		// seta estudante com a da sessao
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setCpf((String) session.getAttribute("estudante"));
 		if (getCpf() == null) {
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("estudanteAcessosHome.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext()
+				.redirect("estudanteAcessosHome.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		// cria o arquivo abstrato
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + ""
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) 
+				+ "" + delimitadorDiretorio + ""
 				+ documento + "" + delimitadorDiretorio);
 		file.mkdirs();
-		file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
+		file = new File(current + "" + delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + getCpf()
 				+ "/files");
 		if (!file.exists()) {
 			// escreve no arquivo o array iniciado como 0
@@ -142,11 +165,13 @@ public class FileUploadAcessosView {
 			conteudo.add("0");
 			conteudo.add("0");
 			conteudo.add("0");
-			ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+			ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio
 					+ "" + getCpf() + delimitadorDiretorio + "files", conteudo);
 		} else {
 			// ler o arquivo
-			String caminhos[] = ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
+			String caminhos[] = ManipuladorArquivos.leitor(current 
+					+ "" + delimitadorDiretorio + "destino_uploader"
 					+ delimitadorDiretorio + getCpf() + "/files");
 			// exclui arquivo documento
 			file = new File(caminhos[documento]);
@@ -158,30 +183,42 @@ public class FileUploadAcessosView {
 		// se a extensão do arquivo for pdf
 		if (aux[aux.length - 1].equals("pdf")) {
 			// copia o pdf
-			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
-					+ delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + documento + ""
-					+ delimitadorDiretorio + "" + nomesArquivos[documento], uploadedFile, documento);
+			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + "" + getCpf() + ""
+					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
+			+ delimitadorDiretorio + "" + documento + ""
+					+ delimitadorDiretorio + "" + nomesArquivos[documento], 
+					uploadedFile, documento);
 		} else {
 			// copia o arquivo
-			copiarArquivo(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
-					+ delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + documento + ""
-					+ delimitadorDiretorio + "" + nomesArquivos[documento], uploadedFile, documento);
+			copiarArquivo(delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + "" + getCpf() + ""
+					+ delimitadorDiretorio + "" + fmt.format(date) 
+					+ "" + delimitadorDiretorio + "" + documento + ""
+					+ delimitadorDiretorio + "" + nomesArquivos[documento], 
+					uploadedFile, documento);
 		}
 		setIsUploaded(new Boolean(true), documento);
 		setIconeUploaded(documento);
 		// ler o arquivo
-		String files[] = ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
-				+ delimitadorDiretorio + "" + getCpf() + "" + delimitadorDiretorio + "files");
-		files[documento] = current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + ""
-				+ documento + "" + delimitadorDiretorio + "" + nomesArquivos[documento] + "." + aux[aux.length - 1];
+		String files[] = ManipuladorArquivos.leitor(current + "" 
+		+ delimitadorDiretorio + "destino_uploader"
+				+ delimitadorDiretorio + "" + getCpf() + "" 
+				+ delimitadorDiretorio + "files");
+		files[documento] = current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ getCpf() + "" + delimitadorDiretorio + "" + fmt.format(date) 
+				+ "" + delimitadorDiretorio + ""
+				+ documento + "" + delimitadorDiretorio + "" 
+				+ nomesArquivos[documento] + "." + aux[aux.length - 1];
 		conteudo = new ArrayList<String>();
 		for (String temp : files) {
 			// add as linhas do arquivo em um array de string
 			conteudo.add(temp);
 		}
 		// faz a cópia do arquivo
-		ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+		ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio
 				+ "" + getCpf() + "" + delimitadorDiretorio + "files", conteudo);
 	}
 
@@ -196,11 +233,13 @@ public class FileUploadAcessosView {
 	public void copiarArquivoPDF(String path, UploadedFile uploadedFile, int documento) {
 		try {
 			// escreve no arquivo o conteúdo do UploadedFile(API primeFaces)
-			FileOutputStream os = new FileOutputStream(current + path + "." + aux[aux.length - 1]);
+			FileOutputStream os = new FileOutputStream(current + path 
+					+ "." + aux[aux.length - 1]);
 			os.write(uploadedFile.getContents());
 			os.close();
 			// Manipula arquivo pdf
-			PDDocument doc = PDDocument.load(current + path + "." + aux[aux.length - 1]);
+			PDDocument doc = PDDocument.load(current + path + "." 
+			+ aux[aux.length - 1]);
 			PDPage page = new PDPage();
 			doc.addPage(page);
 			PDPageContentStream contentStream = new PDPageContentStream(doc, page);
@@ -211,7 +250,8 @@ public class FileUploadAcessosView {
 			chave = getCpf();
 			chave += fmt.format(new Date());
 			chave += documento;
-			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
+			contentStream.drawString("Autenticação: " + 
+			AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + "." + aux[aux.length - 1]);
@@ -234,7 +274,8 @@ public class FileUploadAcessosView {
 	public void copiarArquivo(String path, UploadedFile uploadedFile, int documento) {
 		try {
 			// escreve no arquivo o conteúdo do UploadedFile(API primeFaces)
-			FileOutputStream os = new FileOutputStream(current + path + "." + aux[aux.length - 1]);
+			FileOutputStream os = new FileOutputStream(current + 
+					path + "." + aux[aux.length - 1]);
 			os.write(uploadedFile.getContents());
 			os.close();
 			// Manipula arquivo pdf
@@ -249,7 +290,8 @@ public class FileUploadAcessosView {
 			chave = getCpf();
 			chave += fmt.format(new Date());
 			chave += documento;
-			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
+			contentStream.drawString("Autenticação: " + 
+			AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + ".pdf");
@@ -276,7 +318,10 @@ public class FileUploadAcessosView {
 			descricaoArquivos[3] = Parametros.getParameter("doc_grade");
 			break;
 		case (3):
-			descricaoArquivos[2] = "Neste caso serão confrontados os arquivos já anexados do comprovante de residência do estudante e o endereço de sua Instituição de Ensino no cadastro já realizado. NÃO HÁ NECESSIDADE DE ENVIO DE ARQUIVO!!!";
+			descricaoArquivos[2] = "Neste caso serão confrontados os arquivos "
+					+ "já anexados do comprovante de residência do estudante "
+					+ "e o endereço de sua Instituição de Ensino no cadastro "
+					+ "já realizado. NÃO HÁ NECESSIDADE DE ENVIO DE ARQUIVO!!!";
 			descricaoArquivos[3] = "";
 			break;
 		case (4):
@@ -296,8 +341,10 @@ public class FileUploadAcessosView {
 	public String arquivos() {
 		for (int i = 0; i < 2; i++) {
 			if (!esconderArquivos[i] && !isUploaded.get(i)) {
-				FacesUtil.addMsggError("É necessário anexar o documento: " + descricaoArquivos[i] + "!");
-				return "/pages/estudante/estudanteAcessosArquivos.xhtml?faces-redirect=false";
+				FacesUtil.addMsggError("É necessário anexar o documento: " 
+			+ descricaoArquivos[i] + "!");
+				return "/pages/estudante/estudanteAcessosArquivos.xhtml?"
+						+ "faces-redirect=false";
 			}
 		}
 		try {
@@ -328,10 +375,16 @@ public class FileUploadAcessosView {
 		}
 	}
 	
+	/**
+	 * Método que seta as estruturas e variáveis do bean ConcatenaArquivos
+	 * e retorna o redirecionamento à pagina de concatenação de arquivos.
+	 * @return
+	 */
 	public String concatenaArquivos() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.getValue(context.getELContext(), null, "fileUploadConcatenaView");
+		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.getValue(context
+				.getELContext(), null, "fileUploadConcatenaView");
 		bean.setOrigem(2);
 		return "/pages/estudante/concatenaArquivos.xhtml?faces-redirect=true";
 	}

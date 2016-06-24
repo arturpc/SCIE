@@ -40,7 +40,9 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino.INSTITUICAO_FIND_BY_INEP_EMEC, InstituicaoEnsino.class);
+					.createNamedQuery(InstituicaoEnsino
+							.INSTITUICAO_FIND_BY_INEP_EMEC,
+							InstituicaoEnsino.class);
 			return typedQuery.setParameter("codInepEmec", chave).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -63,13 +65,16 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino.INSTITUICAO_FIND_BY_REP_NAME, InstituicaoEnsino.class);
+					.createNamedQuery(InstituicaoEnsino
+							.INSTITUICAO_FIND_BY_REP_NAME,
+							InstituicaoEnsino.class);
 			return typedQuery.setParameter("nome", nome).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Instituicao por Nome de Representante");
+			throw new DAOExcpetion("Erro ao coletar "
+					+ "Instituicao por Nome de Representante");
 		} finally {
 			entityManager.close();
 		}
@@ -94,7 +99,8 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
-			throw new InsertException(entity.getNomeInstituicao() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getNomeInstituicao() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (entityManager.getTransaction().isActive()) {
@@ -106,7 +112,8 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_INSTITUICAO_ENSINO", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT",
+				"TB_INSTITUICAO_ENSINO", entity.getId()));
 		return entity;
 	}
 
@@ -121,7 +128,9 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino.INSTITUICAO_FIND_BY_ID, InstituicaoEnsino.class);
+					.createNamedQuery(InstituicaoEnsino
+							.INSTITUICAO_FIND_BY_ID, 
+							InstituicaoEnsino.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -146,7 +155,9 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino.INSTITUICAO_FIND_BY_OBJECT, InstituicaoEnsino.class);
+					.createNamedQuery(InstituicaoEnsino
+							.INSTITUICAO_FIND_BY_OBJECT,
+							InstituicaoEnsino.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -169,7 +180,9 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino.INSTITUICAO_GET_ALL, InstituicaoEnsino.class);
+					.createNamedQuery(InstituicaoEnsino
+							.INSTITUICAO_GET_ALL, 
+							InstituicaoEnsino.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;
@@ -190,7 +203,8 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 	 * @throws InsertException
 	 * @throws EntityNotFoundException
 	 */
-	public void add(List<InstituicaoEnsino> list) throws InsertException, EntityNotFoundException {
+	public void add(List<InstituicaoEnsino> list)
+			throws InsertException, EntityNotFoundException {
 		for (InstituicaoEnsino inst : list) {
 			if (get(inst) == null) {
 				add(inst);
@@ -212,7 +226,8 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 			entityManager.getTransaction().begin();
 			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
-			logdao.add(new LogAlteracaoBanco(operacao, "TB_INSTITUICAO_ENSINO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco(operacao, 
+					"TB_INSTITUICAO_ENSINO", entity.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			if(entityManager.getTransaction().isActive()){

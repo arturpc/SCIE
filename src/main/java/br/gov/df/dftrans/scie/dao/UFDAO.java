@@ -37,7 +37,9 @@ public class UFDAO extends DAO<UF> implements Serializable{
 	public UF getByUF(String chave) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<UF> typedQuery = entityManager.createNamedQuery(UF.UF_FIND_BY_UF, UF.class);
+			TypedQuery<UF> typedQuery = 
+					entityManager.createNamedQuery(UF
+							.UF_FIND_BY_UF, UF.class);
 			return typedQuery.setParameter("uf", chave).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -62,7 +64,8 @@ public class UFDAO extends DAO<UF> implements Serializable{
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getUf() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getUf() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			e.printStackTrace();
 			entityManager.getTransaction().rollback();
@@ -97,7 +100,9 @@ public class UFDAO extends DAO<UF> implements Serializable{
 	public UF get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<UF> typedQuery = entityManager.createNamedQuery(UF.UF_FIND_BY_ID, UF.class);
+			TypedQuery<UF> typedQuery = 
+					entityManager.createNamedQuery(UF
+							.UF_FIND_BY_ID, UF.class);
 			return typedQuery.setParameter("id", ((UF) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -119,7 +124,9 @@ public class UFDAO extends DAO<UF> implements Serializable{
 	public List<UF> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<UF> typedQuery = entityManager.createNamedQuery(UF.UF_GET_ALL, UF.class);
+			TypedQuery<UF> typedQuery =
+					entityManager.createNamedQuery(UF
+							.UF_GET_ALL, UF.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;

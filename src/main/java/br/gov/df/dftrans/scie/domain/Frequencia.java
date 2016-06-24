@@ -18,9 +18,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_frequencia")
 @NamedQueries({
-		@NamedQuery(name = Frequencia.FREQUENCIA_GET_ALL, query = "SELECT f FROM Frequencia f ORDER BY f.dataReferencia DESC"),
-		@NamedQuery(name = Frequencia.FREQUENCIA_FIND_BY_ID, query = "SELECT f FROM Frequencia f WHERE f.id = :id ORDER BY f.dataReferencia DESC"),
-		@NamedQuery(name = Frequencia.FREQUENCIA_FIND_BY_INST, query = "SELECT f FROM Frequencia f WHERE f.instituicao = :instituicao ORDER BY f.dataReferencia DESC") })
+		@NamedQuery(name = Frequencia.FREQUENCIA_GET_ALL, 
+		query = "SELECT f FROM Frequencia f ORDER BY f.dataReferencia DESC"),
+		@NamedQuery(name = Frequencia.FREQUENCIA_FIND_BY_ID, 
+		query = "SELECT f FROM Frequencia f WHERE f.id = :id "
+				+ "ORDER BY f.dataReferencia DESC"),
+		@NamedQuery(name = Frequencia.FREQUENCIA_FIND_BY_INST, 
+		query = "SELECT f FROM Frequencia f WHERE f.instituicao = :instituicao "
+				+ "ORDER BY f.dataReferencia DESC") })
 
 public class Frequencia implements Serializable {
 
@@ -81,15 +86,19 @@ public class Frequencia implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Frequencia other = (Frequencia) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 

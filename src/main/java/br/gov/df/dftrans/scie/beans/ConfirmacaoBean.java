@@ -37,7 +37,8 @@ import br.gov.df.dftrans.scie.view.FileUploadView;
 public class ConfirmacaoBean {
 	private InstituicaoEnsino instituicao;
 	private InstituicaoEnsinoDAO instensdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-	private ArrayList<Boolean> exists = new ArrayList<Boolean>(), existsLog = new ArrayList<Boolean>();
+	private ArrayList<Boolean> exists = new ArrayList<Boolean>();
+	private ArrayList<Boolean> existsLog = new ArrayList<Boolean>();
 	private String[] path;
 	private String current = Parametros.getParameter("root_upload"), pathAtual;
 	private int documento, origem;
@@ -51,12 +52,14 @@ public class ConfirmacaoBean {
 	public void init() {
 		exists = new ArrayList<Boolean>();
 		existsLog = new ArrayList<Boolean>();
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
 		setPath(ManipuladorArquivos
-				.leitor(current + "\\destino_uploader\\" + getInstituicao().getId() + "\\files"));
+				.leitor(current + "\\destino_uploader\\" 
+		+ getInstituicao().getId() + "\\files"));
 		for (String temp : getPath()) {
-			if (temp.equals("0")) {
+			if ("0".equals(temp)) {
 				exists.add(false);
 			} else {
 				exists.add(true);
@@ -82,23 +85,27 @@ public class ConfirmacaoBean {
 			cadastrados.clear();
 		}
 		try {
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+			.getExternalContext().getSession(false);
 			setUsuario((Usuario) session.getAttribute("usuario"));
 				if (logdao.getAnalisysUser(getUsuario()) != null) {
-					setInstituicao(logdao.getAnalisysUser(getUsuario()).getInstituicao());
+					setInstituicao(logdao.getAnalisysUser(getUsuario())
+							.getInstituicao());
 				} else {
 					setInstituicao(logdao.getOpens().get(0).getInstituicao());
 				}
 				setPath(ManipuladorArquivos
-						.leitor(current + "\\destino_uploader\\" + getInstituicao().getId() + "\\files"));
+						.leitor(current + "\\destino_uploader\\" 
+							+ getInstituicao().getId() + "\\files"));
 				int cont = 0;
 				for (String temp : getPath()) {
-					if (temp.equals("0")) {
+					if ("0".equals(temp)) {
 						exists.add(false);
 					} else {
 						exists.add(true);
 					}
-					existsLog.add(logdao.existsLog(instituicao.getId(), docdao.getByNro(cont).getId()));
+					existsLog.add(logdao.existsLog(instituicao.getId(), 
+							docdao.getByNro(cont).getId()));
 					cont++;
 				}
 				setPathAtual(getPath()[0]);
@@ -110,7 +117,8 @@ public class ConfirmacaoBean {
 				for (int i = 0; i < existsLog.size(); i++) {
 					if (existsLog.get(i)) {
 						if (docdao.getByNro(i) != null){
-							log = logdao.get(instituicao.getId(), docdao.getByNro(i).getId());
+							log = logdao.get(instituicao.getId(), 
+									docdao.getByNro(i).getId());
 						}else{
 							log = null;
 						}
@@ -151,7 +159,8 @@ public class ConfirmacaoBean {
 
 	public boolean getExisteImagem() {
 		String[] aux = getPathAtual().split("\\.");
-		if (exists.get(getDocumento()) && aux.length > 1 && !aux[1].toLowerCase().equals("pdf")) {
+		if (exists.get(getDocumento()) && aux.length > 1 && 
+				!aux[1].toLowerCase().equals("pdf")) {
 			return true;
 		}
 		return false;
@@ -212,7 +221,8 @@ public class ConfirmacaoBean {
 	public String getLabel() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		FileUploadView filebean = (FileUploadView) resolver.getValue(context.getELContext(), null, "fileUploadView");
+		FileUploadView filebean = (FileUploadView) resolver
+				.getValue(context.getELContext(), null, "fileUploadView");
 		return filebean.getDescricaoArquivos()[getDocumento()];
 	}
 
@@ -233,7 +243,8 @@ public class ConfirmacaoBean {
 		setPathAtual(getPath()[getDocumento()]);
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		ArquivoMB bean = (ArquivoMB) resolver.getValue(context.getELContext(), null, "arquivoMB");
+		ArquivoMB bean = (ArquivoMB) resolver.getValue(
+				context.getELContext(), null, "arquivoMB");
 		bean.setPath(getPathAtual());
 		bean.setOrigem(getOrigem());
 	}
@@ -257,7 +268,8 @@ public class ConfirmacaoBean {
 		String nome = getInstituicao().getRepresentante().getNome();
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		UsuarioBean bean = (UsuarioBean) resolver.getValue(context.getELContext(), null, "usuarioMB");
+		UsuarioBean bean = (UsuarioBean) resolver.getValue(
+				context.getELContext(), null, "usuarioMB");
 		bean.setEmail(email);
 		bean.setNome(nome);
 		return "/pages/confirmacaoCadastroUsuario.xhtml?faces-redirect=true";
@@ -268,7 +280,8 @@ public class ConfirmacaoBean {
 		LogValidacaoCadastro log = null;
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		validadorBean = (ValidadorBean) resolver.getValue(context.getELContext(), null, "validadorMB");
+		validadorBean = (ValidadorBean) resolver.getValue(
+				context.getELContext(), null, "validadorMB");
 		String[] comentario = validadorBean.getComentario();
 		boolean[] arquivoValido = validadorBean.getArquivoValido();
 		boolean validado = true, controle = true;
@@ -280,8 +293,10 @@ public class ConfirmacaoBean {
 				}
 			}
 			if(!controle && arquivoValido[7]){
-				FacesUtil.addMsggError("Marque a validação cadastro como \"Inválida\"!");
-				return "/pages/autenticado/validador/validadorCadastro.xhtml?faces-redirect=true";
+				FacesUtil.addMsggError("Marque a validação cadastro"
+						+ " como \"Inválida\"!");
+				return "/pages/autenticado/validador/"
+						+ "validadorCadastro.xhtml?faces-redirect=true";
 			}
 		}
 		
@@ -289,7 +304,8 @@ public class ConfirmacaoBean {
 		
 		for (int i = 0; i <= existsLog.size(); i++) {
 			if (i == 7) {
-				log = new LogValidacaoCadastro(getUsuario(), getInstituicao(), comentario[i], arquivoValido[i] ? 2 : 3);
+				log = new LogValidacaoCadastro(getUsuario(), getInstituicao(),
+						comentario[i], arquivoValido[i] ? 2 : 3);
 				try {
 					logdao.add(log);
 				} catch (InsertException e) {
@@ -301,7 +317,9 @@ public class ConfirmacaoBean {
 			} else {
 				if (existsLog.get(i)) {
 					try {
-						log = logdao.getAnalisys(getUsuario(), getInstituicao(), docdao.getByNro(i));
+						log = logdao.getAnalisys(getUsuario(), 
+								getInstituicao(), 
+								docdao.getByNro(i));
 					} catch (EntityNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -318,7 +336,8 @@ public class ConfirmacaoBean {
 		if(validado){
 			getInstituicao().setSituacao(2);
 			instensdao.update(getInstituicao());
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+					.getExternalContext().getSession(false);
 			session.setAttribute("instituicao", getInstituicao());
 		}
 		Mail.sendEmailValidation(getInstituicao().getRepresentante());

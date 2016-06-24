@@ -15,7 +15,8 @@ import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 
-public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> implements Serializable {
+public class AutorizacaoRepresentanteDAO extends 
+DAO<AutorizacaoRepresentante> implements Serializable {
 	private static AutorizacaoRepresentanteDAO dao = null;
 
 	public static AutorizacaoRepresentanteDAO AutorizacaoRepresentanteDAO() {
@@ -37,7 +38,8 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	 * Persiste Objeto Autorização representante
 	 */
 	@Override
-	public AutorizacaoRepresentante add(AutorizacaoRepresentante entity) throws InsertException {
+	public AutorizacaoRepresentante add(AutorizacaoRepresentante entity) 
+			throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			entityManager.getTransaction().begin();
@@ -46,7 +48,8 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getCpf() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getCpf() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
 				entityManager.getTransaction().rollback();
@@ -57,7 +60,8 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_AUTORIZACAO_REPRESENTANTE", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT", 
+				"TB_AUTORIZACAO_REPRESENTANTE", entity.getId()));
 		return entity;
 	}
 
@@ -69,8 +73,11 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
-					.createNamedQuery(AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, AutorizacaoRepresentante.class);
-			return typedQuery.setParameter("id", ((AutorizacaoRepresentante) id).getId()).getSingleResult();
+					.createNamedQuery(AutorizacaoRepresentante
+							.AUTORIZACAO_FIND_BY_ID,
+							AutorizacaoRepresentante.class);
+			return typedQuery.setParameter("id", 
+					((AutorizacaoRepresentante) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -91,8 +98,12 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
-					.createNamedQuery(AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF, AutorizacaoRepresentante.class);
-			return typedQuery.setParameter("cpf", cpf).setParameter("id_instituicao", id_instituicao).getSingleResult();
+					.createNamedQuery(AutorizacaoRepresentante
+							.AUTORIZACAO_FIND_BY_CPF, 
+							AutorizacaoRepresentante.class);
+			return typedQuery.setParameter("cpf", cpf)
+					.setParameter("id_instituicao", 
+							id_instituicao).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -114,8 +125,11 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	public AutorizacaoRepresentante getByCpf(String cpf) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager.createNamedQuery(
-					AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_ONLY, AutorizacaoRepresentante.class);
+			TypedQuery<AutorizacaoRepresentante> typedQuery 
+			= entityManager.createNamedQuery(
+					AutorizacaoRepresentante
+					.AUTORIZACAO_FIND_BY_CPF_ONLY, 
+					AutorizacaoRepresentante.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList().get(0);
 		} catch (NoResultException e) {
 			return null;
@@ -138,9 +152,13 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	public AutorizacaoRepresentante getByCpfInstNull(String cpf) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager.createNamedQuery(
-					AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_INST_NULL, AutorizacaoRepresentante.class);
-			List<AutorizacaoRepresentante> retorno = typedQuery.setParameter("cpf", cpf).getResultList();
+			TypedQuery<AutorizacaoRepresentante> typedQuery = 
+					entityManager.createNamedQuery(
+					AutorizacaoRepresentante
+					.AUTORIZACAO_FIND_BY_CPF_INST_NULL,
+					AutorizacaoRepresentante.class);
+			List<AutorizacaoRepresentante> retorno = 
+					typedQuery.setParameter("cpf", cpf).getResultList();
 			if(retorno.isEmpty()){
 				return null;
 			}else{
@@ -173,14 +191,17 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao atualizar AutorizacaoRepresentante cpf = "+ entity.getCpf());
+			throw new DAOExcpetion("Erro ao atualizar "
+					+ "AutorizacaoRepresentante cpf = "+ entity.getCpf());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_AUTORIZACAO_REPRESENTANTE", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("UPDATE",
+					"TB_AUTORIZACAO_REPRESENTANTE", 
+					entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}
@@ -197,7 +218,9 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
-					.createNamedQuery(AutorizacaoRepresentante.AUTORIZACAO_GET_ALL, AutorizacaoRepresentante.class);
+					.createNamedQuery(AutorizacaoRepresentante
+							.AUTORIZACAO_GET_ALL, 
+							AutorizacaoRepresentante.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;
@@ -218,7 +241,8 @@ public class AutorizacaoRepresentanteDAO extends DAO<AutorizacaoRepresentante> i
 	 * @throws InsertException
 	 * @throws EntityNotFoundException
 	 */
-	public void add(List<AutorizacaoRepresentante> list) throws InsertException, EntityNotFoundException {
+	public void add(List<AutorizacaoRepresentante> list) 
+			throws InsertException, EntityNotFoundException {
 		for (AutorizacaoRepresentante aut : list) {
 			if (get(aut) == null) {
 				add(aut);

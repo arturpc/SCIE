@@ -14,7 +14,8 @@ public class CNPJValidator implements Serializable {
 
 	private static final long serialVersionUID = 8856838765083713270L;
 
-	private static final char[] ZEROS = { '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
+	private static final char[] ZEROS = { '0', '0', '0', '0', '0', '0', '0',
+			'0', '0', '0', '0', '0', '0', '0' };
 
 	public void initialize(CNPJ constraintAnnotation) {
 	}
@@ -40,15 +41,17 @@ public class CNPJValidator implements Serializable {
 	 */
 	private static boolean isValidCNPJ(String cnpj) {
 
-		if ((cnpj == null) || cnpj.equals("00000000000000")) {
+		if ((cnpj == null) || "00000000000000".equals(cnpj)) {
 			return false;
 		}
 
 		try {
 			Integer digit1 = calculateDigit(cnpj.substring(0, 12));
 			Integer digit2 = calculateDigit(cnpj.substring(0, 12) + "" + digit1);
-			System.out.println(cnpj.substring(0, 12) + digit1.toString() + digit2.toString());
-			return cnpj.equals(cnpj.substring(0, 12) + digit1.toString() + digit2.toString());
+			System.out.println(cnpj.substring(0, 12) + digit1.toString() 
+			+ digit2.toString());
+			return cnpj.equals(cnpj.substring(0, 12) + digit1.toString() 
+			+ digit2.toString());
 		} catch (Exception e) {
 			return false;
 		}
@@ -68,14 +71,16 @@ public class CNPJValidator implements Serializable {
 			numero = (int) (str.charAt(iterador) - 48);
 			soma = soma + (numero * peso);
 			peso = peso + 1;
-			if (peso == 10)
+			if (peso == 10){
 				peso = 2;
+			}
 		}
 		resultado = soma % 11;
-		if ((resultado == 0) || (resultado == 1))
+		if ((resultado == 0) || (resultado == 1)){
 			return 0;
-		else
+		}
+		else{
 			return 11 - resultado;
+		}
 	}
-
 }

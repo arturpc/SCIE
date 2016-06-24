@@ -53,7 +53,8 @@ public class MotivoDAO extends DAO<Motivo> {
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_MOTIVO_VAL_SEGUNDA_VIA", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT", 
+				"TB_MOTIVO_VAL_SEGUNDA_VIA", entity.getId()));
 		return entity;
 	}
 
@@ -64,7 +65,9 @@ public class MotivoDAO extends DAO<Motivo> {
 	public Motivo get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Motivo> typedQuery = entityManager.createNamedQuery(Motivo.MOTIVO_FIND_BY_ID, Motivo.class);
+			TypedQuery<Motivo> typedQuery = entityManager
+					.createNamedQuery(Motivo.MOTIVO_FIND_BY_ID, 
+							Motivo.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -87,7 +90,9 @@ public class MotivoDAO extends DAO<Motivo> {
 	public List<Motivo> getAll() throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Motivo> typedQuery = entityManager.createNamedQuery(Motivo.MOTIVO_GET_ALL, Motivo.class);
+			TypedQuery<Motivo> typedQuery = entityManager
+					.createNamedQuery(Motivo.MOTIVO_GET_ALL,
+							Motivo.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;

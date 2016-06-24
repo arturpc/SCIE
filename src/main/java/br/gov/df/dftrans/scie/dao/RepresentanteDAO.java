@@ -37,7 +37,9 @@ public class RepresentanteDAO extends DAO<Representante> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<Representante> typedQuery = entityManager
-					.createNamedQuery(Representante.REPRESENTANTE_FIND_BY_CPF, Representante.class);
+					.createNamedQuery(Representante
+							.REPRESENTANTE_FIND_BY_CPF,
+							Representante.class);
 			return typedQuery.setParameter("cpf", chave).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -65,7 +67,8 @@ public class RepresentanteDAO extends DAO<Representante> {
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getNome() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getNome() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			throw new InsertException();
@@ -74,7 +77,8 @@ public class RepresentanteDAO extends DAO<Representante> {
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_REPRESENTANTE_INSTITUICAO", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT", 
+				"TB_REPRESENTANTE_INSTITUICAO", entity.getId()));
 		return entity;
 	}
 
@@ -85,8 +89,12 @@ public class RepresentanteDAO extends DAO<Representante> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<Representante> typedQuery = entityManager
-					.createNamedQuery(Representante.REPRESENTANTE_FIND_BY_ID, Representante.class);
-			return typedQuery.setParameter("id", ((Representante) id).getId()).getSingleResult();
+					.createNamedQuery(Representante
+							.REPRESENTANTE_FIND_BY_ID,
+							Representante.class);
+			return typedQuery.setParameter("id",
+					((Representante) id).getId())
+					.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -107,7 +115,9 @@ public class RepresentanteDAO extends DAO<Representante> {
 	public List<Representante> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Representante> typedQuery = entityManager.createNamedQuery(Representante.REPRESENTANTE_GET_ALL,
+			TypedQuery<Representante> typedQuery = 
+					entityManager.createNamedQuery(Representante
+							.REPRESENTANTE_GET_ALL,
 					Representante.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
@@ -161,7 +171,8 @@ public class RepresentanteDAO extends DAO<Representante> {
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco(operacao, "TB_REPRESENTANTE_INSTITUICAO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco(operacao, 
+					"TB_REPRESENTANTE_INSTITUICAO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}

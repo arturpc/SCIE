@@ -13,7 +13,9 @@ public class MD5 {
 	 */
 	public static String md5(String input) {
 		String md5 = null;
-		if(null == input) return null;
+		if(null == input){
+			return null;
+		}
 		try {
 			//Create MessageDigest object for MD5
 			MessageDigest digest = MessageDigest.getInstance("MD5");

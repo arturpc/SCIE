@@ -35,7 +35,8 @@ public class UsuarioBean {
 			}
 		} else {
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+				FacesContext.getCurrentInstance()
+				.getExternalContext().redirect("index.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

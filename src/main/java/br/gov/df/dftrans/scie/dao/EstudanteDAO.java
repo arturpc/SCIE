@@ -45,7 +45,8 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	public List<Estudante> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Estudante> typedQuery = entityManager.createNamedQuery(Estudante.ESTUDANTE_GET_ALL,
+			TypedQuery<Estudante> typedQuery = entityManager
+					.createNamedQuery(Estudante.ESTUDANTE_GET_ALL,
 					Estudante.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
@@ -68,13 +69,15 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	 * @throws InsertException
 	 * @throws EntityNotFoundException
 	 */
-	public List<Estudante> add(List<Estudante> list) throws InsertException, EntityNotFoundException {
+	public List<Estudante> add(List<Estudante> list) throws InsertException, 
+	EntityNotFoundException {
 		List<Estudante> retorno = new ArrayList<Estudante>();
 		for (Estudante est : list) {
 			if (getByCPF(est.getCpf()) == null) {
-				est = add(est);
-			}
-			retorno.add(est);
+				retorno.add(add(est));
+			}else{
+				retorno.add(est);
+			}	
 		}
 		return retorno;
 	}
@@ -97,7 +100,8 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 			}
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getInstituicao().toString() + entity.getCpf().toString()
+			throw new InsertException(entity.getInstituicao().toString() 
+					+ entity.getCpf().toString()
 					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
@@ -121,9 +125,11 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	public Estudante get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Estudante> typedQuery = entityManager.createNamedQuery(Estudante.ESTUDANTE_FIND_BY_ID,
+			TypedQuery<Estudante> typedQuery = entityManager
+					.createNamedQuery(Estudante.ESTUDANTE_FIND_BY_ID,
 					Estudante.class);
-			return typedQuery.setParameter("id", ((Estudante) id).getId()).getSingleResult();
+			return typedQuery.setParameter("id", ((Estudante) id)
+					.getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -146,7 +152,8 @@ public class EstudanteDAO extends DAO<Estudante> implements Serializable {
 	public Estudante getByCPF(String CPF) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Estudante> typedQuery = entityManager.createNamedQuery(Estudante.ESTUDANTE_FIND_BY_CPF,
+			TypedQuery<Estudante> typedQuery = entityManager
+					.createNamedQuery(Estudante.ESTUDANTE_FIND_BY_CPF,
 					Estudante.class);
 			return typedQuery.setParameter("cpf", CPF).getSingleResult();
 		} catch (NoResultException e) {

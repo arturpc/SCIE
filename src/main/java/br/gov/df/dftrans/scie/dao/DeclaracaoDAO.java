@@ -44,7 +44,9 @@ public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 	public List<Declaracao> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Declaracao> typedQuery = entityManager.createNamedQuery(Declaracao.DECLARACAO_GET_ALL,
+			TypedQuery<Declaracao> typedQuery = entityManager
+					.createNamedQuery(Declaracao.
+							DECLARACAO_GET_ALL,
 					Declaracao.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
@@ -88,7 +90,8 @@ public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getInstituicao().toString() + entity.getEstudante().toString()
+			throw new InsertException(entity.getInstituicao().toString() 
+					+ entity.getEstudante().toString()
 					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
@@ -111,9 +114,12 @@ public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 	public Declaracao get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Declaracao> typedQuery = entityManager.createNamedQuery(Declaracao.DECLARACAO_FIND_BY_ID,
+			TypedQuery<Declaracao> typedQuery = entityManager
+					.createNamedQuery(Declaracao
+							.DECLARACAO_FIND_BY_ID,
 					Declaracao.class);
-			return typedQuery.setParameter("id", ((Declaracao) id).getId()).getSingleResult();
+			return typedQuery.setParameter("id", 
+					((Declaracao) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -136,7 +142,9 @@ public class DeclaracaoDAO extends DAO<Declaracao> implements Serializable {
 	public List<Declaracao> getInst(InstituicaoEnsino id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Declaracao> typedQuery = entityManager.createNamedQuery(Declaracao.DECLARACAO_FIND_BY_INST,
+			TypedQuery<Declaracao> typedQuery = entityManager
+					.createNamedQuery(Declaracao
+							.DECLARACAO_FIND_BY_INST,
 					Declaracao.class);
 			return typedQuery.setParameter("instituicao", id).getResultList();
 		} catch (NoResultException e) {

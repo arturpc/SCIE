@@ -18,7 +18,8 @@ public class ValidadorBean {
 	private File[] aquivos = new File[8];
 	//inicia o usuário com o usuário da sessão
 	public void init(){
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
         setUser((Usuario) session.getAttribute("usuario"));
 	}
 	

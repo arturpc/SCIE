@@ -19,32 +19,67 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_log_validacao_cadastro")
-@NamedQueries({ @NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL, query = "SELECT l FROM LogValidacaoCadastro l"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN_INST, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0 and l.instituicao = :inst"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_INST, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 and l.instituicao = :inst"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_USER, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 and l.usuario = :usuario"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED_INST, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 and l.instituicao = :inst"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECT_INST, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 and l.instituicao = :inst"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ANALISYS, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 and l.usuario = :usuario and l.instituicao = :instituicao and l.documento = :documento"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 and l.instituicao.id = :id"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECTED, query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 and l.instituicao.id = :id"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_ID, query = "SELECT l FROM LogValidacaoCadastro l WHERE l.id = :id"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_DADOS, query = "SELECT l FROM LogValidacaoCadastro l WHERE l.instituicao = :instituicao and l.documento = :documento and l.validacao in (0,1)") })
+@NamedQueries({ @NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL, 
+query = "SELECT l FROM LogValidacaoCadastro l"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN_INST, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0 "
+				+ "and l.instituicao = :inst"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_INST, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
+				+ "and l.instituicao = :inst"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_USER, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
+				+ "and l.usuario = :usuario"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED_INST, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
+				+ "and l.instituicao = :inst"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECT_INST, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 "
+				+ "and l.instituicao = :inst"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ANALISYS, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
+				+ "and l.usuario = :usuario and l.instituicao = :instituicao "
+				+ "and l.documento = :documento"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
+				+ "and l.instituicao.id = :id"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECTED, 
+		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 "
+				+ "and l.instituicao.id = :id"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_ID, 
+		query = "SELECT l FROM LogValidacaoCadastro l WHERE l.id = :id"),
+		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_DADOS, 
+		query = "SELECT l FROM LogValidacaoCadastro l "
+				+ "WHERE l.instituicao = :instituicao "
+				+ "and l.documento = :documento and l.validacao in (0,1)") })
 public class LogValidacaoCadastro implements Serializable {
 
-	public static final String LOG_GET_ALL = "LogValidacaoCadastro.getAll";
-	public static final String LOG_GET_ALL_OPEN = "LogValidacaoCadastro.getAllOpen";
-	public static final String LOG_GET_ALL_OPEN_INST = "LogValidacaoCadastro.getAllOpenInst";
-	public static final String LOG_GET_ALL_ANALISYS_INST = "LogValidacaoCadastro.getAllAnalisysInst";
-	public static final String LOG_GET_ALL_ANALISYS_USER = "LogValidacaoCadastro.getAllAnalisysUser";
-	public static final String LOG_GET_ALL_APROVED_INST = "LogValidacaoCadastro.getAllAprovedInst";
-	public static final String LOG_GET_ALL_REJECT_INST = "LogValidacaoCadastro.getAllRejectInst";
-	public static final String LOG_GET_ANALISYS = "LogValidacaoCadastro.getAllAnalisys";
-	public static final String LOG_GET_ALL_APROVED = "LogValidacaoCadastro.getAllAproved";
-	public static final String LOG_GET_ALL_REJECTED = "LogValidacaoCadastro.getAllRejected";
-	public static final String LOG_FIND_BY_ID = "LogValidacaoCadastro.findById";
-	public static final String LOG_FIND_BY_DADOS = "LogValidacaoCadastro.findByDados";
+	public static final String LOG_GET_ALL = 
+			"LogValidacaoCadastro.getAll";
+	public static final String LOG_GET_ALL_OPEN = 
+			"LogValidacaoCadastro.getAllOpen";
+	public static final String LOG_GET_ALL_OPEN_INST = 
+			"LogValidacaoCadastro.getAllOpenInst";
+	public static final String LOG_GET_ALL_ANALISYS_INST = 
+			"LogValidacaoCadastro.getAllAnalisysInst";
+	public static final String LOG_GET_ALL_ANALISYS_USER = 
+			"LogValidacaoCadastro.getAllAnalisysUser";
+	public static final String LOG_GET_ALL_APROVED_INST = 
+			"LogValidacaoCadastro.getAllAprovedInst";
+	public static final String LOG_GET_ALL_REJECT_INST = 
+			"LogValidacaoCadastro.getAllRejectInst";
+	public static final String LOG_GET_ANALISYS = 
+			"LogValidacaoCadastro.getAllAnalisys";
+	public static final String LOG_GET_ALL_APROVED = 
+			"LogValidacaoCadastro.getAllAproved";
+	public static final String LOG_GET_ALL_REJECTED = 
+			"LogValidacaoCadastro.getAllRejected";
+	public static final String LOG_FIND_BY_ID = 
+			"LogValidacaoCadastro.findById";
+	public static final String LOG_FIND_BY_DADOS = 
+			"LogValidacaoCadastro.findByDados";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -82,7 +117,8 @@ public class LogValidacaoCadastro implements Serializable {
 	public LogValidacaoCadastro() {
 	}
 
-	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, DocumentoPendencia documento,
+	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, 
+			DocumentoPendencia documento,
 			String comentario) {
 		setUsuario(usuario);
 		setInstituicao(instituicao);
@@ -91,13 +127,15 @@ public class LogValidacaoCadastro implements Serializable {
 		setComentario(comentario);
 	}
 	
-	public LogValidacaoCadastro(InstituicaoEnsino instituicao, DocumentoPendencia documento) {
+	public LogValidacaoCadastro(InstituicaoEnsino instituicao, 
+			DocumentoPendencia documento) {
 		setInstituicao(instituicao);
 		setDocumento(documento);
 		setAtualizacao(new Date());
 	}
 
-	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, String comentario, int validacao) {
+	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, 
+			String comentario, int validacao) {
 		setUsuario(usuario);
 		setInstituicao(instituicao);
 		setAtualizacao(new Date());
@@ -129,15 +167,19 @@ public class LogValidacaoCadastro implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		LogValidacaoCadastro other = (LogValidacaoCadastro) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 

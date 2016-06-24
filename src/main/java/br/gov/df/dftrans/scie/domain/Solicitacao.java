@@ -23,14 +23,24 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "tb_solicitacao_segunda_via")
-@NamedQueries({ @NamedQuery(name = Solicitacao.SOLICITACAO_GET_ALL, query = "SELECT s FROM Solicitacao s"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_USUARIO, query = "SELECT s FROM Solicitacao s where s.usuario = :usuario"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_CPF, query = "SELECT s FROM Solicitacao s WHERE s.cpf = :cpf"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_ID, query = "SELECT s FROM Solicitacao s WHERE s.id = :id"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_SOLICITADO, query = "SELECT s FROM Solicitacao s WHERE s.status = 0 order by s.atualizacao"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_ANALISYS, query = "SELECT s FROM Solicitacao s WHERE s.status = 1 and s.usuario = :usuario"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_APROVED, query = "SELECT s FROM Solicitacao s WHERE s.status = 2 and s.cpf = :cpf order by s.atualizacao"),
-		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_REJECTED, query = "SELECT s FROM Solicitacao s WHERE s.status = 3 and s.cpf = :cpf order by s.atualizacao"), })
+@NamedQueries({ @NamedQuery(name = Solicitacao.SOLICITACAO_GET_ALL, 
+		query = "SELECT s FROM Solicitacao s"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_USUARIO, 
+		query = "SELECT s FROM Solicitacao s where s.usuario = :usuario"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_CPF, 
+		query = "SELECT s FROM Solicitacao s WHERE s.cpf = :cpf"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_FIND_BY_ID, 
+		query = "SELECT s FROM Solicitacao s WHERE s.id = :id"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_SOLICITADO, 
+		query = "SELECT s FROM Solicitacao s WHERE s.status = 0 order by s.atualizacao"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_ANALISYS, 
+		query = "SELECT s FROM Solicitacao s WHERE s.status = 1 and s.usuario = :usuario"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_APROVED, 
+		query = "SELECT s FROM Solicitacao s WHERE s.status = 2 and s.cpf = :cpf "
+				+ "order by s.atualizacao"),
+		@NamedQuery(name = Solicitacao.SOLICITACAO_GET_REJECTED, 
+		query = "SELECT s FROM Solicitacao s WHERE s.status = 3 and s.cpf = :cpf "
+				+ "order by s.atualizacao"), })
 public class Solicitacao implements Serializable {
 
 	public static final String SOLICITACAO_GET_ALL = "Solicitacao.getAll";

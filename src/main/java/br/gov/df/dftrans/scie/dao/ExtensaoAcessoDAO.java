@@ -95,7 +95,9 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_ID, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_FIND_BY_ID,
+							ExtensaoAcesso.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -119,13 +121,16 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_GET_SOLICITADO, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_GET_SOLICITADO, 
+							ExtensaoAcesso.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Solicitações de Extensão de Acesso abertas");
+			throw new DAOExcpetion("Erro ao coletar Solicitações "
+					+ "de Extensão de Acesso abertas");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -145,13 +150,16 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_GET_ANALISYS, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_GET_ANALISYS,
+							ExtensaoAcesso.class);
 			return typedQuery.setParameter("usuario", usuario).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Solicitações de Extensão de Acessos abertas");
+			throw new DAOExcpetion("Erro ao coletar Solicitações de "
+					+ "Extensão de Acessos abertas");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -170,13 +178,16 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_GET_APROVED, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_GET_APROVED,
+							ExtensaoAcesso.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Solicitações de Extensão de Acessos aprovadas");
+			throw new DAOExcpetion("Erro ao coletar Solicitações de "
+					+ "Extensão de Acessos aprovadas");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -195,13 +206,16 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_GET_REJECTED, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_GET_REJECTED, 
+							ExtensaoAcesso.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Solicitações Extensão de Acessos rejeitadas");
+			throw new DAOExcpetion("Erro ao coletar Solicitações "
+					+ "Extensão de Acessos rejeitadas");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -226,14 +240,16 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao modificar Status da Solicitação de Extensão de Acessos");
+			throw new DAOExcpetion("Erro ao modificar Status da "
+					+ "Solicitação de Extensão de Acessos");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_EXTENSAO_ACESSO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("UPDATE", 
+					"TB_EXTENSAO_ACESSO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}
@@ -249,14 +265,17 @@ public class ExtensaoAcessoDAO extends DAO<ExtensaoAcesso> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<ExtensaoAcesso> typedQuery = entityManager
-					.createNamedQuery(ExtensaoAcesso.EXTENSAO_ACESSO_GET_ALL, ExtensaoAcesso.class);
+					.createNamedQuery(ExtensaoAcesso
+							.EXTENSAO_ACESSO_GET_ALL, 
+							ExtensaoAcesso.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			e.printStackTrace();
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Solicitações de Extensão de Acesso!");
+			throw new DAOExcpetion("Erro ao coletar Solicitações de "
+					+ "Extensão de Acesso!");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();

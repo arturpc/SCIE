@@ -44,8 +44,9 @@ public class ManipuladorArquivos {
 			for (int i = 0; i < 7; i++) {
 				if (linha != null) {
 					resultado[i] = linha;
-				} else
+				} else{
 					break;
+				}
 				linha = buffRead.readLine();
 			}
 			buffRead.close();
@@ -65,7 +66,8 @@ public class ManipuladorArquivos {
 	 */
 	public static ArrayList<String> leitorCompleto(String path) {
 		try {
-			BufferedReader buffRead = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"));
+			BufferedReader buffRead = new BufferedReader(new InputStreamReader(
+					new FileInputStream(path), "UTF-8"));
 			String linha = "";
 			ArrayList<String> resultado = new ArrayList<String>();
 			linha = buffRead.readLine();
@@ -154,10 +156,13 @@ public class ManipuladorArquivos {
 						// verifica se a celula é uma data
 						if (DateUtil.isCellDateFormatted(cell)) {
 							// formata a data no padrão "dd/MM/yyyy"
-							string += fmt.format(cell.getDateCellValue()) + "\t";
+							string += fmt
+							.format(cell.getDateCellValue()) 
+							+ "\t";
 						} else {
 							// concatena o conteúdo da célula
-							string += (int) cell.getNumericCellValue() + "\t";
+							string += (int) cell.getNumericCellValue() 
+									+ "\t";
 						}
 						break;
 					case Cell.CELL_TYPE_STRING:
@@ -196,7 +201,9 @@ public class ManipuladorArquivos {
 			tipo = ManipuladorArquivos.XLSX;
 			try {
 				// seta a string com o texto da planilha
-				string = new XSSFExcelExtractor(new XSSFWorkbook(new FileInputStream(f))).getText().replaceAll("\n",
+				string = new XSSFExcelExtractor(
+						new XSSFWorkbook(new FileInputStream(f)))
+						.getText().replaceAll("\n",
 						"\r\n");
 				// ignora o nome da planilha
 				string = string.replace("DeclaracaoAlunos\r\n", "");

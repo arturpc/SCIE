@@ -92,7 +92,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public Solicitacao getById(int id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_FIND_BY_ID,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_FIND_BY_ID,
 					Solicitacao.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
@@ -116,7 +118,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public List<Solicitacao> getSolicitado() throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_GET_SOLICITADO,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_GET_SOLICITADO,
 					Solicitacao.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
@@ -141,7 +145,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public List<Solicitacao> getAnalise(Usuario usuario) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_GET_ANALISYS,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_GET_ANALISYS,
 					Solicitacao.class);
 			return typedQuery.setParameter("usuario", usuario).getResultList();
 		} catch (NoResultException e) {
@@ -167,7 +173,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public List<Solicitacao> getAprovado(String cpf) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_GET_APROVED,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_GET_APROVED,
 					Solicitacao.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList();
 		} catch (NoResultException e) {
@@ -192,7 +200,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public List<Solicitacao> getRejeitado(String cpf) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_GET_REJECTED,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_GET_REJECTED,
 					Solicitacao.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList();
 		} catch (NoResultException e) {
@@ -219,7 +229,6 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			;
 			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
@@ -232,7 +241,8 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_SOLICITACAO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("UPDATE", 
+					"TB_SOLICITACAO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}
@@ -247,7 +257,9 @@ public class SolicitacaoDAO extends DAO<Solicitacao> {
 	public List<Solicitacao> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Solicitacao> typedQuery = entityManager.createNamedQuery(Solicitacao.SOLICITACAO_GET_ALL,
+			TypedQuery<Solicitacao> typedQuery = 
+					entityManager.createNamedQuery(Solicitacao
+							.SOLICITACAO_GET_ALL,
 					Solicitacao.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {

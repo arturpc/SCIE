@@ -21,9 +21,12 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_declaracao")
-@NamedQueries({ @NamedQuery(name = Declaracao.DECLARACAO_GET_ALL, query = "SELECT d FROM Declaracao d"),
-		@NamedQuery(name = Declaracao.DECLARACAO_FIND_BY_ID, query = "SELECT d FROM Declaracao d WHERE d.id = :id"),
-		@NamedQuery(name = Declaracao.DECLARACAO_FIND_BY_INST, query = "SELECT d FROM Declaracao d WHERE d.instituicao = :instituicao") })
+@NamedQueries({ @NamedQuery(name = Declaracao.DECLARACAO_GET_ALL, 
+query = "SELECT d FROM Declaracao d"),
+		@NamedQuery(name = Declaracao.DECLARACAO_FIND_BY_ID, 
+		query = "SELECT d FROM Declaracao d WHERE d.id = :id"),
+		@NamedQuery(name = Declaracao.DECLARACAO_FIND_BY_INST, 
+		query = "SELECT d FROM Declaracao d WHERE d.instituicao = :instituicao") })
 public class Declaracao implements Serializable {
 
 	public static final String DECLARACAO_GET_ALL = "Declaracao.getAll";
@@ -89,15 +92,19 @@ public class Declaracao implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Declaracao other = (Declaracao) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 

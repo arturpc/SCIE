@@ -68,7 +68,9 @@ public class LogAlteracaoBancoDAO extends DAO<LogAlteracaoBanco> {
 	public LogAlteracaoBanco getById(int id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<LogAlteracaoBanco> typedQuery = entityManager.createNamedQuery(LogAlteracaoBanco.LOG_FIND_BY_ID,
+			TypedQuery<LogAlteracaoBanco> typedQuery = 
+					entityManager.createNamedQuery(LogAlteracaoBanco
+							.LOG_FIND_BY_ID,
 					LogAlteracaoBanco.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {

@@ -66,10 +66,12 @@ public class SolicitacaoBean {
 	 */
 
 	public String validarSolicitacao() {
-		setSolicitacao((Solicitacao) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+		setSolicitacao((Solicitacao) FacesContext
+				.getCurrentInstance().getExternalContext().getRequestMap()
 				.get("solicitacao"));
 		setEscolhida(true);
-		return "/pages/autenticado/validador/validadorSolicitacao.xhtml?faces-redirect=true";
+		return "/pages/autenticado/validador/"
+				+ "validadorSolicitacao.xhtml?faces-redirect=true";
 
 	}
 	
@@ -80,7 +82,8 @@ public class SolicitacaoBean {
 	 */
 
 	public String desalocarSolicitacao() {
-		setSolicitacao((Solicitacao) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
+		setSolicitacao((Solicitacao) FacesContext.
+				getCurrentInstance().getExternalContext().getRequestMap()
 				.get("solicitacao"));
 		soldao.update(getSolicitacao(), 0);
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
@@ -105,13 +108,15 @@ public class SolicitacaoBean {
 		documento = -1;
 		try {
 			// seta a variavel user com o usuário na sessão
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
+			HttpSession session = (HttpSession) FacesContext.
+					getCurrentInstance().getExternalContext()
 					.getSession(false);
 			setUser((Usuario) session.getAttribute("usuario"));
 			// caso não tenha sido escolhida uma solicitação
 			if (!isEscolhida) {
 				// se tiver solicitação em análise com o usuário na sessão
-				if (soldao.getAnalise(getUser()) != null && !soldao.getAnalise(getUser()).isEmpty()) {
+				if (soldao.getAnalise(getUser()) != null && 
+						!soldao.getAnalise(getUser()).isEmpty()) {
 					setSolicitacao(soldao.getAnalise(getUser()).get(0));
 				} else {
 					setSolicitacao(soldao.getSolicitado().get(0));
@@ -119,8 +124,10 @@ public class SolicitacaoBean {
 			}
 			// seta path com array de string que representam as linhas do
 			// arquivo presente no destino informado
-			setPath(ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" + getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
+			setPath(ManipuladorArquivos.leitor(current + "" 
+			+ delimitadorDiretorio + "destino_uploader"
+					+ delimitadorDiretorio + "" 
+			+ getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
 			setFiles(new String[2]);
 			int flag = 0;
 			for(String tmp : getPath()){
@@ -181,7 +188,8 @@ public class SolicitacaoBean {
 		setPathAtual(getPath()[getDocumento()]);
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		ArquivoMB bean = (ArquivoMB) resolver.getValue(context.getELContext(), null, "arquivoMB");
+		ArquivoMB bean = (ArquivoMB) resolver.getValue(
+				context.getELContext(), null, "arquivoMB");
 		bean.setPath(getPathAtual());
 		bean.setOrigem(getOrigem());
 	}
@@ -194,7 +202,8 @@ public class SolicitacaoBean {
 	public String getLabel() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		FileUploadEstudanteView filebean = (FileUploadEstudanteView) resolver.getValue(context.getELContext(), null,
+		FileUploadEstudanteView filebean = (FileUploadEstudanteView) resolver.
+				getValue(context.getELContext(), null,
 				"fileUploadEstudanteView");
 		return filebean.getDescricaoArquivos()[getDocumento()];
 	}
@@ -227,7 +236,8 @@ public class SolicitacaoBean {
 		// Caso tenha um arquivo valido e os outros não, é necessário setar o
 		// válido como inválido
 		if (getArquivoValido()[2] && (!getArquivoValido()[0] || !getArquivoValido()[1])) {
-			FacesUtil.addMsggError("Marque a validação da solicitação como \"Inválida\"!");
+			FacesUtil.addMsggError("Marque a validação da "
+					+ "solicitação como \"Inválida\"!");
 			return "/pages/autenticado/validadorSolicitacao.xhtml?faces-redirect=false";
 		}
 		for (int i = 0; i < 3; i++) {
@@ -257,7 +267,8 @@ public class SolicitacaoBean {
 		}
 		// Envia um email informando a situação do cadastro
 		// ple.dftrans@gmail.com
-		Mail.sendEmail2ViaValidacao(getSolicitacao(), getArquivoValido(), getComentario(), getNomes(),getFiles());
+		Mail.sendEmail2ViaValidacao(getSolicitacao(), 
+				getArquivoValido(), getComentario(), getNomes(),getFiles());
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
 
@@ -292,44 +303,58 @@ public class SolicitacaoBean {
 	public boolean filterStatus(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim();
 		// Retorna filtro vazio
-		if (filterText == null || filterText.equals("")) {
+		if (filterText == null || "".equals(filterText)) {
 			return true;
 		}
 		int i;
 		// Converte filtro descritivo em numérico
 		if ("Duplicidade".length() >= filterText.length()
-				? "Duplicidade".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Duplicidade".length()).equalsIgnoreCase("Duplicidade")) {
+				? "Duplicidade".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Duplicidade".length())
+				.equalsIgnoreCase("Duplicidade")) {
 			filterText = "-1";
 		}
 		if ("Solicitado".length() >= filterText.length()
-				? "Solicitado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Solicitado".length()).equalsIgnoreCase("Solicitado")) {
+				? "Solicitado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Solicitado".length())
+				.equalsIgnoreCase("Solicitado")) {
 			filterText = "0";
 		}
 		if ("Em analise".length() >= filterText.length()
-				? "Em analise".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Em analise".length()).equalsIgnoreCase("Em analise")) {
+				? "Em analise".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Em analise".length())
+				.equalsIgnoreCase("Em analise")) {
 			filterText = "1";
 		}
 		if ("Aprovado".length() >= filterText.length()
-				? "Aprovado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Aprovado".length()).equalsIgnoreCase("Aprovado")) {
+				? "Aprovado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Aprovado".length())
+				.equalsIgnoreCase("Aprovado")) {
 			filterText = "2";
 		}
 		if ("Rejeitado".length() >= filterText.length()
-				? "Rejeitado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Rejeitado".length()).equalsIgnoreCase("Rejeitado")) {
+				? "Rejeitado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Rejeitado".length())
+				.equalsIgnoreCase("Rejeitado")) {
 			filterText = "3";
 		}
 		if ("Cartao Impresso".length() >= filterText.length()
-				? "Cartao Impresso".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Cartao Impresso".length()).equalsIgnoreCase("Cartao Impresso")) {
+				? "Cartao Impresso".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Cartao Impresso".length())
+				.equalsIgnoreCase("Cartao Impresso")) {
 			filterText = "4";
 		}
 		if ("Cartao Entregue".length() >= filterText.length()
-				? "Cartao Entregue".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Cartao Entregue".length()).equalsIgnoreCase("Cartao Entregue")) {
+				? "Cartao Entregue".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Cartao Entregue".length())
+				.equalsIgnoreCase("Cartao Entregue")) {
 			filterText = "5";
 		}
 		if (value == null) {
@@ -355,24 +380,32 @@ public class SolicitacaoBean {
 	public boolean filterMotivo(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim();
 		// Retorna filtro vazio
-		if (filterText == null || filterText.equals("")) {
+		if (filterText == null || "".equals(filterText)) {
 			return true;
 		}
 		int i;
 		// Converte filtro descritivo em numérico
 		if ("Cartao danificado ou inutilizado".length() >= filterText.length()
-				? "Cartao danificado ou inutilizado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Cartao danificado ou inutilizado".length()).equalsIgnoreCase("Cartao danificado ou inutilizado")) {
+				? "Cartao danificado ou inutilizado".
+						substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, 
+						"Cartao danificado ou inutilizado".length())
+				.equalsIgnoreCase("Cartao danificado ou inutilizado")) {
 			filterText = "3";
 		}
 		if ("Roubo ou Furto".length() >= filterText.length()
-				? "Roubo ou Furto".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Roubo ou Furto".length()).equalsIgnoreCase("Roubo ou Furto")) {
+				? "Roubo ou Furto".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Roubo ou Furto".length())
+				.equalsIgnoreCase("Roubo ou Furto")) {
 			filterText = "2";
 		}
 		if ("Perda".length() >= filterText.length()
-				? "Perda".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Perda".length()).equalsIgnoreCase("Perda")) {
+				? "Perda".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Perda".length())
+				.equalsIgnoreCase("Perda")) {
 			filterText = "1";
 		}
 		if (value == null) {

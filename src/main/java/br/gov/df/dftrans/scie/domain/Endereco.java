@@ -20,8 +20,10 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @Entity
 @Table(name = "tb_endereco")
 @NamedQueries({ @NamedQuery(name = Endereco.ENDERECO_GET_ALL, query = "SELECT e FROM Endereco e"),
-		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_CEP, query = "SELECT e FROM Endereco e WHERE e.cep = :cep order by e.id desc"),
-		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_ID, query = "SELECT e FROM Endereco e WHERE e.id = :id") })
+		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_CEP, 
+		query = "SELECT e FROM Endereco e WHERE e.cep = :cep order by e.id desc"),
+		@NamedQuery(name = Endereco.ENDERECO_FIND_BY_ID, 
+		query = "SELECT e FROM Endereco e WHERE e.id = :id") })
 public class Endereco implements Serializable {
 
 	public static final String ENDERECO_GET_ALL = "Endereco.getAll";
@@ -54,12 +56,16 @@ public class Endereco implements Serializable {
 	@StringFormatter
 	@Column(name = "ds_complemento")
 	private String complemento;
+	
+	@Column(name = "nr_endereco")
+	private int nr_endereco = 0;
 
 	// construtores
 	public Endereco() {
 	}
 
-	public Endereco(String cep, String bairro, String logradouro, String complemento, Cidade cidade) {
+	public Endereco(String cep, String bairro, String logradouro, 
+			String complemento, Cidade cidade) {
 		setCep(cep);
 		setBairro(bairro);
 		setLogradouro(logradouro);
@@ -92,15 +98,19 @@ public class Endereco implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Endereco other = (Endereco) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 

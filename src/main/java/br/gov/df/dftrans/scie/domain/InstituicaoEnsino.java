@@ -21,18 +21,28 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 
 @Entity
 @Table(name = "tb_instituicao_ensino")
-@NamedQueries({ @NamedQuery(name = InstituicaoEnsino.INSTITUICAO_GET_ALL, query = "SELECT i FROM InstituicaoEnsino i"),
-		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_INEP_EMEC, query = "SELECT i FROM InstituicaoEnsino i WHERE i.codInepEmec = :codInepEmec"),
-		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_REP_NAME, query = "SELECT i FROM InstituicaoEnsino i where i.representante.nome = :nome"),
-		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_ID, query = "SELECT i FROM InstituicaoEnsino i WHERE i.id = :id"),
-		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_OBJECT, query = "SELECT i FROM InstituicaoEnsino i WHERE i = :id") })
+@NamedQueries({ @NamedQuery(name = InstituicaoEnsino.INSTITUICAO_GET_ALL, 
+		query = "SELECT i FROM InstituicaoEnsino i"),
+		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_INEP_EMEC, 
+		query = "SELECT i FROM InstituicaoEnsino i WHERE i.codInepEmec = :codInepEmec"),
+		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_REP_NAME, 
+		query = "SELECT i FROM InstituicaoEnsino i where i.representante.nome = :nome"),
+		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_ID, 
+		query = "SELECT i FROM InstituicaoEnsino i WHERE i.id = :id"),
+		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_OBJECT, 
+		query = "SELECT i FROM InstituicaoEnsino i WHERE i = :id") })
 public class InstituicaoEnsino implements Serializable {
 
-	public static final String INSTITUICAO_GET_ALL = "InstituicaoEnsino.getAll";
-	public static final String INSTITUICAO_FIND_BY_INEP_EMEC = "InstituicaoEnsino.consultarPorInepEmec";
-	public static final String INSTITUICAO_FIND_BY_ID = "InstituicaoEnsino.consultarPorCodigo";
-	public static final String INSTITUICAO_FIND_BY_OBJECT = "InstituicaoEnsino.consultarPorObject";
-	public static final String INSTITUICAO_FIND_BY_REP_NAME = "InstituicaoEnsino.consultarPorNomeRepresentante";
+	public static final String INSTITUICAO_GET_ALL = 
+			"InstituicaoEnsino.getAll";
+	public static final String INSTITUICAO_FIND_BY_INEP_EMEC = 
+			"InstituicaoEnsino.consultarPorInepEmec";
+	public static final String INSTITUICAO_FIND_BY_ID = 
+			"InstituicaoEnsino.consultarPorCodigo";
+	public static final String INSTITUICAO_FIND_BY_OBJECT = 
+			"InstituicaoEnsino.consultarPorObject";
+	public static final String INSTITUICAO_FIND_BY_REP_NAME = 
+			"InstituicaoEnsino.consultarPorNomeRepresentante";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,7 +89,8 @@ public class InstituicaoEnsino implements Serializable {
 	public InstituicaoEnsino() {
 	}
 
-	public InstituicaoEnsino(String nomeInstituicao, String cnpj, String razaoSocial, String codInepEmec,
+	public InstituicaoEnsino(String nomeInstituicao, String cnpj, 
+			String razaoSocial, String codInepEmec,
 			Endereco endereco, Representante representante, int situacao) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
@@ -90,8 +101,10 @@ public class InstituicaoEnsino implements Serializable {
 		setSituacao(situacao);
 	}
 
-	public InstituicaoEnsino(String nomeInstituicao, String cnpj, String razaoSocial, String codInepEmec,
-			Endereco endereco, Representante representante, int situacao, String codEscola) {
+	public InstituicaoEnsino(String nomeInstituicao, String cnpj, 
+			String razaoSocial, String codInepEmec,
+			Endereco endereco, Representante representante, 
+			int situacao, String codEscola) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
@@ -128,15 +141,19 @@ public class InstituicaoEnsino implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		InstituicaoEnsino other = (InstituicaoEnsino) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 

@@ -84,9 +84,8 @@ public class ArquivoMB implements Serializable {
 				contentType = "image/" + aux[1];
 				aux = getPath().split(delimitadorDiretorioREGEX);
 				is2 = new FileInputStream(path);
-				streamedContent2 = new DefaultStreamedContent(is2, contentType, aux[1]);// aux[1]
-																						// =
-																						// extensão
+				streamedContent2 = new DefaultStreamedContent(
+						is2, contentType, aux[1]);// aux[1] = extensão
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -104,9 +103,9 @@ public class ArquivoMB implements Serializable {
 				contentType = "application/" + aux[1];
 				is3 = new FileInputStream(path);
 				aux = getPath().split(delimitadorDiretorioREGEX);
-				streamedContent3 = new DefaultStreamedContent(is3, contentType, aux[aux.length - 1]);// aux[aux.length-1]
-																										// =
-																										// extensão
+				streamedContent3 = new DefaultStreamedContent(
+						is3, contentType, aux[aux.length - 1]);
+				// aux[aux.length-1] = extensão
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -123,16 +122,20 @@ public class ArquivoMB implements Serializable {
 			return "/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true";
 		}
 		if (getOrigem() == 2) {
-			return "/pages/autenticado/validador/validadorCadastro.xhtml?faces-redirect=true";
+			return "/pages/autenticado/validador/"
+					+ "validadorCadastro.xhtml?faces-redirect=true";
 		}
 		if (getOrigem() == 3) {
-			return "/pages/autenticado/validador/validadorSolicitacao.xhtml?faces-redirect=true";
+			return "/pages/autenticado/validador/"
+					+ "validadorSolicitacao.xhtml?faces-redirect=true";
 		}
 		if (getOrigem() == 4) {
-			return "/pages/autenticado/validador/validadorAcessos.xhtml?faces-redirect=true";
+			return "/pages/autenticado/validador/"
+					+ "validadorAcessos.xhtml?faces-redirect=true";
 		}
 		if (getOrigem() == 5) {
-			return "/pages/autenticado/validador/validadorAcessos.xhtml?faces-redirect=true";
+			return "/pages/autenticado/validador/"
+					+ "validadorAcessos.xhtml?faces-redirect=true";
 		}
 		return null;
 	}

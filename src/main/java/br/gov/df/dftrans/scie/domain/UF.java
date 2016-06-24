@@ -13,9 +13,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_uf")
-@NamedQueries({ @NamedQuery(name = UF.UF_GET_ALL, query = "SELECT u FROM UF u"),
-		@NamedQuery(name = UF.UF_FIND_BY_UF, query = "SELECT u FROM UF u WHERE u.uf = :uf"),
-		@NamedQuery(name = UF.UF_FIND_BY_ID, query = "SELECT u FROM UF u WHERE u.id = :id") })
+@NamedQueries({ @NamedQuery(name = UF.UF_GET_ALL, 
+		query = "SELECT u FROM UF u"),
+		@NamedQuery(name = UF.UF_FIND_BY_UF, 
+		query = "SELECT u FROM UF u WHERE u.uf = :uf"),
+		@NamedQuery(name = UF.UF_FIND_BY_ID, 
+		query = "SELECT u FROM UF u WHERE u.id = :id") })
 public class UF implements Serializable {
 
 	public static final String UF_GET_ALL = "UF.getAll";
@@ -64,20 +67,28 @@ public class UF implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		UF other = (UF) obj;
-		if (id != other.id)
+		if (id != other.id) {
 			return false;
+		}
 		if (uf == null) {
-			if (other.uf != null)
+			if (other.uf != null) {
 				return false;
-		} else if (!uf.equals(other.uf))
-			return false;
+			}
+		} else {
+			if (!uf.equals(other.uf)) {
+				return false;
+			}
+		}
 		return true;
 	}
 

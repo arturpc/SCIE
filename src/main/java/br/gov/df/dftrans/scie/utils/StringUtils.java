@@ -23,19 +23,24 @@ public class StringUtils {
 			if (field.isAnnotationPresent(StringUpperCase.class)) {
 				try {
 					// passa os dados do atributo com a anotação para maiúsculo
-					field.set(object, field.get(object).toString().toUpperCase());
+					field.set(object, field.get(object)
+							.toString().toUpperCase());
 				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 			// verifica se tem a anotação @StringFormatter
 			if (field.isAnnotationPresent(StringFormatter.class)) {
 				try {
 					// passa os dados do atributo com a anotação para maiúsculo
-					field.set(object, field.get(object).toString().toUpperCase());
+					field.set(object, field.get(object)
+							.toString().toUpperCase());
 					// retira acentos
-					field.set(object, Normalizer.normalize(field.get(object).toString(), Normalizer.Form.NFD)
+					field.set(object, Normalizer.normalize(field.get(object)
+							.toString(), Normalizer.Form.NFD)
 							.replaceAll("[^\\p{ASCII}]", "").trim());
 				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 

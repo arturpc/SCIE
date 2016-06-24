@@ -16,7 +16,8 @@ public class CPFValidator implements Serializable {
 
 	private static final int[] pesoCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 
-	private static final char[] ZEROS = { '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0' };
+	private static final char[] ZEROS = { '0', '0', '0', '0', '0', 
+			'0', '0', '0', '0', '0', '0' };
 
 	public void initialize(CPF constraintAnnotation) {
 	}
@@ -42,16 +43,20 @@ public class CPFValidator implements Serializable {
 	 */
 	private static boolean isValidCPF(String cpf) {
 
-		if ((cpf == null) || cpf.equals("11111111111") || cpf.equals("22222222222") || cpf.equals("33333333333")
-				|| cpf.equals("44444444444") || cpf.equals("55555555555") || cpf.equals("66666666666")
-				|| cpf.equals("77777777777") || cpf.equals("88888888888") || cpf.equals("99999999999")
-				|| cpf.equals("00000000000")) {
+		if ((cpf == null) || "11111111111".equals(cpf) || "22222222222".equals(cpf) 
+				|| "33333333333".equals(cpf)
+				|| "44444444444".equals(cpf) || "55555555555".equals(cpf) 
+				|| "66666666666".equals(cpf)
+				|| "77777777777".equals(cpf) || "88888888888".equals(cpf) 
+				|| "99999999999".equals(cpf)
+				|| "00000000000".equals(cpf)) {
 			return false;
 		}
 		try {
 			Integer digit1 = calculateDigit(cpf.substring(0, 9), pesoCPF);
 			Integer digit2 = calculateDigit(cpf.substring(0, 9) + digit1, pesoCPF);
-			return cpf.equals(cpf.substring(0, 9) + digit1.toString() + digit2.toString());
+			return cpf.equals(cpf.substring(0, 9) + digit1.toString() 
+			+ digit2.toString());
 		} catch (Exception e) {
 			return false;
 		}

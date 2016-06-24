@@ -45,8 +45,14 @@ public class FileUploadView implements Serializable {
 	public ArrayList<Boolean> isUploaded = new ArrayList<Boolean>();
 	private String fileNameUploaded;
 	private InstituicaoEnsino inst;
-	private String chave = "", iconeAto, iconeCNPJ, iconeDiretor, iconeEndereco, iconeCurso = "", iconeEstatuto = "",
-			iconeConvenio = "";
+	private String chave = "";
+	private String iconeAto;
+	private String iconeCNPJ;
+	private String iconeDiretor;
+	private String iconeEndereco;
+	private String iconeCurso = "";
+	private String iconeEstatuto = "";
+	private String iconeConvenio = "";
 	private String aux[];
 	public final int ATO_RECONHECIMENTO = 0;
 	public final int INSCRICAO_CNPJ = 1;
@@ -55,11 +61,15 @@ public class FileUploadView implements Serializable {
 	public final int AUTORIZACAO_CURSO_SUPERIOR = 4;
 	public final int ESTATUTO = 5;
 	public final int CONVENIO_ESTADO = 6;
-	public final String nomesArquivos[] = { "ATO", "CNPJ", "DIRETOR", "ENDERECO", "CURSO", "ESTATUTO", "CONVENIO" };
+	public final String nomesArquivos[] = 
+		{ "ATO", "CNPJ", "DIRETOR", "ENDERECO", "CURSO", "ESTATUTO", "CONVENIO" };
 	public final String descricaoArquivos[] = { Parametros.getParameter("doc_ato_name"),
-			Parametros.getParameter("doc_cnpj_name"), Parametros.getParameter("doc_dir_name"),
-			Parametros.getParameter("doc_end_name"), Parametros.getParameter("doc_sup_name"),
-			Parametros.getParameter("doc_est_name"), Parametros.getParameter("doc_conv_name") };
+			Parametros.getParameter("doc_cnpj_name"),
+			Parametros.getParameter("doc_dir_name"),
+			Parametros.getParameter("doc_end_name"), 
+			Parametros.getParameter("doc_sup_name"),
+			Parametros.getParameter("doc_est_name"), 
+			Parametros.getParameter("doc_conv_name") };
 	private String current = Parametros.getParameter("root_upload");
 	private Date date = Calendar.getInstance().getTime();
 	private DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
@@ -122,7 +132,8 @@ public class FileUploadView implements Serializable {
 	public void doUploadCNPJ(FileUploadEvent fileUploadEvent) {
 		doUpload(fileUploadEvent, INSCRICAO_CNPJ);
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[INSCRICAO_CNPJ]);
+			DocumentoPendencia doc = docdao.
+					getByDesc(descricaoArquivos[INSCRICAO_CNPJ]);
 			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
@@ -145,7 +156,8 @@ public class FileUploadView implements Serializable {
 	public void doUploadDiretor(FileUploadEvent fileUploadEvent) {
 		doUpload(fileUploadEvent, ATO_DESIGNACAO_DIRETOR_SECRETARIO);
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ATO_DESIGNACAO_DIRETOR_SECRETARIO]);
+			DocumentoPendencia doc = docdao.getByDesc(
+					descricaoArquivos[ATO_DESIGNACAO_DIRETOR_SECRETARIO]);
 			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
@@ -168,7 +180,8 @@ public class FileUploadView implements Serializable {
 	public void doUploadEndereco(FileUploadEvent fileUploadEvent) {
 		doUpload(fileUploadEvent, COMPROVANTE_ENDERECO);
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[COMPROVANTE_ENDERECO]);
+			DocumentoPendencia doc = docdao.
+					getByDesc(descricaoArquivos[COMPROVANTE_ENDERECO]);
 			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
@@ -191,7 +204,8 @@ public class FileUploadView implements Serializable {
 	public void doUploadCursoSuperior(FileUploadEvent fileUploadEvent) {
 		doUpload(fileUploadEvent, AUTORIZACAO_CURSO_SUPERIOR);
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[AUTORIZACAO_CURSO_SUPERIOR]);
+			DocumentoPendencia doc = docdao.
+					getByDesc(descricaoArquivos[AUTORIZACAO_CURSO_SUPERIOR]);
 			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
@@ -237,7 +251,8 @@ public class FileUploadView implements Serializable {
 	public void doUploadConvenio(FileUploadEvent fileUploadEvent) {
 		doUpload(fileUploadEvent, CONVENIO_ESTADO);
 		try {
-			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[CONVENIO_ESTADO]);
+			DocumentoPendencia doc = docdao.
+					getByDesc(descricaoArquivos[CONVENIO_ESTADO]);
 			log = logdao.get(getInst().getId(), doc.getId());
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
@@ -260,26 +275,32 @@ public class FileUploadView implements Serializable {
 		setFileNameUploaded(uploadedFile.getFileName());
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
-		String infoAboutFile = "<br/> Arquivo recebido: <b>" + fileNameUploaded + "</b><br/>"
+		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
+		+ fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
 		// seta InstituiçãoEnsino com a da sessao
-		//HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		//HttpSession session = (HttpSession) FacesContext.
+		//getCurrentInstance().getExternalContext().getSession(false);
 		//setInst((InstituicaoEnsino) session.getAttribute("instituicao"));
 		if (inst == null) {
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("instituicaoHome.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext()
+				.redirect("instituicaoHome.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		// cria o arquivo abstrato
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ inst.getId() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + ""
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ inst.getId() + "" + delimitadorDiretorio + "" 
+				+ fmt.format(date) + "" + delimitadorDiretorio + ""
 				+ documento + "" + delimitadorDiretorio);
 		file.mkdirs();
-		file = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + inst.getId()
+		file = new File(current + delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + inst.getId()
 				+ delimitadorDiretorio + "files");
 		if (!file.exists()) {
 			// escreve no arquivo o array iniciado como 0
@@ -292,12 +313,15 @@ public class FileUploadView implements Serializable {
 			conteudo.add("0");
 			conteudo.add("0");
 			conteudo.add("0");
-			ManipuladorArquivos.escritor(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
+			ManipuladorArquivos.escritor(current + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
 					+ inst.getId() + delimitadorDiretorio + "files", conteudo);
 		} else {
 			// ler o arquivo
-			String caminhos[] = ManipuladorArquivos.leitor(current + delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" + inst.getId() + delimitadorDiretorio + "files");
+			String caminhos[] = ManipuladorArquivos.leitor(current 
+					+ delimitadorDiretorio + "destino_uploader"
+					+ delimitadorDiretorio + "" + inst.getId() 
+					+ delimitadorDiretorio + "files");
 			// exclui arquivo documento
 			file = new File(caminhos[documento]);
 			file.delete();
@@ -307,31 +331,44 @@ public class FileUploadView implements Serializable {
 		// se a extensão do arquivo for pdf
 		if (aux[1].equals("pdf")) {
 			// copia o pdf
-			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + inst.getId() + ""
-					+ delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + documento + ""
-					+ delimitadorDiretorio + "" + nomesArquivos[documento], uploadedFile, documento);
+			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + "" + inst.getId() + ""
+					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
+					+ delimitadorDiretorio + "" + documento + ""
+					+ delimitadorDiretorio + "" + nomesArquivos[documento], 
+					uploadedFile, documento);
 		} else {
 			// copia o arquivo
-			copiarArquivo(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + inst.getId() + ""
-					+ delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + "" + documento + ""
-					+ delimitadorDiretorio + "" + nomesArquivos[documento], uploadedFile, documento);
+			copiarArquivo(delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + "" + inst.getId() + ""
+			+ delimitadorDiretorio + "" + fmt.format(date) + "" 
+			+ delimitadorDiretorio + "" + documento + ""
+			+ delimitadorDiretorio + "" + nomesArquivos[documento], 
+			uploadedFile, documento);
 		}
 		setIsUploaded(new Boolean(true), documento);
 		setIconeUploaded(documento);
 		// ler o arquivo
-		String files[] = ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
-				+ delimitadorDiretorio + "" + inst.getId() + "" + delimitadorDiretorio + "files");
-		files[documento] = current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ inst.getId() + "" + delimitadorDiretorio + "" + fmt.format(date) + "" + delimitadorDiretorio + ""
-				+ documento + "" + delimitadorDiretorio + "" + nomesArquivos[documento] + "." + aux[1];
+		String files[] = ManipuladorArquivos.leitor(current + "" 
+		+ delimitadorDiretorio + "destino_uploader"
+		+ delimitadorDiretorio + "" + inst.getId() + "" 
+		+ delimitadorDiretorio + "files");
+		files[documento] = current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ inst.getId() + "" + delimitadorDiretorio + "" 
+				+ fmt.format(date) + "" + delimitadorDiretorio + ""
+				+ documento + "" + delimitadorDiretorio + "" 
+				+ nomesArquivos[documento] + "." + aux[1];
 		conteudo = new ArrayList<String>();
 		for (String temp : files) {
 			// add as linhas do arquivo em um array de string
 			conteudo.add(temp);
 		}
 		// faz a cópia do arquivo
-		ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
-				+ "" + inst.getId() + "" + delimitadorDiretorio + "files", conteudo);
+		ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio
+				+ "" + inst.getId() + "" + delimitadorDiretorio 
+				+ "files", conteudo);
 	}
 
 	/**
@@ -363,7 +400,8 @@ public class FileUploadView implements Serializable {
 			chave += inst.getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += documento;
-			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
+			contentStream.drawString("Autenticação: " 
+			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + "." + aux[1]);
@@ -406,7 +444,8 @@ public class FileUploadView implements Serializable {
 			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			chave += fmt.format(new Date());
 			chave += documento;
-			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
+			contentStream.drawString("Autenticação: " 
+			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + ".pdf");
@@ -479,8 +518,10 @@ public class FileUploadView implements Serializable {
 	public String arquivos() {
 		for (int i = 0; i < 4; i++) {
 			if (!isUploaded.get(i)) {
-				FacesUtil.addMsggError("É necessário anexar o documento: " + descricaoArquivos[i] + "!");
-				return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=false";
+				FacesUtil.addMsggError("É necessário anexar o documento: " 
+			+ descricaoArquivos[i] + "!");
+				return "/pages/instituicao/arquivosCadastro.xhtml"
+						+ "?faces-redirect=false";
 			}
 		}
 		return "/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true";
@@ -510,25 +551,36 @@ public class FileUploadView implements Serializable {
 	 * seta o upload e o ícone checked se for válido e unchecked se der erro
 	 */
 	public void setUploaded() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setInst((InstituicaoEnsino) session.getAttribute("instituicao"));
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
 				+ inst.getId() + "" + delimitadorDiretorio + "files");
 		if (file.exists()) {
-			arquivosAtuais = ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" + inst.getId() + "" + delimitadorDiretorio + "files");
+			arquivosAtuais = ManipuladorArquivos.leitor(current + "" 
+		+ delimitadorDiretorio + "destino_uploader"
+					+ delimitadorDiretorio + "" + inst.getId() + "" 
+		+ delimitadorDiretorio + "files");
 			// seta o array de boolean caso tenha 0 false, outro valor true
 			for (int i = 0; i < 7; i++) {
 				isUploaded.set(i, new Boolean(!arquivosAtuais[i].equals("0")));
 			}
 			// campos true o ícone recebe checked
-			iconeAto = "//resources//images//" + ((isUploaded.get(0)) ? "" : "un") + "checked-icon.png";
-			iconeCNPJ = "//resources//images//" + ((isUploaded.get(1)) ? "" : "un") + "checked-icon.png";
-			iconeDiretor = "//resources//images//" + ((isUploaded.get(2)) ? "" : "un") + "checked-icon.png";
-			iconeEndereco = "//resources//images//" + ((isUploaded.get(3)) ? "" : "un") + "checked-icon.png";
-			iconeCurso = (isUploaded.get(4)) ? "//resources//images//checked-icon.gif" : "";
-			iconeEstatuto = (isUploaded.get(5)) ? "//resources//images//checked-icon.gif" : "";
-			iconeConvenio = (isUploaded.get(6)) ? "//resources//images//checked-icon.gif" : "";
+			iconeAto = "//resources//images//" + ((isUploaded.get(0)) 
+					? "" : "un") + "checked-icon.png";
+			iconeCNPJ = "//resources//images//" + ((isUploaded.get(1)) 
+					? "" : "un") + "checked-icon.png";
+			iconeDiretor = "//resources//images//" + ((isUploaded.get(2)) 
+					? "" : "un") + "checked-icon.png";
+			iconeEndereco = "//resources//images//" + ((isUploaded.get(3)) 
+					? "" : "un") + "checked-icon.png";
+			iconeCurso = (isUploaded.get(4)) ? 
+					"//resources//images//checked-icon.gif" : "";
+			iconeEstatuto = (isUploaded.get(5)) ? 
+					"//resources//images//checked-icon.gif" : "";
+			iconeConvenio = (isUploaded.get(6)) ? 
+					"//resources//images//checked-icon.gif" : "";
 		} else {
 			// se o arquivo não existir, reseta o upload
 			resetUploaded();
@@ -538,7 +590,8 @@ public class FileUploadView implements Serializable {
 	public String concatenaArquivos() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.getValue(context.getELContext(), null, "fileUploadConcatenaView");
+		ConcatenaArquivo bean = (ConcatenaArquivo) resolver.
+				getValue(context.getELContext(), null, "fileUploadConcatenaView");
 		bean.setOrigem(3);
 		return "/pages/concatenaArquivos.xhtml?faces-redirect=true";
 	}

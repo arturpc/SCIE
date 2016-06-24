@@ -56,7 +56,8 @@ public class CursoViewBean implements Serializable {
 	 */
 	public String finalizar() {
 		if (getDetalharCursos() && !getTarget().isEmpty()) {
-			FacesMessage msg = new FacesMessage("É preciso finalizar o detalhamento de cursos!");
+			FacesMessage msg = new FacesMessage("É preciso finalizar "
+					+ "o detalhamento de cursos!");
 			msg.setSeverity(FacesMessage.SEVERITY_INFO);
 			FacesContext.getCurrentInstance().addMessage("Cursos não detalhados!", msg);
 			return "/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=false";
@@ -94,7 +95,8 @@ public class CursoViewBean implements Serializable {
 			// seta a instituição curso com o primeiro curso encontrado
 			setInstCurso(instdao.get(instituicao, getTarget().get(0)));
 			if (getInstCurso() == null) {
-				setInstCurso(new InstituicaoCurso(getInstituicao(), getTarget().get(0)));
+				setInstCurso(new InstituicaoCurso(getInstituicao(), 
+						getTarget().get(0)));
 			}
 		}
 		// seta detalhar curso para true
@@ -137,7 +139,8 @@ public class CursoViewBean implements Serializable {
 	}
 
 	public void onTransfer(TransferEvent event) {
-		setDualListCurso(new DualListModel<Curso>(getCursosMomento(), getDualListCurso().getTarget()));
+		setDualListCurso(new DualListModel<Curso>(getCursosMomento(),
+				getDualListCurso().getTarget()));
 	}
 
 	/**
@@ -155,9 +158,14 @@ public class CursoViewBean implements Serializable {
 
 	// getteres and setteres
 
+	/**
+	 * Devolve e inicializa um DualListModel
+	 * @return
+	 */
 	public DualListModel<Curso> getDualListCurso() {
 		if (this.dualListCurso == null) {
-			this.dualListCurso = new DualListModel<Curso>(getCursos(), new ArrayList<Curso>());
+			this.dualListCurso = new DualListModel<Curso>(
+					getCursos(), new ArrayList<Curso>());
 		}
 		return this.dualListCurso;
 	}

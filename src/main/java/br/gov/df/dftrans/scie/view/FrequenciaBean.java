@@ -64,7 +64,8 @@ public class FrequenciaBean {
 	private FrequenciaDAO freqdao = FrequenciaDAO.FrequenciaDAO();
 	private String chave = "";
 	private boolean erroProcessamento;
-	private String[] nomeMeses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto",
+	private String[] nomeMeses = { "Janeiro", "Fevereiro", "Março", 
+			"Abril", "Maio", "Junho", "Julho", "Agosto",
 			"Setembro", "Outubro", "Novembro", "Dezembro" };
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
@@ -75,10 +76,12 @@ public class FrequenciaBean {
 	 */
 	public void init() {
 		setDelimitadorDiretorioREGEX();
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
 		try {
-			ArrayList<Frequencia> freqlist = (ArrayList<Frequencia>) freqdao.getInst(getInstituicao());
+			ArrayList<Frequencia> freqlist = (ArrayList<Frequencia>) 
+					freqdao.getInst(getInstituicao());
 			setFrequencias(new HashSet<Frequencia>());
 			for (Frequencia freq : freqlist) {
 				getFrequencias().add(freq);
@@ -108,21 +111,26 @@ public class FrequenciaBean {
 		setFileNameUploaded(uploadedFile.getFileName());
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
-		String infoAboutFile = "<br/> Arquivo recebido: <b>" + fileNameUploaded + "</b><br/>"
+		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
+		+ fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		// seta Instituicao com a da sessao
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
 		if (instituicao == null) {
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("instituicaoHome.xhtml");
+				FacesContext.getCurrentInstance()
+				.getExternalContext().redirect("instituicaoHome.xhtml");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		// cria o arquivo abstrato
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-				+ getInstituicao().getId() + "" + delimitadorDiretorio + "frequencias" + delimitadorDiretorio + ""
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
+				+ getInstituicao().getId() + "" + delimitadorDiretorio 
+				+ "frequencias" + delimitadorDiretorio + ""
 				+ getMes().getValue() + "" + delimitadorDiretorio);
 		file.mkdirs();
 		try {
@@ -137,9 +145,12 @@ public class FrequenciaBean {
 			if (aux[1].toLowerCase().equals("xlsx")) {
 				tipo = ManipuladorArquivos.XLSX;
 			}
-			String path = current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-					+ instituicao.getId() + "" + delimitadorDiretorio + "frequencias" + delimitadorDiretorio + ""
-					+ getMes().getValue() + "" + delimitadorDiretorio + "frequencias." + aux[1];
+			String path = current + "" + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
+					+ instituicao.getId() + "" + delimitadorDiretorio 
+					+ "frequencias" + delimitadorDiretorio + ""
+					+ getMes().getValue() + "" + delimitadorDiretorio 
+					+ "frequencias." + aux[1];
 			// escreve no arquivo o conteúdo do UploadedFile(API primeFaces)
 			FileOutputStream os = new FileOutputStream(path);
 			os.write(uploadedFile.getContents());
@@ -159,16 +170,22 @@ public class FrequenciaBean {
 			chave += instituicao.getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += 8;
-			chave = chave.replaceAll(delimitadorDiretorioREGEX, "").replaceAll(" ", "").replaceAll("-", "");
-			contentStream.drawString("Autenticação: " + AutenticacaoDocumentos.getChaveSeguranca(chave));
+			chave = chave.replaceAll(delimitadorDiretorioREGEX, "")
+					.replaceAll(" ", "").replaceAll("-", "");
+			contentStream.drawString("Autenticação: " 
+			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
-			doc.save(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-					+ instituicao.getId() + "" + delimitadorDiretorio + "frequencias" + delimitadorDiretorio + ""
-					+ getMes().getValue() + "" + delimitadorDiretorio + "frequencias"
+			doc.save(current + "" + delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + ""
+					+ instituicao.getId() + "" + delimitadorDiretorio 
+					+ "frequencias" + delimitadorDiretorio + ""
+					+ getMes().getValue() + "" + delimitadorDiretorio 
+					+ "frequencias"
 					+ ManipuladorArquivos.ARQ_NAME[tipo] + ".pdf");
 			String[][] temp = ManipuladorArquivos.lerPlanilha(path);
-			persistirFrequencias(temp, AutenticacaoDocumentos.getChaveSeguranca(chave), tipo);
+			persistirFrequencias(temp, AutenticacaoDocumentos
+					.getChaveSeguranca(chave), tipo);
 			if (!erroProcessamento) {
 				setIcone("//resources//images//checked-icon.png");
 			}
@@ -193,49 +210,67 @@ public class FrequenciaBean {
 			erro = temp[3][1];
 			if (!temp[3][1].trim().equals("" + getInstituicao().getId())) {
 				throw new PlanilhaException(
-						"Código de cadastro não reconhecido!<br/>Favor verifique se o código digitado é o mesmo apresentado na página de upload!!!");
+						"Código de cadastro não reconhecido!<br/>Favor "
+						+ "verifique se o código digitado é o mesmo "
+						+ "apresentado na página de upload!!!");
 			}
 			inst = instdao.getById(Integer.parseInt(temp[3][1]));
 			if (inst == null) {
 				throw new PlanilhaException(
-						"Código de cadastro não reconhecido!<br/>Favor verifique se o código digitado é o mesmo apresentado na página de upload!!!");
+						"Código de cadastro não reconhecido!<br/>Favor "
+						+ "verifique se o código digitado é o mesmo "
+						+ "apresentado na página de upload!!!");
 			}
 			// verifica se o cnpj coincide com os dados da instituição
-			campo = temp[3][3].replaceAll("\\.", "").replaceAll(delimitadorDiretorioREGEX, "").replaceAll("-", "")
-					.replaceAll(" ", "").replaceAll("/", "").trim();
-			if (campo == null || campo.equals("null") || campo.isEmpty() || !inst.getCnpj().equals(campo)) {
-				throw new PlanilhaException("CNPJ não confere com o cadastrado ( " + inst.getCnpj() + " )!");
+			campo = temp[3][3].replaceAll("\\.", "")
+					.replaceAll(delimitadorDiretorioREGEX, "")
+					.replaceAll("-", "").replaceAll(" ", "")
+					.replaceAll("/", "").trim();
+			if (campo == null || "null".equals(campo) || campo.isEmpty() 
+					|| !inst.getCnpj().equals(campo)) {
+				throw new PlanilhaException("CNPJ não confere com o "
+						+ "cadastrado ( " + inst.getCnpj() + " )!");
 			}
 			// analiza caso específico xls, verifica a célula de forma
 			// diferente, pelo fato de se ter mais de uma célula
 			if (tipo == ManipuladorArquivos.XLS) {
 				// verifica o nome da instituição
-				campo = Normalizer.normalize(temp[3][5], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[3][5], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase().trim();
-				if (campo == null || campo.equals("null") || campo.isEmpty()
+				if (campo == null || "null".equals(campo) || campo.isEmpty()
 						|| !campo.contains(inst.getNomeInstituicao())) {
 					throw new PlanilhaException(
-							"Nome fantasia não confere com o cadastrado ( " + inst.getNomeInstituicao() + " )!");
+							"Nome fantasia não confere com o "
+							+ "cadastrado ( " 
+							+ inst.getNomeInstituicao() 
+							+ " )!");
 				}
-				campo = Normalizer.normalize(temp[3][7], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[3][7], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase().trim();
 			} else {
 				// verifica a nome da instituição para arquivos que não são xls
-				campo = Normalizer.normalize(temp[3][6], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[3][6], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase().trim();
-				if (campo == null || campo.equals("null") || campo.isEmpty()
+				if (campo == null || "null".equals(campo) || campo.isEmpty()
 						|| !campo.contains(inst.getNomeInstituicao())) {
 					throw new PlanilhaException(
-							"Nome fantasia não confere com o cadastrado ( " + inst.getNomeInstituicao() + " )!");
+					"Nome fantasia não confere com o cadastrado ( " 
+					+ inst.getNomeInstituicao() + " )!");
 				}
 				// seta razão social
-				campo = Normalizer.normalize(temp[3][8], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[3][8], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase().trim();
 			}
 			// verifica a razão social para arquivos que não são xls
-			if (campo == null || campo.equals("null") || campo.isEmpty() || !campo.contains(inst.getRazaoSocial())) {
+			if (campo == null || "null".equals(campo) || campo.isEmpty() 
+			|| !campo.contains(inst.getRazaoSocial())) {
 				throw new PlanilhaException(
-						"Razão Social não confere com a cadastrada ( " + inst.getRazaoSocial() + " )!");
+						"Razão Social não confere com a cadastrada ( " 
+				+ inst.getRazaoSocial() + " )!");
 			}
 			// enquanto não for nulo
 			for (int i = 6; (temp[i][1] != null && !temp[i][1].equals("null"))
@@ -246,23 +281,29 @@ public class FrequenciaBean {
 					|| (temp[i][6] != null && !temp[i][6].equals("null"))
 					|| (temp[i][7] != null && !temp[i][7].equals("null"))
 					|| (temp[i][8] != null && !temp[i][8].equals("null"))
-					|| (temp[i][9] != null && !temp[i][9].equals("null")); i++) {
+					|| (temp[i][9] != null && 
+					!temp[i][9].equals("null")); i++) {
 				Estudante est = new Estudante();
 				Frequencia freq = new Frequencia();
 				DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 				// caso matricula seja nula ou vazia
-				if (temp[i][1] == null || temp[i][1].equals("null") || temp[i][1].trim().isEmpty()) {
-					throw new PlanilhaException("Matrícula (nula) inválida na linha " + i + "!");
+				if (temp[i][1] == null || temp[i][1].equals("null") 
+						|| temp[i][1].trim().isEmpty()) {
+					throw new PlanilhaException("Matrícula (nula) inválida "
+					+ "na linha " + i + "!");
 				}
 				// caso não seja nula seta a matricula do estudante
 				est.setMatricula(temp[i][1]);
 				// caso nome completo seja nulo
-				if (temp[i][2] == null || temp[i][2].equals("null") || temp[i][2].trim().isEmpty()) {
-					throw new PlanilhaException("Nome do aluno (nulo) inválido na linha " + i + "!");
+				if (temp[i][2] == null || temp[i][2].equals("null") 
+						|| temp[i][2].trim().isEmpty()) {
+					throw new PlanilhaException("Nome do aluno (nulo) inválido "
+					+ "na linha " + i + "!");
 				}
 				// seta campo nome do estudante sem acentos ou caracteres
 				// especiais
-				campo = Normalizer.normalize(temp[i][2], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[i][2], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase();
 				est.setNome(campo);
 				// verifica problemas de formatação referente a data de
@@ -272,10 +313,13 @@ public class FrequenciaBean {
 				est.setDataNascimento(fmt.parse(temp[i][3]));
 				erro = temp[i][4];
 				// verifica problemas de formatação referente ao CPF
-				campo = temp[i][4].replaceAll("\\.", "").replaceAll(delimitadorDiretorioREGEX, "").replaceAll(" ", "")
+				campo = temp[i][4].replaceAll("\\.", "")
+						.replaceAll(delimitadorDiretorioREGEX, "")
+						.replaceAll(" ", "")
 						.replaceAll("-", "").trim();
-				if (campo == null || campo.equals("null") || campo.isEmpty()) {
-					throw new PlanilhaException("CPF do estudante (nulo) inválido na linha " + i + "!");
+				if (campo == null || "null".equals(campo) || campo.isEmpty()) {
+					throw new PlanilhaException("CPF do estudante (nulo) "
+							+ "inválido na linha " + i + "!");
 				}
 				// verifica se só existem npumeros no CPF
 				Pattern intsOnly = Pattern.compile("[0-9]+");
@@ -283,35 +327,46 @@ public class FrequenciaBean {
 				makeMatch.find();
 				if (makeMatch.group().isEmpty()) {
 					throw new PlanilhaException(
-							"CPF do estudante " + temp[i][4] + " contêm letras na linha " + i + "!");
+							"CPF do estudante " + temp[i][4] 
+							+ " contem letras na linha " + i + "!");
 				}
 				if (!listcpf.add(campo)) {
-					throw new PlanilhaException("Há CPF duplicado na linha " + i + "!");
+					throw new PlanilhaException("Há CPF duplicado na linha " 
+				+ i + "!");
 				}
 				// seta CPF para o estudante
 				est.setCpf(campo);
 				// verifica problemas de formatação referente ao nome do
 				// responsável
-				if (temp[i][5] == null || temp[i][5].equals("null") || temp[i][5].trim().isEmpty()) {
-					throw new PlanilhaException("Nome do responsável (nulo) inválido na linha " + i + "!");
+				if (temp[i][5] == null || temp[i][5].equals("null") 
+						|| temp[i][5].trim().isEmpty()) {
+					throw new PlanilhaException("Nome do responsável (nulo) "
+					+ "inválido na linha " + i + "!");
 				}
-				campo = Normalizer.normalize(temp[i][5], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[i][5], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase();
 				// seta o nome do responsável
 				est.setResponsavel(campo);
 				// verifica problemas de formatação referente ao nome do curso
-				if (temp[i][6] == null || temp[i][6].equals("null") || temp[i][6].trim().isEmpty()) {
-					throw new PlanilhaException("Nome do Curso (nulo) inválido na linha " + i + "!");
+				if (temp[i][6] == null || temp[i][6].equals("null") 
+						|| temp[i][6].trim().isEmpty()) {
+					throw new PlanilhaException("Nome do Curso (nulo) "
+					+ "inválido na linha " + i + "!");
 				}
-				campo = Normalizer.normalize(temp[i][6], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[i][6], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase();
 				// seta o nome do curso
 				est.setCurso(campo);
 				// verifica problemas de formatação referente ao nível do curso
-				if (temp[i][7] == null || temp[i][7].equals("null") || temp[i][7].trim().isEmpty()) {
-					throw new PlanilhaException("Nível do Curso (nulo) inválido na linha " + i + "!");
+				if (temp[i][7] == null || temp[i][7].equals("null") 
+						|| temp[i][7].trim().isEmpty()) {
+					throw new PlanilhaException("Nível do Curso (nulo) "
+							+ "inválido na linha " + i + "!");
 				}
-				campo = Normalizer.normalize(temp[i][7], Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
+				campo = Normalizer.normalize(temp[i][7], Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "")
 						.toUpperCase();
 				// seta o nível do curso
 				est.setNivel(campo);
@@ -329,7 +384,9 @@ public class FrequenciaBean {
 				campo = temp[i][9].toUpperCase();
 				if (!campo.startsWith("P") && !campo.startsWith("A")) {
 					throw new PlanilhaException("O valor " + campo
-							+ " não é um valor válido para Presença/Ausênciana linha " + i + "! Substitua por P ou A!");
+							+ " não é um valor válido para Presença/"
+							+ "Ausência na linha " + i + "! Substitua "
+							+ "por P ou A!");
 				}
 				if (campo.startsWith("P")) {
 					freq.setFrequencia(0);
@@ -344,7 +401,8 @@ public class FrequenciaBean {
 		} catch (NumberFormatException e) {
 			erroProcessamento = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão do Arquivo!",
+			facesContext.addMessage(null, new FacesMessage(FacesMessage
+					.SEVERITY_ERROR, "Erro de Conversão do Arquivo!",
 					"O valor " + erro + " não é um número válido!"));
 		} catch (EntityNotFoundException e) {
 			erroProcessamento = true;
@@ -352,17 +410,21 @@ public class FrequenciaBean {
 			erroProcessamento = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão do Arquivo!", e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+					"Erro de Conversão do Arquivo!", e.getMessage()));
 		} catch (ParseException e) {
 			erroProcessamento = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Conversão do Arquivo!",
+			facesContext.addMessage(null, new FacesMessage(FacesMessage
+					.SEVERITY_ERROR, "Erro de Conversão do Arquivo!",
 					"O valor " + erro + " não é uma data válida!"));
 		} catch (InsertException e) {
 			erroProcessamento = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Banco de Dados!",
-					"Erro de Inserção no Banco de Dados! Tente novamente em alguns instantes"));
+			facesContext.addMessage(null, new FacesMessage(FacesMessage
+					.SEVERITY_ERROR, "Erro de Banco de Dados!",
+					"Erro de Inserção no Banco de Dados! "
+					+ "Tente novamente em alguns instantes"));
 			e.printStackTrace();
 		}
 		return null;
@@ -370,27 +432,35 @@ public class FrequenciaBean {
 
 	public FrequenciaBean() {
 		// pega instituicão da sessão
-		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setInstituicao((InstituicaoEnsino) sessao.getAttribute("instituicao"));
 		setMeses(new ArrayList<MesReferencia>());
 		MesReferencia mesref;
 		// seta o mes de referência
 		switch (getDataMes()) {
 		case 0:
-			mesref = new MesReferencia(nomeMeses[11] + "" + delimitadorDiretorio + "" + (getDataAno() + 1899),
+			mesref = new MesReferencia(nomeMeses[11] + "" + delimitadorDiretorio 
+					+ "" + (getDataAno() + 1899),
 					Integer.parseInt((getDataAno() + 1900 - 1) + "" + 12));
 			getMeses().add(mesref);
-			mesref = new MesReferencia(nomeMeses[getDataMes()] + "" + delimitadorDiretorio + "" + (getDataAno() + 1900),
-					Integer.parseInt((getDataAno() + 1900) + "" + (getDataMes() + 1)));
+			mesref = new MesReferencia(nomeMeses[getDataMes()] + "" 
+			+ delimitadorDiretorio + "" + (getDataAno() + 1900),
+					Integer.parseInt((getDataAno() + 1900) 
+							+ "" + (getDataMes() + 1)));
 			getMeses().add(mesref);
 			break;
 		default:
 			mesref = new MesReferencia(
-					nomeMeses[getDataMes() - 1] + "" + delimitadorDiretorio + "" + (getDataAno() + 1900),
-					Integer.parseInt((getDataAno() + 1900) + "" + getDataMes()));
+					nomeMeses[getDataMes() - 1] + "" + delimitadorDiretorio 
+					+ "" + (getDataAno() + 1900),
+					Integer.parseInt((getDataAno() + 1900) + "" 
+					+ getDataMes()));
 			getMeses().add(mesref);
-			mesref = new MesReferencia(nomeMeses[getDataMes()] + "" + delimitadorDiretorio + "" + (getDataAno() + 1900),
-					Integer.parseInt((getDataAno() + 1900) + "" + (getDataMes() + 1)));
+			mesref = new MesReferencia(nomeMeses[getDataMes()] + "" 
+			+ delimitadorDiretorio + "" + (getDataAno() + 1900),
+					Integer.parseInt((getDataAno() + 1900) 
+							+ "" + (getDataMes() + 1)));
 			getMeses().add(mesref);
 			break;
 		}
@@ -404,7 +474,8 @@ public class FrequenciaBean {
 	public StreamedContent getXls() {
 		InputStream stream = null;
 		try {
-			stream = new FileInputStream(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+			stream = new FileInputStream(current + "" + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio
 					+ "templates" + delimitadorDiretorio + "frequencia.xls");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -421,7 +492,8 @@ public class FrequenciaBean {
 	public StreamedContent getXlsx() {
 		InputStream stream = null;
 		try {
-			stream = new FileInputStream(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+			stream = new FileInputStream(current + "" + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio
 					+ "templates" + delimitadorDiretorio + "frequencia.xlsx");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -438,7 +510,8 @@ public class FrequenciaBean {
 	public StreamedContent getOds() {
 		InputStream stream = null;
 		try {
-			stream = new FileInputStream(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+			stream = new FileInputStream(current + "" + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio
 					+ "templates" + delimitadorDiretorio + "frequencia.ods");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

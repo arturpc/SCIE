@@ -23,26 +23,44 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "tb_instituicao_curso")
 @NamedQueries({
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_GET_ALL, query = "SELECT i FROM InstituicaoCurso i where i.fim = null"),
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_CURSO, query = "SELECT i FROM InstituicaoCurso i WHERE i.curso.id = :idCurso and i.instituicao.id = :idInstituicao and i.fim = null"),
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_CURSO, query = "SELECT i FROM InstituicaoCurso i WHERE i.curso.id = :idCurso and i.instituicao.id = :idInstituicao and i.fim = null"
-				+ " and i.ano = (SELECT MAX(inst.ano) FROM InstituicaoCurso inst WHERE inst.instituicao = i.instituicao "
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_GET_ALL, 
+				query = "SELECT i FROM InstituicaoCurso i where i.fim = null"),
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_CURSO, 
+		query = "SELECT i FROM InstituicaoCurso i WHERE i.curso.id = :idCurso "
+				+ "and i.instituicao.id = :idInstituicao and i.fim = null"),
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_CURSO, 
+		query = "SELECT i FROM InstituicaoCurso i WHERE i.curso.id = :idCurso "
+				+ "and i.instituicao.id = :idInstituicao and i.fim = null"
+				+ " and i.ano = (SELECT MAX(inst.ano) FROM InstituicaoCurso inst "
+				+ "WHERE inst.instituicao = i.instituicao "
 				+ "and inst.curso = i.curso and inst.fim = null)"),
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, query = "SELECT i FROM InstituicaoCurso i "
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, 
+		query = "SELECT i FROM InstituicaoCurso i "
 				+ "WHERE i.instituicao.id = :id and "
-				+ "i.fim = null and i.ano = (SELECT MAX(inst.ano) FROM InstituicaoCurso inst WHERE inst.instituicao = i.instituicao "
+				+ "i.fim = null and i.ano = (SELECT MAX(inst.ano) "
+				+ "FROM InstituicaoCurso inst "
+				+ "WHERE inst.instituicao = i.instituicao "
 				+ "and inst.curso = i.curso and inst.fim = null)"),
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO, query = "SELECT i FROM InstituicaoCurso i "
-				+ "WHERE i.instituicao = :inst and " + "i.curso = :curso and i.fim = null"),
-		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_ID, query = "SELECT i FROM InstituicaoCurso i WHERE i.id = :id and i.fim = null") })
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO, 
+		query = "SELECT i FROM InstituicaoCurso i "
+				+ "WHERE i.instituicao = :inst and " + "i.curso = :curso "
+						+ "and i.fim = null"),
+		@NamedQuery(name = InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_ID, 
+		query = "SELECT i FROM InstituicaoCurso i WHERE i.id = :id and i.fim = null") })
 public class InstituicaoCurso implements Serializable {
 
-	public static final String INSTITUICAOCURSO_GET_ALL = "InstituicaoCurso.getAll";
-	public static final String INSTITUICAOCURSO_FIND_BY_CURSO = "InstituicaoCurso.consultarPorCurso";
-	public static final String INSTITUICAOCURSO_FIND_ALL_BY_CURSO = "InstituicaoCurso.consultarTodosPorCurso";
-	public static final String INSTITUICAOCURSO_FIND_BY_INSTITUICAO = "InstituicaoCurso.consultarPorInstituicao";
-	public static final String INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO = "InstituicaoCurso.consultarTodosPorInstituicao";
-	public static final String INSTITUICAOCURSO_FIND_BY_ID = "InstituicaoCurso.consultarPorCodigo";
+	public static final String INSTITUICAOCURSO_GET_ALL = 
+			"InstituicaoCurso.getAll";
+	public static final String INSTITUICAOCURSO_FIND_BY_CURSO = 
+			"InstituicaoCurso.consultarPorCurso";
+	public static final String INSTITUICAOCURSO_FIND_ALL_BY_CURSO = 
+			"InstituicaoCurso.consultarTodosPorCurso";
+	public static final String INSTITUICAOCURSO_FIND_BY_INSTITUICAO = 
+			"InstituicaoCurso.consultarPorInstituicao";
+	public static final String INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO = 
+			"InstituicaoCurso.consultarTodosPorInstituicao";
+	public static final String INSTITUICAOCURSO_FIND_BY_ID = 
+			"InstituicaoCurso.consultarPorCodigo";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -47,7 +47,10 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public List<Curso> getAll() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_GET_ALL, Curso.class);
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_GET_ALL,
+							Curso.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			e.printStackTrace();
@@ -76,7 +79,8 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getCurso() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getCurso() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
 				entityManager.getTransaction().rollback();
@@ -131,8 +135,12 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public Curso get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_ID, Curso.class);
-			return typedQuery.setParameter("id", ((Curso) id).getId()).getSingleResult();
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_FIND_BY_ID, 
+							Curso.class);
+			return typedQuery.setParameter("id", 
+					((Curso) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -151,7 +159,10 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public Curso get(int id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_ID, Curso.class);
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_FIND_BY_ID, 
+							Curso.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -171,8 +182,12 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public Curso get(String curso, String nivel) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_CURSO_NIVEL, Curso.class);
-			return typedQuery.setParameter("curso", curso).setParameter("nivel", nivel).getSingleResult();
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_FIND_BY_CURSO_NIVEL, 
+							Curso.class);
+			return typedQuery.setParameter("curso", curso)
+					.setParameter("nivel", nivel).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -209,7 +224,10 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public Curso getByEmec(String emec) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_EMEC, Curso.class);
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_FIND_BY_EMEC, 
+							Curso.class);
 			List<Curso> list = new ArrayList<Curso>();
 			list = typedQuery.setParameter("codEmec", emec).getResultList();
 			if (!list.isEmpty()) {
@@ -236,7 +254,10 @@ public class CursoDAO extends DAO<Curso> implements Serializable {
 	public Curso getByCurso(String curso) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Curso> typedQuery = entityManager.createNamedQuery(Curso.CURSO_FIND_BY_CURSO, Curso.class);
+			TypedQuery<Curso> typedQuery = entityManager
+					.createNamedQuery(Curso
+							.CURSO_FIND_BY_CURSO, 
+							Curso.class);
 			return typedQuery.setParameter("curso", curso).getSingleResult();
 		} catch (NoResultException e) {
 			return null;

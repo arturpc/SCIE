@@ -38,8 +38,11 @@ import br.gov.df.dftrans.scie.view.ArquivoMB;
 public class AcessosBean {
 
 	private Usuario user;
-	private boolean[] arquivoValido = new boolean[3], existeArquivo = new boolean[2];
-	private String[] comentario = new String[3], nomes = new String[3], nomesArquivos = new String[2];
+	private boolean[] arquivoValido = new boolean[3];
+	private boolean[] existeArquivo = new boolean[2];
+	private String[] comentario = new String[3];
+	private String[] nomes = new String[3];
+	private String[] nomesArquivos = new String[2];
 	private ExtensaoAcesso extAcesso;
 	private String motivo;
 	private String[] path;
@@ -56,7 +59,7 @@ public class AcessosBean {
 	public String[] getFiles() {
 		return files;
 	}
-	
+
 	public AcessosBean() {
 	}
 
@@ -79,13 +82,13 @@ public class AcessosBean {
 	 * @return a nova URL no qual a aplicação será direcionada
 	 */
 	public String validarSolicitacao() {
-		setExtAcesso((ExtensaoAcesso) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
-				.get("solicitacao"));
+		setExtAcesso((ExtensaoAcesso) FacesContext.getCurrentInstance().
+				getExternalContext().getRequestMap().get("solicitacao"));
 		setEscolhida(true);
 		return "/pages/autenticado/validador/validadorAcessos.xhtml?faces-redirect=true";
 
 	}
-	
+
 	/**
 	 * Método resposável por desalocar uma solicitação
 	 * 
@@ -93,8 +96,8 @@ public class AcessosBean {
 	 */
 
 	public String desalocarSolicitacao() {
-		setExtAcesso((ExtensaoAcesso) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
-				.get("solicitacao"));
+		setExtAcesso((ExtensaoAcesso) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestMap().get("solicitacao"));
 		extdao.update(getExtAcesso(), 0);
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 
@@ -123,13 +126,14 @@ public class AcessosBean {
 		// Inicia o vetor de String e inicia o vetor de boolean como false
 		try {
 			// seta a variavel user com o usuário na sessão
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-					.getSession(false);
+			HttpSession session = (HttpSession) FacesContext.
+					getCurrentInstance().getExternalContext().getSession(false);
 			setUser((Usuario) session.getAttribute("usuario"));
 			// caso não tenha sido escolhida uma solicitação
 			if (!isEscolhida) {
 				// se tiver solicitação em análise com o usuário na sessão
-				if (extdao.getAnalise(getUser()) != null && !extdao.getAnalise(getUser()).isEmpty()) {
+				if (extdao.getAnalise(getUser()) != null && 
+						!extdao.getAnalise(getUser()).isEmpty()) {
 					// seta a variavel extAcesso com o primeiro encontrado
 					setExtAcesso(extdao.getAnalise(getUser()).get(0));
 				} else {
@@ -154,13 +158,15 @@ public class AcessosBean {
 			// arquivo presente no destino informado
 			if (temArquivos()) {
 				setFiles(new String[2]);
-				setPath(ManipuladorArquivos.leitor(current + "" + delimitadorDiretorio + "destino_uploader"
-						+ delimitadorDiretorio + "" + getExtAcesso().getCpf() + "" + delimitadorDiretorio + "files"));
-				
+				setPath(ManipuladorArquivos.leitor(current + "" 
+				+ delimitadorDiretorio + "destino_uploader" + 
+				delimitadorDiretorio + "" + getExtAcesso().getCpf() 
+				+ "" + delimitadorDiretorio + "files"));
+
 				int flag = 0;
-				for(String tmp : getPath()){
-					if (flag > 1 && flag < 4){
-						files[flag-2] = tmp;
+				for (String tmp : getPath()) {
+					if (flag > 1 && flag < 4) {
+						files[flag - 2] = tmp;
 					}
 					flag++;
 				}
@@ -205,7 +211,8 @@ public class AcessosBean {
 		setPathAtual(getPath()[getDocumento()]);
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		ArquivoMB bean = (ArquivoMB) resolver.getValue(context.getELContext(), null, "arquivoMB");
+		ArquivoMB bean = (ArquivoMB) resolver.
+				getValue(context.getELContext(), null, "arquivoMB");
 		bean.setPath(getPathAtual());
 		bean.setOrigem(getOrigem());
 	}
@@ -224,35 +231,36 @@ public class AcessosBean {
 	 * @return a chave formatada em MD5
 	 */
 	public String getAutenticacao() {
-		try{
-		String chave = "";
-		chave = getExtAcesso().getCpf();
-		if (temArquivos()) {
-			String[] aux = getPathAtual().split("destino_uploader"), aux1;
-			if(delimitadorDiretorioREGEX == null){
-				setDelimitadorDiretorioREGEX();
+		try {
+			String chave = "";
+			chave = getExtAcesso().getCpf();
+			if (temArquivos()) {
+				String[] aux = getPathAtual().split("destino_uploader"), aux1;
+				if (delimitadorDiretorioREGEX == null) {
+					setDelimitadorDiretorioREGEX();
+				}
+				aux1 = aux[1].split(delimitadorDiretorioREGEX);
+				chave += aux1[2];
+			} else {
+				Date d = new Date();
+				DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+				chave += fmt.format(d);
 			}
-			aux1 = aux[1].split(delimitadorDiretorioREGEX);
-			chave += aux1[2];
-		} else {
-			Date d = new Date();
-			DateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
-			chave += fmt.format(d);
-		}
-		chave += getDocumento();
-		return AutenticacaoDocumentos.getChaveSeguranca(chave);
-		} catch (Exception e){
+			chave += getDocumento();
+			return AutenticacaoDocumentos.getChaveSeguranca(chave);
+		} catch (Exception e) {
 			return "Não foi possivel calcular a autenticacao";
 		}
 	}
 
 	public String terminarValidacao() {
 		boolean validado = true;
-		
+
 		// Caso tenha um arquivo valido e os outros não, é necessário setar o
 		// válido como inválido
 		if (getArquivoValido()[2] && (!getArquivoValido()[0] || !getArquivoValido()[1])) {
-			FacesUtil.addMsggError("Marque a validação da solicitação como \"Inválida\"!");
+			FacesUtil.addMsggError("Marque a validação da "
+					+ "solicitação como \"Inválida\"!");
 			return "/pages/autenticado/validadorAcessos.xhtml?faces-redirect=true";
 		}
 
@@ -283,7 +291,8 @@ public class AcessosBean {
 		}
 		// Envia um email informando a situação do cadastro
 		// ple.dftrans@gmail.com
-		Mail.sendEmailAcessosValidacao(getExtAcesso(), getArquivoValido(), getComentario(), getNomes(),getFiles());
+		Mail.sendEmailAcessosValidacao(getExtAcesso(), 
+				getArquivoValido(), getComentario(), getNomes(), getFiles());
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
 
@@ -354,44 +363,58 @@ public class AcessosBean {
 	public boolean filterStatus(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim();
 		// Retorna filtro vazio
-		if (filterText == null || filterText.equals("")) {
+		if (filterText == null || "".equals(filterText)) {
 			return true;
 		}
 		int i;
 		// Converte filtro descritivo em numérico
 		if ("Duplicidade".length() >= filterText.length()
-				? "Duplicidade".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Duplicidade".length()).equalsIgnoreCase("Duplicidade")) {
+				? "Duplicidade".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Duplicidade".length())
+						.equalsIgnoreCase("Duplicidade")) {
 			filterText = "-1";
 		}
 		if ("Solicitado".length() >= filterText.length()
-				? "Solicitado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Solicitado".length()).equalsIgnoreCase("Solicitado")) {
+				? "Solicitado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Solicitado".length())
+						.equalsIgnoreCase("Solicitado")) {
 			filterText = "0";
 		}
 		if ("Em analise".length() >= filterText.length()
-				? "Em analise".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Em analise".length()).equalsIgnoreCase("Em analise")) {
+				? "Em analise".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Em analise".length())
+						.equalsIgnoreCase("Em analise")) {
 			filterText = "1";
 		}
 		if ("Aprovado".length() >= filterText.length()
-				? "Aprovado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Aprovado".length()).equalsIgnoreCase("Aprovado")) {
+				? "Aprovado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Aprovado".length())
+						.equalsIgnoreCase("Aprovado")) {
 			filterText = "2";
 		}
 		if ("Rejeitado".length() >= filterText.length()
-				? "Rejeitado".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Rejeitado".length()).equalsIgnoreCase("Rejeitado")) {
+				? "Rejeitado".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Rejeitado".length())
+						.equalsIgnoreCase("Rejeitado")) {
 			filterText = "3";
 		}
 		if ("Cartao Impresso".length() >= filterText.length()
-				? "Cartao Impresso".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Cartao Impresso".length()).equalsIgnoreCase("Cartao Impresso")) {
+				? "Cartao Impresso".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Cartao Impresso".length())
+						.equalsIgnoreCase("Cartao Impresso")) {
 			filterText = "4";
 		}
 		if ("Cartao Entregue".length() >= filterText.length()
-				? "Cartao Entregue".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Cartao Entregue".length()).equalsIgnoreCase("Cartao Entregue")) {
+				? "Cartao Entregue".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Cartao Entregue".length())
+						.equalsIgnoreCase("Cartao Entregue")) {
 			filterText = "5";
 		}
 		if (value == null) {
@@ -405,7 +428,7 @@ public class AcessosBean {
 		}
 		return (Integer) value == i;
 	}
-	
+
 	/**
 	 * Filtro para valores descritivos e numéricos dos motivos;
 	 * 
@@ -417,29 +440,37 @@ public class AcessosBean {
 	public boolean filterMotivo(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim();
 		// Retorna filtro vazio
-		if (filterText == null || filterText.equals("")) {
+		if (filterText == null || "".equals(filterText)) {
 			return true;
 		}
 		int i;
 		// Converte filtro descritivo em numérico
 		if ("Alteracao de endereço/IE".length() >= filterText.length()
-				? "Alteracao de endereço/IE".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Alteracao de endereço/IE".length()).equalsIgnoreCase("Alteracao de endereço/IE")) {
+				? "Alteracao de endereço/IE".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Alteracao de endereço/IE".length())
+						.equalsIgnoreCase("Alteracao de endereço/IE")) {
 			filterText = "4";
 		}
 		if ("Insuficiencia de Acessos".length() >= filterText.length()
-				? "Insuficiencia de Acessos".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Insuficiencia de Acessos".length()).equalsIgnoreCase("Insuficiencia de Acessos")) {
+				? "Insuficiencia de Acessos".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Insuficiencia de Acessos".length())
+						.equalsIgnoreCase("Insuficiencia de Acessos")) {
 			filterText = "3";
 		}
 		if ("Estagio Obrigatorio".length() >= filterText.length()
-				? "Estagio Obrigatorio".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Estagio Obrigatorio".length()).equalsIgnoreCase("Estagio Obrigatorio")) {
+				? "Estagio Obrigatorio".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Estagio Obrigatorio".length())
+						.equalsIgnoreCase("Estagio Obrigatorio")) {
 			filterText = "2";
 		}
 		if ("Matricula em mais de uma IE".length() >= filterText.length()
-				? "Matricula em mais de uma IE".substring(0, filterText.length()).equalsIgnoreCase(filterText)
-				: filterText.substring(0, "Matricula em mais de uma IE".length()).equalsIgnoreCase("Matricula em mais de uma IE")) {
+				? "Matricula em mais de uma IE".substring(0, filterText.length())
+						.equalsIgnoreCase(filterText)
+				: filterText.substring(0, "Matricula em mais de uma IE".length())
+						.equalsIgnoreCase("Matricula em mais de uma IE")) {
 			filterText = "1";
 		}
 		if (value == null) {

@@ -23,24 +23,43 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "tb_extensao_acesso")
-@NamedQueries({ @NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_ALL, query = "SELECT e FROM ExtensaoAcesso e"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_USUARIO, query = "SELECT e FROM ExtensaoAcesso e where e.usuario = :usuario"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_CPF, query = "SELECT e FROM ExtensaoAcesso e WHERE e.cpf = :cpf"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_ID, query = "SELECT e FROM ExtensaoAcesso e WHERE e.id = :id"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_SOLICITADO, query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 0 order by e.atualizacao"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_ANALISYS, query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 1 and e.usuario = :usuario"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_APROVED, query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 2 and e.cpf = :cpf order by e.atualizacao"),
-		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_REJECTED, query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 3 and e.cpf = :cpf order by e.atualizacao"), })
+@NamedQueries({ @NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_ALL, 
+		query = "SELECT e FROM ExtensaoAcesso e"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_USUARIO, 
+		query = "SELECT e FROM ExtensaoAcesso e where e.usuario = :usuario"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_CPF, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.cpf = :cpf"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_FIND_BY_ID, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.id = :id"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_SOLICITADO, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 0 order by e.atualizacao"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_ANALISYS, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 1 "
+				+ "and e.usuario = :usuario"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_APROVED, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 2 "
+				+ "and e.cpf = :cpf order by e.atualizacao"),
+		@NamedQuery(name = ExtensaoAcesso.EXTENSAO_ACESSO_GET_REJECTED, 
+		query = "SELECT e FROM ExtensaoAcesso e WHERE e.status = 3 "
+				+ "and e.cpf = :cpf order by e.atualizacao"), })
 public class ExtensaoAcesso implements Serializable {
 
-	public static final String EXTENSAO_ACESSO_GET_ALL = "ExtensaoAcesso.getAll";
-	public static final String EXTENSAO_ACESSO_FIND_BY_USUARIO = "ExtensaoAcesso.consultarPorUsuario";
-	public static final String EXTENSAO_ACESSO_FIND_BY_CPF = "ExtensaoAcesso.consultarPorCPF";
-	public static final String EXTENSAO_ACESSO_FIND_BY_ID = "ExtensaoAcesso.consultarPorId";
-	public static final String EXTENSAO_ACESSO_GET_SOLICITADO = "ExtensaoAcesso.getSolicitado";
-	public static final String EXTENSAO_ACESSO_GET_ANALISYS = "ExtensaoAcesso.getAnalisys";
-	public static final String EXTENSAO_ACESSO_GET_APROVED = "ExtensaoAcesso.getAproved";
-	public static final String EXTENSAO_ACESSO_GET_REJECTED = "ExtensaoAcesso.getRejected";
+	public static final String EXTENSAO_ACESSO_GET_ALL = 
+			"ExtensaoAcesso.getAll";
+	public static final String EXTENSAO_ACESSO_FIND_BY_USUARIO = 
+			"ExtensaoAcesso.consultarPorUsuario";
+	public static final String EXTENSAO_ACESSO_FIND_BY_CPF = 
+			"ExtensaoAcesso.consultarPorCPF";
+	public static final String EXTENSAO_ACESSO_FIND_BY_ID = 
+			"ExtensaoAcesso.consultarPorId";
+	public static final String EXTENSAO_ACESSO_GET_SOLICITADO = 
+			"ExtensaoAcesso.getSolicitado";
+	public static final String EXTENSAO_ACESSO_GET_ANALISYS = 
+			"ExtensaoAcesso.getAnalisys";
+	public static final String EXTENSAO_ACESSO_GET_APROVED = 
+			"ExtensaoAcesso.getAproved";
+	public static final String EXTENSAO_ACESSO_GET_REJECTED = 
+			"ExtensaoAcesso.getRejected";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

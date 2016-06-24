@@ -37,18 +37,22 @@ public class EnderecoDAO extends DAO<Endereco> {
 	public Endereco getByCEP(String chave) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Endereco> typedQuery = entityManager.createNamedQuery(Endereco.ENDERECO_FIND_BY_CEP,
+			TypedQuery<Endereco> typedQuery = entityManager
+					.createNamedQuery(Endereco.ENDERECO_FIND_BY_CEP,
 					Endereco.class);
-			List<Endereco> endlist = typedQuery.setParameter("cep", chave).getResultList();
+			List<Endereco> endlist = typedQuery
+					.setParameter("cep", chave).getResultList();
 			int count1 = 0, count2 = 0;
 			Endereco end = null;
 			if(!endlist.isEmpty()){
 				end = new Endereco();
 				for(Endereco temp: endlist){
-					if(temp.getBairro() != null && temp.getBairro().length() > count1){
+					if(temp.getBairro() != null 
+							&& temp.getBairro().length() > count1){
 						end.setBairro(temp.getBairro());
 						count1 = temp.getBairro().length();
-					}if(temp.getLogradouro() != null && temp.getLogradouro().length() > count2){
+					}if(temp.getLogradouro() != null 
+							&& temp.getLogradouro().length() > count2){
 						end.setLogradouro(temp.getLogradouro());
 						count2 = temp.getLogradouro().length();
 					}
@@ -80,7 +84,8 @@ public class EnderecoDAO extends DAO<Endereco> {
 	public Endereco getByCodigo(int chave) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Endereco> typedQuery = entityManager.createNamedQuery(Endereco.ENDERECO_FIND_BY_ID,
+			TypedQuery<Endereco> typedQuery = entityManager
+					.createNamedQuery(Endereco.ENDERECO_FIND_BY_ID,
 					Endereco.class);
 			return typedQuery.setParameter("id", chave).getSingleResult();
 		} catch (NoResultException e) {
@@ -109,7 +114,8 @@ public class EnderecoDAO extends DAO<Endereco> {
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getCep() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getCep() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			throw new InsertException();
 		} finally {
@@ -143,9 +149,11 @@ public class EnderecoDAO extends DAO<Endereco> {
 	public Endereco get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Endereco> typedQuery = entityManager.createNamedQuery(Endereco.ENDERECO_FIND_BY_ID,
+			TypedQuery<Endereco> typedQuery = entityManager
+					.createNamedQuery(Endereco.ENDERECO_FIND_BY_ID,
 					Endereco.class);
-			return typedQuery.setParameter("id", ((Endereco) id).getId()).getSingleResult();
+			return typedQuery.setParameter("id", ((Endereco) id)
+					.getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -166,7 +174,10 @@ public class EnderecoDAO extends DAO<Endereco> {
 	public List<Endereco> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Endereco> typedQuery = entityManager.createNamedQuery(Endereco.ENDERECO_GET_ALL, Endereco.class);
+			TypedQuery<Endereco> typedQuery = entityManager
+					.createNamedQuery(Endereco
+							.ENDERECO_GET_ALL,
+							Endereco.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;

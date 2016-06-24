@@ -80,8 +80,11 @@ public class UsuarioDAO extends DAO<Usuario> {
 		EntityManager entityManager = factory.createEntityManager();
 		Usuario user = null;
 		try {
-			user = entityManager.createNamedQuery(Usuario.USUARIO_FIND_BY_AUTENTICACAO, Usuario.class)
-					.setParameter("login", login).setParameter("senha", MD5.md5(senha)).getSingleResult();
+			user = entityManager.createNamedQuery(Usuario
+					.USUARIO_FIND_BY_AUTENTICACAO, Usuario.class)
+					.setParameter("login", login)
+					.setParameter("senha", MD5.md5(senha))
+					.getSingleResult();
 		} catch (Exception e) {
 			// e.printStackTrace();
 			// throw new DAOExcpetion("Erro na autenticaçao do usuario");
@@ -104,7 +107,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 		EntityManager entityManager = factory.createEntityManager();
 		Usuario user = null;
 		try {
-			user = entityManager.createNamedQuery(Usuario.USUARIO_FIND_BY_EMAIL, Usuario.class)
+			user = entityManager.createNamedQuery(
+					Usuario.USUARIO_FIND_BY_EMAIL, Usuario.class)
 					.setParameter("email", email).getSingleResult();
 		} catch (Exception e) {
 			throw new DAOExcpetion("Erro ao buscar usuário por Email");
@@ -124,7 +128,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 		EntityManager entityManager = factory.createEntityManager();
 		Usuario user = null;
 		try {
-			user = entityManager.createNamedQuery(Usuario.USUARIO_FIND_BY_LOGIN, Usuario.class)
+			user = entityManager.createNamedQuery(
+					Usuario.USUARIO_FIND_BY_LOGIN, Usuario.class)
 					.setParameter("login", login).getSingleResult();
 		} catch (Exception e) {
 			throw new DAOExcpetion("Erro ao buscar usuário por Email");
@@ -159,7 +164,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 	public List<Usuario> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Usuario> typedQuery = entityManager.createNamedQuery(Usuario.USUARIO_GET_ALL, Usuario.class);
+			TypedQuery<Usuario> typedQuery = entityManager
+					.createNamedQuery(Usuario.USUARIO_GET_ALL, Usuario.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;

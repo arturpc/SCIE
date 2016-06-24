@@ -18,8 +18,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "tb_prioridade")
-@NamedQueries({ @NamedQuery(name = Prioridade.PRIORIDADE_GET_ALL, query = "SELECT p FROM Prioridade p"),
-	@NamedQuery(name = Prioridade.PRIORIDADE_FIND_BY_ID, query = "SELECT p FROM Prioridade p WHERE p.id = :id") })
+@NamedQueries({ @NamedQuery(name = Prioridade.PRIORIDADE_GET_ALL, 
+	query = "SELECT p FROM Prioridade p"),
+	@NamedQuery(name = Prioridade.PRIORIDADE_FIND_BY_ID, 
+	query = "SELECT p FROM Prioridade p WHERE p.id = :id") })
 public class Prioridade implements Serializable{
 
 	public static final String PRIORIDADE_GET_ALL = "Prioridade.getAll";

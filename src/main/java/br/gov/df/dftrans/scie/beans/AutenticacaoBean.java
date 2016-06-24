@@ -48,13 +48,15 @@ public class AutenticacaoBean {
 	 */
 	public String validate() {
 		try {
-			Usuario usuario = userdao.getByAutenticacao(user.getLogin(), user.getSenha());
+			Usuario usuario = userdao.getByAutenticacao(user.getLogin(),
+					user.getSenha());
 			if (usuario == null) {
 				FacesUtil.addMsggError("Usuario ou Senha inválidos!");
 				getUser().setSenha(null);
 				return "/pages/login.xhtml?faces-redirect=false";
 			} else {
-				HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
+				HttpSession session = (HttpSession) FacesContext
+						.getCurrentInstance().getExternalContext()
 						.getSession(false);
 				session.setAttribute("usuario", usuario);
 				if (usuario.getReset() == 0) {
@@ -63,12 +65,16 @@ public class AutenticacaoBean {
 					getUser().setSenha(null);
 					switch (usuario.getPerfil()) {
 					case (0):
-						session.setAttribute("instituicao", instdao.getByRepNome(usuario.getNome()));
-						return "/pages/autenticado/instituicao/instituicaoIndex.xhtml?faces-redirect=true";
+						session.setAttribute("instituicao",
+						instdao.getByRepNome(usuario.getNome()));
+						return "/pages/autenticado/instituicao/"
+						+ "instituicaoIndex.xhtml?faces-redirect=true";
 					case (2):
-						return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
+						return "/pages/autenticado/validador/"
+						+ "validadorIndex.xhtml?faces-redirect=true";
 					case (1):
-						return "/pages/autenticado/admin/adminIndex.xhtml?faces-redirect=true";
+						return "/pages/autenticado/admin/"
+						+ "adminIndex.xhtml?faces-redirect=true";
 					default:
 						return "/pages/index.xhtml?faces-redirect=true";
 					}
@@ -91,7 +97,7 @@ public class AutenticacaoBean {
 	public String gerarTeclado() {
 		ArrayList<String> teclas = new ArrayList<String>();
 		ArrayList<String> numeros = new ArrayList<String>();
-		ArrayList<String> botoes = new ArrayList<String>();
+    ArrayList<String> botoes = new ArrayList<String>();
 		teclas.add("a");
 		teclas.add("b");
 		teclas.add("c");
@@ -189,7 +195,8 @@ public class AutenticacaoBean {
 			return "/pages/resetSenha.xhtml?faces-redirect=false";
 		}
 		// salva os novos dados no usuário da sessão caso de tudo certo
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
 		getUser().setSenha(getNovaSenha());
 		getUser().setReset(1);
@@ -204,7 +211,8 @@ public class AutenticacaoBean {
 	 * @return true caso não tenha e false caso tenha usuário logado
 	 */
 	public boolean logado() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		Usuario teste = (Usuario) session.getAttribute("usuario");
 		if (teste == null) {
 			return true;
@@ -229,7 +237,8 @@ public class AutenticacaoBean {
 	 * @return direcionamento para página de login
 	 */
 	public String logOff() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		session.setAttribute("usuario", null);
 		getUser().setSenha(null);
 		return "/pages/login.xhtml?faces-redirect=true";
@@ -242,13 +251,16 @@ public class AutenticacaoBean {
 	 */
 	public String validadorCadastro() {
 		// pega o usuário da sessão
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
 		try {
 			// caso não tenha logs abertos
-			if (logdao.getOpens().isEmpty() && logdao.getAnalisysUser(getUser()) == null) {
+			if (logdao.getOpens().isEmpty() && 
+					logdao.getAnalisysUser(getUser()) == null) {
 				FacesUtil.addMsggError("Não há documentos a serem validados");
-				return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=false";
+				return "/pages/autenticado/validador/"
+				+ "validadorIndex.xhtml?faces-redirect=false";
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
@@ -262,17 +274,21 @@ public class AutenticacaoBean {
 	 * @return redirecionamento de acordo com a resposta
 	 */
 	public String validadorSolicitacao() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
 		try {
-			if (soldao.getSolicitado().size() == 0 && soldao.getAnalise(getUser()).size() == 0) {
+			if (soldao.getSolicitado().size() == 0 && 
+					soldao.getAnalise(getUser()).size() == 0) {
 				FacesUtil.addMsggError("Não há solicitações a serem validadas");
-				return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=false";
+				return "/pages/autenticado/validador/"
+				+ "validadorIndex.xhtml?faces-redirect=false";
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
 		}
-		return "/pages/autenticado/validador/validadorSolicitacao.xhtml?faces-redirect=true";
+		return "/pages/autenticado/validador/"
+		+ "validadorSolicitacao.xhtml?faces-redirect=true";
 	}
 
 	/**
@@ -282,12 +298,15 @@ public class AutenticacaoBean {
 	 */
 
 	public String validadorAcessos() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
 		try {
-			if (extdao.getSolicitado().size() == 0 && extdao.getAnalise(getUser()).size() == 0) {
+			if (extdao.getSolicitado().size() == 0 && 
+				extdao.getAnalise(getUser()).size() == 0) {
 				FacesUtil.addMsggError("Não há solicitações a serem validadas");
-				return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=false";
+				return "/pages/autenticado/validador/"
+				+ "validadorIndex.xhtml?faces-redirect=false";
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
@@ -297,20 +316,25 @@ public class AutenticacaoBean {
 
 	// redirecionamentos de página
 	public String index() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
 		Usuario user = (Usuario) session.getAttribute("usuario");
 		if (user == null) {
 			return "/pages/index.xhtml?faces-redirect=true";
 		} else {
 			switch (user.getPerfil()) {
 			case (0):
-				session.setAttribute("instituicao", instdao.getByRepNome(user.getNome()));
-				return "/pages/autenticado/instituicao/instituicaoIndex.xhtml?faces-redirect=true";
+				session.setAttribute("instituicao", 
+						instdao.getByRepNome(user.getNome()));
+				return "/pages/autenticado/instituicao/"
+				+ "instituicaoIndex.xhtml?faces-redirect=true";
 			case (2):
 				session.setAttribute("usuario", getUser());
-				return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
+				return "/pages/autenticado/validador/"
+				+ "validadorIndex.xhtml?faces-redirect=true";
 			case (1):
-				return "/pages/autenticado/admin/adminIndex.xhtml?faces-redirect=true";
+				return "/pages/autenticado/admin/"
+				+ "adminIndex.xhtml?faces-redirect=true";
 			default:
 				return "/pages/index.xhtml?faces-redirect=true";
 			}
@@ -362,7 +386,8 @@ public class AutenticacaoBean {
 	}
 
 	public String listSolicitacoesAcessos() {
-		return "/pages/autenticado/validador/listSolicitacoesAcessos.xhtml?faces-redirect=true";
+		return "/pages/autenticado/validador/"
+		+ "listSolicitacoesAcessos.xhtml?faces-redirect=true";
 	}
 
 	public String login() {

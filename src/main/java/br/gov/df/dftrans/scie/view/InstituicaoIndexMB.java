@@ -21,7 +21,8 @@ public class InstituicaoIndexMB {
 	private List<LogValidacaoCadastro> abertas, aprovadas, reprovadas, emAnalise;
 	private InstituicaoEnsino instituicao;
 	private Usuario user;
-	private String[] validacao = { "Pendente de Verificação", "Em Análise", "Aprovado", "Não Aprovado" };
+	private String[] validacao = { "Pendente de Verificação", "Em Análise",
+			"Aprovado", "Não Aprovado" };
 	private LogDAO logdao = LogDAO.LogDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 
@@ -30,7 +31,8 @@ public class InstituicaoIndexMB {
 	 * status em diferentes lists <abertas,aprovadas,reprovadas,emAnalise>
 	 */
 	public void init() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
 		setInstituicao(instdao.getByRepNome(getUser().getNome()));
 		session.setAttribute("instituicao", getInstituicao());

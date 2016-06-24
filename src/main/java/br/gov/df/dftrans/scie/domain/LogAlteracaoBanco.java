@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @Entity
 @Table(name = "tb_log_banco")
 @NamedQueries({
-		@NamedQuery(name = LogAlteracaoBanco.LOG_FIND_BY_ID, query = "SELECT l FROM LogAlteracaoBanco l WHERE l.id = :id") })
+		@NamedQuery(name = LogAlteracaoBanco.LOG_FIND_BY_ID, 
+				query = "SELECT l FROM LogAlteracaoBanco l WHERE l.id = :id") })
 public class LogAlteracaoBanco {
 
 	public static final String LOG_FIND_BY_ID = "LogAlteracaoBanco.findById";
@@ -49,7 +50,8 @@ public class LogAlteracaoBanco {
 	}
 
 	public LogAlteracaoBanco(String operacao, String tabela, int idLinha) {
-		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+		HttpServletRequest httpServletRequest = 
+				(HttpServletRequest) FacesContext.getCurrentInstance()
 				.getExternalContext().getRequest();
 		setIp(httpServletRequest.getRemoteAddr());
 		setOperacao(operacao);

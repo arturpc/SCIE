@@ -19,7 +19,8 @@ public class MesReferenciaConverter implements Converter{
 	
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
-        	freq = (FrequenciaBean) resolver.getValue(context.getELContext(), null, "FrequenciaMB");
+        	freq = (FrequenciaBean) resolver.getValue(
+        			context.getELContext(), null, "FrequenciaMB");
            	if(freq == null){
         		return 0;
         	}

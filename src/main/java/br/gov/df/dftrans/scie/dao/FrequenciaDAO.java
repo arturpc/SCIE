@@ -43,7 +43,9 @@ public class FrequenciaDAO extends DAO<Frequencia> {
 	public List<Frequencia> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Frequencia> typedQuery = entityManager.createNamedQuery(Frequencia.FREQUENCIA_GET_ALL,
+			TypedQuery<Frequencia> typedQuery = entityManager
+					.createNamedQuery(Frequencia
+							.FREQUENCIA_GET_ALL,
 					Frequencia.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
@@ -88,8 +90,10 @@ public class FrequenciaDAO extends DAO<Frequencia> {
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getInstituicao().toString() + entity.getEstudante().toString()
-					+ entity.getDataReferencia() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getInstituicao().toString() 
+					+ entity.getEstudante().toString()
+					+ entity.getDataReferencia() + getString(
+							ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (entityManager.getTransaction().isActive()) {
@@ -112,9 +116,12 @@ public class FrequenciaDAO extends DAO<Frequencia> {
 	public Frequencia get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Frequencia> typedQuery = entityManager.createNamedQuery(Frequencia.FREQUENCIA_FIND_BY_ID,
+			TypedQuery<Frequencia> typedQuery = entityManager
+					.createNamedQuery(Frequencia
+							.FREQUENCIA_FIND_BY_ID,
 					Frequencia.class);
-			return typedQuery.setParameter("id", ((Frequencia) id).getId()).getSingleResult();
+			return typedQuery.setParameter("id", ((Frequencia) id).getId())
+					.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -137,7 +144,9 @@ public class FrequenciaDAO extends DAO<Frequencia> {
 	public List<Frequencia> getInst(InstituicaoEnsino id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Frequencia> typedQuery = entityManager.createNamedQuery(Frequencia.FREQUENCIA_FIND_BY_INST,
+			TypedQuery<Frequencia> typedQuery = entityManager
+					.createNamedQuery(Frequencia
+							.FREQUENCIA_FIND_BY_INST,
 					Frequencia.class);
 			return typedQuery.setParameter("instituicao", id).getResultList();
 		} catch (NoResultException e) {

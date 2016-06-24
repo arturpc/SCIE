@@ -34,11 +34,13 @@ public class AutenticacaoValidadorFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, 
+			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
-		if(session == null || session.getAttribute("usuario") == null || ((Usuario) session.getAttribute("usuario")).getPerfil() != 2){
+		if(session == null || session.getAttribute("usuario") == null 
+				|| ((Usuario) session.getAttribute("usuario")).getPerfil() != 2){
 			resp.sendRedirect("/2Via/pages/login.xhtml");
 		}else{
 			chain.doFilter(request, response);

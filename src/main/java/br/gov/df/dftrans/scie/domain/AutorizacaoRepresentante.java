@@ -18,22 +18,30 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 @Table(name = "tb_autorizacao_representante")
 @NamedQueries({
-    @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_GET_ALL, query = "SELECT a FROM AutorizacaoRepresentante a"),
+    @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_GET_ALL, 
+    		query = "SELECT a FROM AutorizacaoRepresentante a"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF, 
-    	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf and a.instituicao.id = :id_instituicao"),
+    	query = "SELECT a FROM AutorizacaoRepresentante a "
+    			+ "WHERE a.cpf = :cpf and a.instituicao.id = :id_instituicao"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_ONLY, 
 	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_CPF_INST_NULL, 
-	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf and a.instituicao = null"),
-    @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.id = :id")
+	query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.cpf = :cpf "
+			+ "and a.instituicao = null"),
+    @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, 
+    query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.id = :id")
 })
 public class AutorizacaoRepresentante implements Serializable{
 
 	public static final String AUTORIZACAO_GET_ALL = "AutorizacaoRepresentante.getAll";
-	public static final String AUTORIZACAO_FIND_BY_CPF = "AutorizacaoRepresentante.consultarPorCPF";
-	public static final String AUTORIZACAO_FIND_BY_CPF_ONLY = "AutorizacaoRepresentante.consultarPorCPFApenas";
-	public static final String AUTORIZACAO_FIND_BY_CPF_INST_NULL = "AutorizacaoRepresentante.consultarPorCPFInstNula";
-	public static final String AUTORIZACAO_FIND_BY_ID = "AutorizacaoRepresentante.consultarPorCodigo";
+	public static final String AUTORIZACAO_FIND_BY_CPF = 
+			"AutorizacaoRepresentante.consultarPorCPF";
+	public static final String AUTORIZACAO_FIND_BY_CPF_ONLY = 
+			"AutorizacaoRepresentante.consultarPorCPFApenas";
+	public static final String AUTORIZACAO_FIND_BY_CPF_INST_NULL = 
+			"AutorizacaoRepresentante.consultarPorCPFInstNula";
+	public static final String AUTORIZACAO_FIND_BY_ID = 
+			"AutorizacaoRepresentante.consultarPorCodigo";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -72,15 +80,19 @@ public class AutorizacaoRepresentante implements Serializable{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		AutorizacaoRepresentante other = (AutorizacaoRepresentante) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 	//sobrescrita toString

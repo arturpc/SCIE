@@ -52,7 +52,8 @@ public class InstituicaoBean implements Serializable {
 	private Cidade cidade;
 	private UF uf;
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
+	private AutorizacaoRepresentanteDAO autdao = 
+			AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
 	private UFDAO ufdao = UFDAO.UFDAO();
 	private CidadeDAO ciddao = CidadeDAO.CidadeDAO();
 	private EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
@@ -77,7 +78,8 @@ public class InstituicaoBean implements Serializable {
 	public String pesquisar() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		AutenticacaoBean meuBeanAut = (AutenticacaoBean) resolver.getValue(context.getELContext(), null, "loginBean");
+		AutenticacaoBean meuBeanAut = (AutenticacaoBean) resolver
+				.getValue(context.getELContext(), null, "loginBean");
 		if (!meuBeanAut.isCaptcha()) {
 			FacesUtil.addMsggError("Digite os números no campo abaixo");
 			return "/pages/instituicaoHome.xhtml?faces-redirect=false";
@@ -85,7 +87,8 @@ public class InstituicaoBean implements Serializable {
 		codCPFsemMascara = removeMascara(getCodCPF());
 		if (getCodInepEmec().equals("")) {
 			try {
-				setInstituicao(getAutDAO().getByCpf(codCPFsemMascara).getInstituicao());
+				setInstituicao(getAutDAO()
+						.getByCpf(codCPFsemMascara).getInstituicao());
 			} catch (DAOExcpetion e) {
 				FacesUtil.addMsggError("O cpf " + codCPF + " não está autorizado.");
 				return "/pages/instituicaoHome.xhtml?faces-redirect=false";
@@ -97,7 +100,8 @@ public class InstituicaoBean implements Serializable {
 			setInstituicao(new InstituicaoEnsino());
 			instituicao.setCodInepEmec(codInepEmec);
 			setEndereco(new Endereco());
-			CidadeService meuBean = (CidadeService) resolver.getValue(context.getELContext(), null, "CidadeService");
+			CidadeService meuBean = (CidadeService) resolver
+					.getValue(context.getELContext(), null, "CidadeService");
 			if (!meuBean.getCidades().isEmpty()) {
 				setCidade(meuBean.getCidades().get(0));
 			} else {
@@ -121,14 +125,17 @@ public class InstituicaoBean implements Serializable {
 			RepresentanteDAO repDAO = RepresentanteDAO.RepresentanteDAO();
 			setRepresentante(repDAO.getByCPF(codCPFsemMascara));
 			if (getRepresentante() == null) {
-				setRepresentante(new Representante(null, codCPFsemMascara, 1, null, null));
+				setRepresentante(new Representante(null, 
+						codCPFsemMascara, 1, null, null));
 			}
 			instituicao.setRepresentante(getRepresentante());
 		}
 		if (!getRepresentante().getTelefone().isEmpty()) {
 			String[] contatos = new String[5];
-			for (int i = 0; i < getRepresentante().getTelefone().toArray().length; i++) {
-				contatos[i] = (String) getRepresentante().getTelefone().toArray()[i];
+			for (int i = 0; i < getRepresentante().getTelefone()
+					.toArray().length; i++) {
+				contatos[i] = (String) getRepresentante()
+						.getTelefone().toArray()[i];
 			}
 			setContato(contatos);
 			setContato1(getContato()[0]);
@@ -137,7 +144,8 @@ public class InstituicaoBean implements Serializable {
 			setContato4(getContato()[3]);
 			setContato5(getContato()[4]);
 		}
-		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession sessao = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		sessao.setAttribute("instituicao", getInstituicao());
 		return "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true";
 	}
@@ -165,28 +173,31 @@ public class InstituicaoBean implements Serializable {
 		telefones = new ArrayList<String>();
 		setContato();
 		for (String s : getContato()) {
-			if (!s.equals(""))
-				telefones.add(s);
+			if (!"".equals(s)){
+				telefones.add(s);	
+			}
 		}
 		rep.setTelefone(telefones);
 		inst.setRepresentante(rep);
 		inst.setEndereco(end);
 		setInstituicao(instdao.update(inst));
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		session.setAttribute("instituicao", instituicao);
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
-		fileUploader = (FileUploadView) resolver.getValue(context.getELContext(), null, "fileUploadView");
+		fileUploader = (FileUploadView) resolver.
+				getValue(context.getELContext(), null, "fileUploadView");
 		fileUploader.setInst(instituicao);
-		cursoBean = (CursoViewBean) resolver.getValue(context.getELContext(), null, "MBCursoView");
+		cursoBean = (CursoViewBean) resolver.getValue(
+				context.getELContext(), null, "MBCursoView");
 		cursoBean.setInstituicao(instituicao);
 		cursoBean.updateTarget();
-		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(getInstituicao().getRepresentante().getCpf());
+		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(
+				getInstituicao().getRepresentante().getCpf());
 		if (autrep != null) {
 			autrep.setInstituicao(getInstituicao());
 			autdao.update(autrep);
-		} else {
-
 		}
 		return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 	}
@@ -313,9 +324,14 @@ public class InstituicaoBean implements Serializable {
 			setBairro(getInstituicao().getEndereco().getBairro());
 			setLogradouro(getInstituicao().getEndereco().getLogradouro());
 			setComplemento("");
-			Cidade cid = ciddao.get(getInstituicao().getEndereco().getCidade().getNome(), getInstituicao().getEndereco().getCidade().getUf().getUf());
+			Cidade cid = ciddao.get(getInstituicao().getEndereco()
+					.getCidade().getNome(),
+					getInstituicao().getEndereco().getCidade().getUf().getUf());
 			if (cid != null) {
-				setCidade(ciddao.get(getInstituicao().getEndereco().getCidade().getNome(), getInstituicao().getEndereco().getCidade().getUf().getUf()));
+				setCidade(ciddao.get(getInstituicao().getEndereco()
+						.getCidade().getNome(),getInstituicao()
+						.getEndereco().getCidade().getUf()
+						.getUf()));
 			}
 			/*String cep = removeMascara(getInstituicao().getEndereco().getCep());
 			CEP c = ValidadorCEP.getEndereco(cep);

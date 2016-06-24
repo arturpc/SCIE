@@ -24,9 +24,13 @@ public class readMSOfficeFiles {
 	public static void main(String[] args) throws IOException, Exception {
 		File f = new File("C:\\Users\\2695936\\Desktop\\declaracao.ods");
 			if (f.getName().toLowerCase().endsWith(".docx")) {
-				System.out.println(new XWPFWordExtractor(new XWPFDocument(new FileInputStream(f))).getText());
+				System.out.println(new XWPFWordExtractor(
+						new XWPFDocument(new FileInputStream(f)))
+						.getText());
 			} else if(f.getName().toLowerCase().endsWith(".doc")){
-				String s = (new WordExtractor(new HWPFDocument(new POIFSFileSystem(new FileInputStream(f))))).getText();
+				String s = (new WordExtractor(new HWPFDocument(
+						new POIFSFileSystem(new FileInputStream(f)))))
+						.getText();
 				System.out.println(s);
 			}else if (f.getName().toLowerCase().endsWith(".xls")) {
 				String s = "";
@@ -68,7 +72,9 @@ public class readMSOfficeFiles {
 				document.loadFrom(f);
 				System.out.println(document);
 			} else if (f.getName().toLowerCase().endsWith(".xlsx")) {
-				System.out.println(new XSSFExcelExtractor(new XSSFWorkbook(new FileInputStream(f))).getText());
+				System.out.println(new XSSFExcelExtractor(
+						new XSSFWorkbook(new FileInputStream(f)))
+						.getText());
 			} else {
 				System.out.println("Enter MS Office 2007+ files");
 			}

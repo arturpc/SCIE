@@ -16,10 +16,13 @@ public class UFConverter implements Converter {
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
-                UFService service = (UFService) fc.getExternalContext().getApplicationMap().get("UFService");
+                UFService service = (UFService) fc.
+                		getExternalContext().getApplicationMap().get("UFService");
                 return service.getUfPorSigla(value);
             } catch(NumberFormatException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "UF inválida."));
+                throw new ConverterException(
+                		new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                				"Conversion Error", "UF inválida."));
             }
         }
         else {

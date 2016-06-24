@@ -12,7 +12,8 @@ public class AutenticacaoDocumentos {
 	 * @return texto convertido
 	 */
 	public static String getChaveSeguranca(String chaveTexto) {
-		byte bytesOriginais[] = chaveTexto.getBytes(), complementoDeUm[] = new byte[bytesOriginais.length];
+		byte bytesOriginais[] = chaveTexto.getBytes(), 
+				complementoDeUm[] = new byte[bytesOriginais.length];
 		MessageDigest m = null;
 		try {
 			m = MessageDigest.getInstance("MD5");

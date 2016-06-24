@@ -4,7 +4,8 @@ package br.gov.df.dftrans.scie.testers;
 public class AutorizacaoDBTeste {
 
 	public void addAutorizacaoTest(){
-		AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
+		AutorizacaoRepresentanteDAO autdao 
+		= AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
 		AutorizacaoRepresentante aut = new AutorizacaoRepresentante();
 		autdao.add(entity);
 	}

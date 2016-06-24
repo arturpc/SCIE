@@ -50,7 +50,9 @@ public class ComentarioSegundaViaDAO extends DAO<Comentario> {
 				entityManager.close();
 			}
 		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_COMENTARIOS_SEGUNDA_VIA", entity.getId()));
+		logdao.add(new LogAlteracaoBanco("INSERT",
+				"TB_COMENTARIOS_SEGUNDA_VIA",
+				entity.getId()));
 		return entity;
 	}
 
@@ -71,7 +73,9 @@ public class ComentarioSegundaViaDAO extends DAO<Comentario> {
 	public Comentario getById(int id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Comentario> typedQuery = entityManager.createNamedQuery(Comentario.COMENTARIO_FIND_BY_ID,
+			TypedQuery<Comentario> typedQuery = 
+					entityManager.createNamedQuery(Comentario
+							.COMENTARIO_FIND_BY_ID,
 					Comentario.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {

@@ -24,11 +24,13 @@ public class MotivoConverter implements Converter {
 			try {
 				FacesContext context = FacesContext.getCurrentInstance();
 				ELResolver resolver = context.getApplication().getELResolver();
-				MotivoService service = (MotivoService) resolver.getValue(context.getELContext(), null, "MotivoService");
+				MotivoService service = (MotivoService) resolver.getValue(
+						context.getELContext(), null, "MotivoService");
 				return service.getMotivoPorNome(value);
 			} catch (NumberFormatException e) {
 				throw new ConverterException(
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Motivo inválida."));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+							"Conversion Error", "Motivo inválida."));
 			}
 		} else {
 			return null;

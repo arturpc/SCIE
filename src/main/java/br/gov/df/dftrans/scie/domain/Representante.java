@@ -22,9 +22,12 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 
 @Entity
 @Table(name = "tb_representante_instituicao")
-@NamedQueries({ @NamedQuery(name = Representante.REPRESENTANTE_GET_ALL, query = "SELECT r FROM Representante r"),
-		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_CPF, query = "SELECT r FROM Representante r WHERE r.cpf = :cpf"),
-		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_ID, query = "SELECT r FROM Representante r WHERE r.id = :id") })
+@NamedQueries({ @NamedQuery(name = Representante.REPRESENTANTE_GET_ALL, 
+		query = "SELECT r FROM Representante r"),
+		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_CPF, 
+		query = "SELECT r FROM Representante r WHERE r.cpf = :cpf"),
+		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_ID, 
+		query = "SELECT r FROM Representante r WHERE r.id = :id") })
 public class Representante implements Serializable {
 
 	public static final String REPRESENTANTE_GET_ALL = "Representante.getAll";
@@ -94,15 +97,19 @@ public class Representante implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Representante other = (Representante) obj;
-		if (id != other.id)
+		if (id != other.id){
 			return false;
+		}
 		return true;
 	}
 
@@ -131,7 +138,8 @@ public class Representante implements Serializable {
 		ArrayList<String> temp = (ArrayList<String>) getTelefone();
 		String retorno = "";
 		for (String s : temp) {
-			retorno += "(" + s.substring(0, 2) + ")" + s.substring(2, 6) + "-" + s.substring(6, s.length()) + "\n";
+			retorno += "(" + s.substring(0, 2) + ")" + s.substring(2, 6) 
+			+ "-" + s.substring(6, s.length()) + "\n";
 		}
 		return retorno.substring(0, retorno.length());
 	}
@@ -152,7 +160,7 @@ public class Representante implements Serializable {
 		if (retorno.length() > 1) {
 			retorno = retorno.substring(0, retorno.length() - 1);
 		}
-		if (retorno.equals("61")) {
+		if ("61".equals(retorno)) {
 			return null;
 		} else {
 			return retorno;

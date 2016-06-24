@@ -27,13 +27,15 @@ public class NamesValidator implements Validator, ClientValidator {
 	/**
 	 * valida nome vazio ou nulo
 	 */
-	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+	public void validate(FacesContext context, UIComponent component, Object value) 
+			throws ValidatorException {
 		if (value == null) {
 			return;
 		}
 
 		if (value.toString().trim().isEmpty()) {
-			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de Validação",
+			throw new ValidatorException(new FacesMessage(FacesMessage
+					.SEVERITY_ERROR, "Erro de Validação",
 					"Espaços não é um valor válido!"));
 		}
 	}

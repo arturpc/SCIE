@@ -36,7 +36,10 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	public Cidade getByNome(String chave) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_FIND_BY_NOME, Cidade.class);
+			TypedQuery<Cidade> typedQuery = entityManager
+					.createNamedQuery(Cidade
+							.CIDADE_FIND_BY_NOME, 
+							Cidade.class);
 			return typedQuery.setParameter("nome", chave).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -60,13 +63,15 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getUf() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getUf() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			throw new InsertException();
 		} finally {
-			if (entityManager.isOpen())
+			if (entityManager.isOpen()){
 				entityManager.close();
+			}
 		}
 		logdao.add(new LogAlteracaoBanco("INSERT", "TB_CIDADE", entity.getId()));
 		return entity;
@@ -93,8 +98,12 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	public Cidade get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_FIND_BY_ID, Cidade.class);
-			return typedQuery.setParameter("id", ((Cidade) id).getId()).getSingleResult();
+			TypedQuery<Cidade> typedQuery = entityManager
+					.createNamedQuery(Cidade
+							.CIDADE_FIND_BY_ID, 
+							Cidade.class);
+			return typedQuery.setParameter("id", 
+					((Cidade) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -113,7 +122,10 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	public List<Cidade> get() {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_GET_ALL, Cidade.class);
+			TypedQuery<Cidade> typedQuery = entityManager
+					.createNamedQuery(Cidade
+							.CIDADE_GET_ALL, 
+							Cidade.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;
@@ -133,8 +145,12 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	public Cidade get(String nome, String uf) {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			TypedQuery<Cidade> typedQuery = entityManager.createNamedQuery(Cidade.CIDADE_FIND_BY_NOME_UF, Cidade.class);
-			List<Cidade> cid = typedQuery.setParameter("nome", nome).setParameter("uf", uf).getResultList();
+			TypedQuery<Cidade> typedQuery = entityManager
+					.createNamedQuery(Cidade
+							.CIDADE_FIND_BY_NOME_UF, 
+							Cidade.class);
+			List<Cidade> cid = typedQuery.setParameter("nome", nome)
+					.setParameter("uf", uf).getResultList();
 			if(cid.isEmpty()){
 				return null;
 			}

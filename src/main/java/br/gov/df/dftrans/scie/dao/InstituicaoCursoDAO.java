@@ -56,7 +56,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 			entityManager.getTransaction().commit();
 		} catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
-			throw new InsertException(entity.getCurso() + getString(ALREADY_EXISTS_EXCEPTION_KEY));
+			throw new InsertException(entity.getCurso() 
+					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
 				entityManager.getTransaction().rollback();
@@ -98,7 +99,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_INSTITUICAO_CURSO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("UPDATE", 
+					"TB_INSTITUICAO_CURSO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}
@@ -115,7 +117,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.remove(entityManager.getReference(InstituicaoCurso.class, entity.getId()));
+			entityManager.remove(entityManager.getReference(InstituicaoCurso.class, 
+					entity.getId()));
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
@@ -129,7 +132,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 			}
 		}
 		try {
-			logdao.add(new LogAlteracaoBanco("DELETE", "TB_INSTITUICAO_CURSO", entity.getId()));
+			logdao.add(new LogAlteracaoBanco("DELETE", 
+					"TB_INSTITUICAO_CURSO", entity.getId()));
 		} catch (InsertException e) {
 			e.printStackTrace();
 		}
@@ -143,8 +147,11 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_ID, InstituicaoCurso.class);
-			return typedQuery.setParameter("id", ((InstituicaoCurso) id).getId()).getSingleResult();
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_FIND_BY_ID, 
+							InstituicaoCurso.class);
+			return typedQuery.setParameter("id", ((InstituicaoCurso) id)
+					.getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -169,14 +176,18 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_CURSO, InstituicaoCurso.class);
-			return typedQuery.setParameter("idInstituicao", inst.getId()).setParameter("idCurso", curso.getId())
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_FIND_BY_CURSO, 
+							InstituicaoCurso.class);
+			return typedQuery.setParameter("idInstituicao", inst.getId())
+					.setParameter("idCurso", curso.getId())
 					.getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar InstituicaoCurso por Instituicao e Curso");
+			throw new DAOExcpetion("Erro ao coletar InstituicaoCurso por "
+					+ "Instituicao e Curso");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -196,14 +207,18 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_CURSO, InstituicaoCurso.class);
-			return typedQuery.setParameter("idInstituicao", inst.getId()).setParameter("idCurso", curso.getId())
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_FIND_ALL_BY_CURSO,
+							InstituicaoCurso.class);
+			return typedQuery.setParameter("idInstituicao",
+					inst.getId()).setParameter("idCurso", curso.getId())
 					.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar InstituicaoCurso por Instituicao e Curso");
+			throw new DAOExcpetion("Erro ao coletar InstituicaoCurso "
+					+ "por Instituicao e Curso");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -222,8 +237,11 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, InstituicaoCurso.class);
-			List<InstituicaoCurso> list = typedQuery.setParameter("id", idInstituicao).getResultList();
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, 
+							InstituicaoCurso.class);
+			List<InstituicaoCurso> list = typedQuery.setParameter("id",
+					idInstituicao).getResultList();
 			List<Curso> cursos = new ArrayList<Curso>();
 			CursoDAO cursodao = CursoDAO.CursoDAO();
 			for (InstituicaoCurso i : list) {
@@ -234,7 +252,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Cursos de Instituição por Instituição");
+			throw new DAOExcpetion("Erro ao coletar Cursos de"
+					+ " Instituição por Instituição");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -249,18 +268,23 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 	 * @return uma lista de InstituicaoCurso ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<InstituicaoCurso> getCursos(InstituicaoEnsino instituicao) throws EntityNotFoundException {
+	public List<InstituicaoCurso> getCursos(InstituicaoEnsino instituicao)
+			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_FIND_BY_INSTITUICAO, InstituicaoCurso.class);
-			List<InstituicaoCurso> list = typedQuery.setParameter("id", instituicao.getId()).getResultList();
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_FIND_BY_INSTITUICAO,
+							InstituicaoCurso.class);
+			List<InstituicaoCurso> list = typedQuery.setParameter("id",
+					instituicao.getId()).getResultList();
 			return list;
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Cursos de Instituição por Instituição");
+			throw new DAOExcpetion("Erro ao coletar Cursos de"
+					+ " Instituição por Instituição");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -281,15 +305,18 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager.createNamedQuery(
-					InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO, InstituicaoCurso.class);
-			List<InstituicaoCurso> list = typedQuery.setParameter("inst", instituicao).setParameter("curso", curso)
+					InstituicaoCurso.INSTITUICAOCURSO_FIND_ALL_BY_INSTITUICAO,
+					InstituicaoCurso.class);
+			List<InstituicaoCurso> list = typedQuery.setParameter("inst",
+					instituicao).setParameter("curso", curso)
 					.getResultList();
 			return list;
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Cursos de Instituição por Instituição");
+			throw new DAOExcpetion("Erro ao coletar Cursos de"
+					+ " Instituição por Instituição");
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -306,7 +333,9 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<InstituicaoCurso> typedQuery = entityManager
-					.createNamedQuery(InstituicaoCurso.INSTITUICAOCURSO_GET_ALL, InstituicaoCurso.class);
+					.createNamedQuery(InstituicaoCurso
+							.INSTITUICAOCURSO_GET_ALL, 
+							InstituicaoCurso.class);
 			return typedQuery.getResultList();
 		} catch (NoResultException e) {
 			return null;
@@ -327,7 +356,8 @@ public class InstituicaoCursoDAO extends DAO<InstituicaoCurso> implements Serial
 	 * @throws InsertException
 	 * @throws EntityNotFoundException
 	 */
-	public void add(List<InstituicaoCurso> list) throws InsertException, EntityNotFoundException {
+	public void add(List<InstituicaoCurso> list) 
+			throws InsertException, EntityNotFoundException {
 		for (InstituicaoCurso instCurso : list) {
 			if (get(instCurso) == null) {
 				add(instCurso);

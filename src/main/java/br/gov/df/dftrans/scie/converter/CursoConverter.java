@@ -26,7 +26,7 @@ public class CursoConverter implements Converter {
 					break;
 				}
 			}
-			if (ret == null)
+			if (ret == null){
 				for (Object o : dl.getTarget()) {
 					String id = "" + ((Curso) o).getId();
 					if (arg2.equals(id)) {
@@ -34,6 +34,7 @@ public class CursoConverter implements Converter {
 						break;
 					}
 				}
+			}
 		}
 		return ret;
 	}

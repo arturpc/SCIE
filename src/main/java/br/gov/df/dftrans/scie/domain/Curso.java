@@ -17,10 +17,14 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @Entity
 @Table(name = "tb_curso")
 @NamedQueries({ @NamedQuery(name = Curso.CURSO_GET_ALL, query = "SELECT c FROM Curso c"),
-		@NamedQuery(name = Curso.CURSO_FIND_BY_EMEC, query = "SELECT c FROM Curso c WHERE c.codEmec = :codEmec"),
-		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO, query = "SELECT c FROM Curso c WHERE c.curso = :curso"),
-		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO_NIVEL, query = "SELECT c FROM Curso c WHERE c.curso = :curso and c.nivel = :nivel"),
-		@NamedQuery(name = Curso.CURSO_FIND_BY_ID, query = "SELECT c FROM Curso c WHERE c.id = :id") })
+		@NamedQuery(name = Curso.CURSO_FIND_BY_EMEC, 
+		query = "SELECT c FROM Curso c WHERE c.codEmec = :codEmec"),
+		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO, 
+		query = "SELECT c FROM Curso c WHERE c.curso = :curso"),
+		@NamedQuery(name = Curso.CURSO_FIND_BY_CURSO_NIVEL, 
+		query = "SELECT c FROM Curso c WHERE c.curso = :curso and c.nivel = :nivel"),
+		@NamedQuery(name = Curso.CURSO_FIND_BY_ID, 
+		query = "SELECT c FROM Curso c WHERE c.id = :id") })
 public class Curso implements Serializable {
 
 	public static final String CURSO_GET_ALL = "Curso.getAll";
@@ -74,20 +78,28 @@ public class Curso implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Curso other = (Curso) obj;
 		if (codEmec == null) {
-			if (other.codEmec != null)
+			if (other.codEmec != null){
 				return false;
-		} else if (!codEmec.equals(other.codEmec))
+			}
+		} else {
+			if (!codEmec.equals(other.codEmec)){
+				return false;
+			}
+		}
+		if (id != other.id){
 			return false;
-		if (id != other.id)
-			return false;
+		}
 		return true;
 	}
 

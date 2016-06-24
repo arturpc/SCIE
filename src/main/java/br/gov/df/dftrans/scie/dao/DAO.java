@@ -14,7 +14,8 @@ import javax.persistence.TypedQuery;
 public abstract class DAO<T> {
     
     protected static final Integer EMPTY = 0;
-    protected static EntityManagerFactory factory = Persistence.createEntityManagerFactory("sciePU");
+    protected static EntityManagerFactory factory = 
+    		Persistence.createEntityManagerFactory("sciePU");
     @PersistenceContext(unitName = "scie")
     protected static LogAlteracaoBancoDAO logdao = LogAlteracaoBancoDAO.LogAlteracaoBancoDAO();
 

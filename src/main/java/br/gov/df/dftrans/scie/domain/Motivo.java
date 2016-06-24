@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_motivo_val_segunda_via")
 @NamedQueries({ @NamedQuery(name = Motivo.MOTIVO_GET_ALL, query = "SELECT m FROM Motivo m"),
-		@NamedQuery(name = Motivo.MOTIVO_FIND_BY_ID, query = "SELECT m FROM Motivo m WHERE m.id = :id") })
+		@NamedQuery(name = Motivo.MOTIVO_FIND_BY_ID, 
+		query = "SELECT m FROM Motivo m WHERE m.id = :id") })
 public class Motivo implements Serializable {
 
 	public static final String MOTIVO_GET_ALL = "Motivo.getAll";
