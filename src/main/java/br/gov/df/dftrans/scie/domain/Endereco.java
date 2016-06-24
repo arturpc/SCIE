@@ -26,9 +26,12 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 		query = "SELECT e FROM Endereco e WHERE e.id = :id") })
 public class Endereco implements Serializable {
 
-	public static final String ENDERECO_GET_ALL = "Endereco.getAll";
-	public static final String ENDERECO_FIND_BY_CEP = "Endereco.consultarPorCep";
-	public static final String ENDERECO_FIND_BY_ID = "Endereco.consultarPorCodigo";
+	public static final String ENDERECO_GET_ALL = 
+			"Endereco.getAll";
+	public static final String ENDERECO_FIND_BY_CEP = 
+			"Endereco.consultarPorCep";
+	public static final String ENDERECO_FIND_BY_ID = 
+			"Endereco.consultarPorCodigo";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

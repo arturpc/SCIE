@@ -61,13 +61,16 @@ public class ConcatenaArquivo {
 		documentos.add("documento.");
 		documentos.add("1.");
 		// seta Estudante com a da sessao
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
 		setCpf((String) session.getAttribute("estudante"));
 		if (getCpf() == null) {
-			setCpf("" + ((InstituicaoEnsino) session.getAttribute("instituicao")).getId());
+			setCpf("" + ((InstituicaoEnsino) session
+					.getAttribute("instituicao")).getId());
 			if (getCpf().isEmpty()) {
 				try {
-					FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+					FacesContext.getCurrentInstance()
+					.getExternalContext().redirect("index.xhtml");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -75,8 +78,10 @@ public class ConcatenaArquivo {
 		}
 		for (String temp1 : documentos) {
 			for (String temp : tipos) {
-				File f = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-						+ getCpf() + "" + delimitadorDiretorio + temp1 + temp);
+				File f = new File(current + delimitadorDiretorio 
+						+ "destino_uploader" + delimitadorDiretorio + ""
+						+ getCpf() + "" + delimitadorDiretorio 
+						+ temp1 + temp);
 				if (f.exists()) {
 					f.delete();
 				}
@@ -105,7 +110,8 @@ public class ConcatenaArquivo {
 	public void concatenaImagem(String path) {
 		File file1 = new File(path);
 		setAux(path);
-		File file2 = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
+		File file2 = new File(current + delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "documento." + aux[1]);
 		try {
 			if (file2.exists()) {
@@ -142,13 +148,17 @@ public class ConcatenaArquivo {
 
 				img.createGraphics().drawImage(img1, x, y, null);
 				// here width is mentioned as width of horizontally
-				File final_image = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
-						+ "" + getCpf() + "" + delimitadorDiretorio + "documento." + aux[1]);
+				File final_image = new File(current + delimitadorDiretorio 
+						+ "destino_uploader" + delimitadorDiretorio
+						+ "" + getCpf() + "" + delimitadorDiretorio 
+						+ "documento." + aux[1]);
 
 				ImageIO.write(img, aux[1], final_image);
 			} else {
-				file1.renameTo(new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-						+ getCpf() + "" + delimitadorDiretorio + "documento." + aux[1]));
+				file1.renameTo(new File(current + delimitadorDiretorio 
+						+ "destino_uploader" + delimitadorDiretorio + ""
+						+ getCpf() + "" + delimitadorDiretorio 
+						+ "documento." + aux[1]));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -167,25 +177,30 @@ public class ConcatenaArquivo {
 		setFileNameUploaded(uploadedFile.getFileName());
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
-		String infoAboutFile = "<br/> Arquivo recebido: <b>" + fileNameUploaded + "</b><br/>"
+		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
+		+ fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
 		// cria o arquivo abstrato
-		File file = new File(current + "" + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
+		File file = new File(current + "" + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + ""
 				+ getCpf() + "" + delimitadorDiretorio);
 		file.mkdirs();
 		file = null;
 		setAux(fileNameUploaded);
-		copiarArquivo(delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
+		copiarArquivo(delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + getCpf() + ""
 				+ delimitadorDiretorio + "1", uploadedFile);
 		setIsUploaded(new Boolean(true));
 		setIconeUploaded();
 		if (aux[aux.length - 1].equals("pdf")) {
-			concatenaArquivoPDF(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
+			concatenaArquivoPDF(current + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
 					+ getCpf() + "" + delimitadorDiretorio + "1." + aux[1]);
 		} else {
-			concatenaImagem(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
+			concatenaImagem(current + delimitadorDiretorio + "destino_uploader" 
+		+ delimitadorDiretorio + "" + getCpf()
 					+ "" + delimitadorDiretorio + "1." + aux[1]);
 		}
 	}
@@ -197,16 +212,21 @@ public class ConcatenaArquivo {
 	public void concatenaArquivoPDF(String path) {
 		File file1 = new File(path);
 		setAux(path);
-		File file2 = new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf()
+		File file2 = new File(current + delimitadorDiretorio 
+				+ "destino_uploader" + delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "documento." + aux[1]);
 		if (file2.exists()) {
 			PDFMergerUtility ut = new PDFMergerUtility();
-			ut.addSource(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
+			ut.addSource(current + delimitadorDiretorio + "destino_uploader" 
+			+ delimitadorDiretorio + "" + getCpf() + ""
 					+ delimitadorDiretorio + "documento." + aux[1]);
-			ut.addSource(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + "" + getCpf() + ""
+			ut.addSource(current + delimitadorDiretorio + "destino_uploader" 
+					+ delimitadorDiretorio + "" + getCpf() + ""
 					+ delimitadorDiretorio + "1." + aux[1]);
-			ut.setDestinationFileName(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-					+ getCpf() + "" + delimitadorDiretorio + "documento." + aux[1]);
+			ut.setDestinationFileName(current + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
+					+ getCpf() + "" + delimitadorDiretorio 
+					+ "documento." + aux[1]);
 			try {
 				ut.mergeDocuments();
 			} catch (COSVisitorException e) {
@@ -215,8 +235,10 @@ public class ConcatenaArquivo {
 				e.printStackTrace();
 			}
 		} else {
-			file1.renameTo(new File(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-					+ getCpf() + "" + delimitadorDiretorio + "documento." + aux[1]));
+			file1.renameTo(new File(current + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
+					+ getCpf() + "" + delimitadorDiretorio 
+					+ "documento." + aux[1]));
 		}
 	}
 
@@ -244,9 +266,12 @@ public class ConcatenaArquivo {
 		try {
 			String contentType;
 			contentType = "application/" + aux[1];
-			is = new FileInputStream(current + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio + ""
-					+ getCpf() + "" + delimitadorDiretorio + "documento." + aux[1]);
-			streamedContent = new DefaultStreamedContent(is, contentType, "documento." + aux[1]);
+			is = new FileInputStream(current + delimitadorDiretorio 
+					+ "destino_uploader" + delimitadorDiretorio + ""
+					+ getCpf() + "" + delimitadorDiretorio 
+					+ "documento." + aux[1]);
+			streamedContent = new DefaultStreamedContent(is, 
+					contentType, "documento." + aux[1]);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -262,7 +287,8 @@ public class ConcatenaArquivo {
 			return "/pages/estudante/estudante2ViaArquivos.xhtml?faces-redirect=true";
 		}
 		if (getOrigem() == 2) {
-			return "/pages/estudante/" + "estudanteAcessosArquivos.xhtml?faces-redirect=true";
+			return "/pages/estudante/" + "estudanteAcessosArquivos.xhtml?"
+					+ "faces-redirect=true";
 		}
 		if (getOrigem() == 3) {
 			return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
