@@ -20,6 +20,7 @@ import br.gov.df.dftrans.scie.domain.Comentario;
 import br.gov.df.dftrans.scie.domain.InstituicaoCurso;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
@@ -48,6 +49,7 @@ public class ConfirmacaoBean {
 	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
 	private Usuario usuario;
 	private ValidadorBean validadorBean;
+	private Representante representante;
 
 	public void init() {
 		exists = new ArrayList<Boolean>();
@@ -57,7 +59,7 @@ public class ConfirmacaoBean {
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
 		setPath(ManipuladorArquivos
 				.leitor(current + "\\destino_uploader\\" 
-		+ getInstituicao().getId() + "\\files"));
+		+ getRepresentante().getCpf() + "\\files"));
 		for (String temp : getPath()) {
 			if ("0".equals(temp)) {
 				exists.add(false);
@@ -89,14 +91,16 @@ public class ConfirmacaoBean {
 			.getExternalContext().getSession(false);
 			setUsuario((Usuario) session.getAttribute("usuario"));
 				if (logdao.getAnalisysUser(getUsuario()) != null) {
-					setInstituicao(logdao.getAnalisysUser(getUsuario())
-							.getInstituicao());
+					setRepresentante(logdao.getAnalisysUser(getUsuario())
+							.getRepresentante());
 				} else {
-					setInstituicao(logdao.getOpens().get(0).getInstituicao());
+					setRepresentante(logdao.getOpens()
+							.get(0).getRepresentante());
 				}
+				setInstituicao(getRepresentante().getInstituicao());
 				setPath(ManipuladorArquivos
 						.leitor(current + "\\destino_uploader\\" 
-							+ getInstituicao().getId() + "\\files"));
+							+ getRepresentante().getCpf() + "\\files"));
 				int cont = 0;
 				for (String temp : getPath()) {
 					if ("0".equals(temp)) {
@@ -104,8 +108,8 @@ public class ConfirmacaoBean {
 					} else {
 						exists.add(true);
 					}
-					existsLog.add(logdao.existsLog(instituicao.getId(), 
-							docdao.getByNro(cont).getId()));
+					existsLog.add(logdao.existsLog(getRepresentante(), 
+							docdao.getByNro(cont)));
 					cont++;
 				}
 				setPathAtual(getPath()[0]);
@@ -117,8 +121,8 @@ public class ConfirmacaoBean {
 				for (int i = 0; i < existsLog.size(); i++) {
 					if (existsLog.get(i)) {
 						if (docdao.getByNro(i) != null){
-							log = logdao.get(instituicao.getId(), 
-									docdao.getByNro(i).getId());
+							log = logdao.get(getRepresentante(), 
+									docdao.getByNro(i));
 						}else{
 							log = null;
 						}
@@ -142,8 +146,8 @@ public class ConfirmacaoBean {
 	}
 
 	public String getRepCargo() {
-		if (getInstituicao() != null && getInstituicao().getRepresentante() != null) {
-			int i = getInstituicao().getRepresentante().getCargo();
+		if (getRepresentante() != null) {
+			int i = getRepresentante().getCargo();
 			return (i == 1) ? "Diretor" : ((i == 2) ? "Secretário" : null);
 		}
 		return null;
@@ -230,8 +234,8 @@ public class ConfirmacaoBean {
 		String chave = "";
 		chave = getInstituicao().getCnpj();
 		chave += getInstituicao().getId();
-		chave += getInstituicao().getRepresentante().getNome();
-		chave += getInstituicao().getRepresentante().getCpf();
+		chave += getRepresentante().getNome();
+		chave += getRepresentante().getCpf();
 		String[] aux = getPathAtual().split("destino_uploader"), aux1;
 		aux1 = aux[1].split("\\\\");
 		chave += aux1[2];
@@ -264,8 +268,8 @@ public class ConfirmacaoBean {
 	}
 
 	public String verifyUser() {
-		String email = getInstituicao().getRepresentante().getEmail();
-		String nome = getInstituicao().getRepresentante().getNome();
+		String email = getRepresentante().getEmail();
+		String nome = getRepresentante().getNome();
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
 		UsuarioBean bean = (UsuarioBean) resolver.getValue(
@@ -304,7 +308,7 @@ public class ConfirmacaoBean {
 		
 		for (int i = 0; i <= existsLog.size(); i++) {
 			if (i == 7) {
-				log = new LogValidacaoCadastro(getUsuario(), getInstituicao(),
+				log = new LogValidacaoCadastro(getUsuario(), getRepresentante(),
 						comentario[i], arquivoValido[i] ? 2 : 3);
 				try {
 					logdao.add(log);
@@ -340,7 +344,7 @@ public class ConfirmacaoBean {
 					.getExternalContext().getSession(false);
 			session.setAttribute("instituicao", getInstituicao());
 		}
-		Mail.sendEmailValidation(getInstituicao().getRepresentante());
+		Mail.sendEmailValidation(getRepresentante());
 		validadorBean.reset();
 		return "/pages/autenticado/validador/validadorIndex.xhtml?faces-redirect=true";
 	}
@@ -349,4 +353,14 @@ public class ConfirmacaoBean {
 		String cep = getInstituicao().getEndereco().getCep();
 		return ValidadorCEP.getEndereco(cep).toString().replaceAll("\n", "<br\\>");
 	}
+
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+	
+	
 }

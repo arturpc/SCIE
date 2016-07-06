@@ -11,8 +11,10 @@ import javax.servlet.http.HttpSession;
 import br.gov.df.dftrans.scie.dao.ExtensaoAcessoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.LogDAO;
+import br.gov.df.dftrans.scie.dao.RepresentanteDAO;
 import br.gov.df.dftrans.scie.dao.SolicitacaoDAO;
 import br.gov.df.dftrans.scie.dao.UsuarioDAO;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.utils.FacesUtil;
@@ -30,6 +32,8 @@ public class AutenticacaoBean {
 	private String novaSenha = "", senhaAntiga = "", novaSenha2 = "";
 	private UsuarioDAO userdao = UsuarioDAO.UsuarioDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
+	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
+	private Representante representante;
 	private LogDAO logdao = LogDAO.LogDAO();
 	private SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
 	private ExtensaoAcessoDAO extdao = ExtensaoAcessoDAO.ExtensaoAcessoDAO();
@@ -65,8 +69,11 @@ public class AutenticacaoBean {
 					getUser().setSenha(null);
 					switch (usuario.getPerfil()) {
 					case (0):
+						setRepresentante(repdao.getByUser(usuario));
 						session.setAttribute("instituicao",
-						instdao.getByRepNome(usuario.getNome()));
+						getRepresentante().getInstituicao());
+						session.setAttribute("representante", 
+								getRepresentante());
 						return "/pages/autenticado/instituicao/"
 						+ "instituicaoIndex.xhtml?faces-redirect=true";
 					case (2):
@@ -324,8 +331,11 @@ public class AutenticacaoBean {
 		} else {
 			switch (user.getPerfil()) {
 			case (0):
-				session.setAttribute("instituicao", 
-						instdao.getByRepNome(user.getNome()));
+				setRepresentante(repdao.getByUser(user));
+				session.setAttribute("instituicao",
+						representante.getInstituicao());
+				session.setAttribute("representante", 
+						getRepresentante());
 				return "/pages/autenticado/instituicao/"
 				+ "instituicaoIndex.xhtml?faces-redirect=true";
 			case (2):
@@ -445,4 +455,14 @@ public class AutenticacaoBean {
 	public void setCaptcha(boolean captcha) {
 		this.captcha = captcha;
 	}
+
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+	
+	
 }

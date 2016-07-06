@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.el.ELResolver;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -12,6 +13,8 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
+import br.gov.df.dftrans.scie.beans.AutenticacaoBean;
+import br.gov.df.dftrans.scie.beans.InstituicaoBean;
 import br.gov.df.dftrans.scie.dao.CursoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoCursoDAO;
 import br.gov.df.dftrans.scie.domain.Curso;
@@ -33,6 +36,10 @@ public class CursoViewBean implements Serializable {
 	private InstituicaoCurso instCurso = new InstituicaoCurso();
 	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
 	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(false);
+	
+	public CursoViewBean(){
+		
+	}
 
 	/**
 	 * Inicia variáveis
@@ -154,6 +161,14 @@ public class CursoViewBean implements Serializable {
 			e.printStackTrace();
 		}
 		setDualListCurso(new DualListModel<Curso>(getCursosMomento(), getTarget()));
+	}
+	
+	public boolean getDetalharCursosEEditavel() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ELResolver resolver = context.getApplication().getELResolver();
+		InstituicaoBean meuBean = (InstituicaoBean) resolver
+				.getValue(context.getELContext(), null, "InstituicaoMB");
+		return !(detalharCursos && meuBean.getEditavel());
 	}
 
 	// getteres and setteres

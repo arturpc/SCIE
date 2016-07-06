@@ -26,7 +26,7 @@
 		<class>br.gov.df.dftrans.scie.domain.Motivo</class>
 		<class>br.gov.df.dftrans.scie.domain.Solicitacao</class>
 
-		<!--<properties>
+		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/scie" />
 			<property name="javax.persistence.jdbc.user" value="root" />
@@ -44,7 +44,7 @@
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-		</properties>-->
+		</properties>
 
 		<!--<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect" />
@@ -81,7 +81,7 @@
 			<property name="hibernate.format_sql" value="true" />
 		</properties>-->
 		  
-		<properties>
+		<!--<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle9iDialect" />
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
 			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@10.72.31.161:1521/GDFPROD"/>
@@ -98,7 +98,7 @@
             <property name="hibernate.connection.release_mode" value="after_statement" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
-		</properties>
+		</properties>-->
 		
 	</persistence-unit>
 </persistence>

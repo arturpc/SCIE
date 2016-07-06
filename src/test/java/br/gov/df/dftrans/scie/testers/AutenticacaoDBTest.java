@@ -9,6 +9,10 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class AutenticacaoDBTest {
 	
+	public AutenticacaoDBTest(){
+		
+	}
+	
 	@Test
 	public void testarAutenticacao(){
 	}

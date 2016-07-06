@@ -26,6 +26,10 @@ public class ArquivoMB implements Serializable {
 	private int origem;
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
+	
+	public ArquivoMB(){
+		
+	}
 
 	/**
 	 * se for um arquivo pdf,doc, docx ou odt seta imagem false(arquivo não é de

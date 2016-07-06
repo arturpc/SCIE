@@ -2,6 +2,7 @@ package br.gov.df.dftrans.scie.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -51,6 +52,7 @@ public class InstituicaoBean implements Serializable {
 	private Endereco endereco;
 	private Cidade cidade;
 	private UF uf;
+	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 	private AutorizacaoRepresentanteDAO autdao = 
 			AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
@@ -71,8 +73,17 @@ public class InstituicaoBean implements Serializable {
 	private String logradouro;
 	private String complemento;
 
+
+
+
 	public void init() {
 		// DBService.init();
+	}
+	
+	
+	public List<InstituicaoEnsino> getAllInstituicoes(){
+		return instdao.get();
+		
 	}
 
 	public String pesquisar() {
@@ -108,13 +119,14 @@ public class InstituicaoBean implements Serializable {
 				setCidade(new Cidade());
 				setUf(getCidade().getUf());
 			}
-			setRepresentante(new Representante(null, codCPFsemMascara, 1, null, null));
-			instituicao.setRepresentante(getRepresentante());
+			setRepresentante(new Representante(null, codCPFsemMascara, 
+					1, null, null, null, getInstituicao()));
+			//instituicao.setRepresentante(getRepresentante());
 		} else {
-			if (autdao.getByCpf(codCPFsemMascara, instituicao.getId()) == null) {
+		/*	if (autdao.getByCpf(codCPFsemMascara, instituicao.getId()) == null) {
 				FacesUtil.addMsggError("O cpf " + codCPF + " não está autorizado.");
 				return "instituicaoHome.xhtml?faces-redirect=false";
-			}
+			}*/
 			setEndereco(instituicao.getEndereco());
 			setBairro(getEndereco().getBairro());
 			setLogradouro(getEndereco().getLogradouro());
@@ -126,9 +138,10 @@ public class InstituicaoBean implements Serializable {
 			setRepresentante(repDAO.getByCPF(codCPFsemMascara));
 			if (getRepresentante() == null) {
 				setRepresentante(new Representante(null, 
-						codCPFsemMascara, 1, null, null));
+						codCPFsemMascara, 1, null, 
+						null, null, getInstituicao()));
 			}
-			instituicao.setRepresentante(getRepresentante());
+			//instituicao.setRepresentante(getRepresentante());
 		}
 		if (!getRepresentante().getTelefone().isEmpty()) {
 			String[] contatos = new String[5];
@@ -147,6 +160,7 @@ public class InstituicaoBean implements Serializable {
 		HttpSession sessao = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext().getSession(false);
 		sessao.setAttribute("instituicao", getInstituicao());
+		sessao.setAttribute("representante", getRepresentante());
 		return "/pages/instituicao/atualizarCadastro.xhtml?faces-redirect=true";
 	}
 
@@ -178,9 +192,14 @@ public class InstituicaoBean implements Serializable {
 			}
 		}
 		rep.setTelefone(telefones);
-		inst.setRepresentante(rep);
+		//inst.setRepresentante(rep);
 		inst.setEndereco(end);
-		setInstituicao(instdao.update(inst));
+		if(!getEditavel()){
+			rep.setInstituicao(inst);
+			setInstituicao(instdao.update(inst));
+		}else{
+			rep.setInstituicao(getInstituicao());
+		}
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext().getSession(false);
 		session.setAttribute("instituicao", instituicao);
@@ -194,14 +213,18 @@ public class InstituicaoBean implements Serializable {
 		cursoBean.setInstituicao(instituicao);
 		cursoBean.updateTarget();
 		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(
-				getInstituicao().getRepresentante().getCpf());
+				getRepresentante().getCpf());
 		if (autrep != null) {
 			autrep.setInstituicao(getInstituicao());
 			autdao.update(autrep);
 		}
+		setRepresentante(repdao.update(getRepresentante()));
 		return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 	}
 
+	
+
+	
 	public InstituicaoEnsino getInstituicao() {
 		return instituicao;
 	}
@@ -333,22 +356,14 @@ public class InstituicaoBean implements Serializable {
 						.getEndereco().getCidade().getUf()
 						.getUf()));
 			}
-			/*String cep = removeMascara(getInstituicao().getEndereco().getCep());
-			CEP c = ValidadorCEP.getEndereco(cep);
-			if (c != null) {
-				setBairro(c.getBairro());
-				getInstituicao().getEndereco().setBairro(c.getBairro());
-				getEndereco().setBairro(c.getBairro());
-				setLogradouro(c.getLogradouro());
-				getInstituicao().getEndereco().setLogradouro(c.getLogradouro());
-				getEndereco().setLogradouro(c.getLogradouro());
-				setComplemento("");
-				Cidade cid = ciddao.get(c.getCidade(), c.getUf());
-				if (cid != null) {
-					setCidade(ciddao.get(c.getCidade(), c.getUf()));
-				}
-			}
-			*/
+		}
+	}
+	
+	public boolean getEditavel(){
+		if(getRepresentante().getCadastro() != 0){
+			return false;
+		}else{
+			return true;
 		}
 	}
 
@@ -427,7 +442,6 @@ public class InstituicaoBean implements Serializable {
 	public String getLogradouro() {
 		return logradouro;
 	}
-
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}

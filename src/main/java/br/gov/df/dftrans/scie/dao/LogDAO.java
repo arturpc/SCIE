@@ -13,6 +13,7 @@ import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.DocumentoPendenciaDAO;
 import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
@@ -404,12 +405,8 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return um object LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public LogValidacaoCadastro get(int id_inst, int id_documento)
+	public LogValidacaoCadastro get(Representante representante, DocumentoPendencia documento)
 			throws EntityNotFoundException {
-		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-		InstituicaoEnsino instituicao = instdao.getById(id_inst);
-		DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
-		DocumentoPendencia documento = docdao.get(id_documento);
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
@@ -417,7 +414,7 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 							.LOG_FIND_BY_DADOS, 
 							LogValidacaoCadastro.class);
 			LogValidacaoCadastro log = typedQuery
-					.setParameter("instituicao", instituicao)
+					.setParameter("representante", representante)
 					.setParameter("documento", documento)
 					.getSingleResult();
 			return log;
@@ -425,8 +422,8 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar Log da instituicao " 
-			+ instituicao.getNomeInstituicao());
+			throw new DAOExcpetion("Erro ao coletar Log do Representante " 
+			+ representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -499,9 +496,9 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @param documento
 	 * @return true ou false
 	 */
-	public boolean existsLog(int id_inst, int id_documento) {
+	public boolean existsLog(Representante representante, DocumentoPendencia documento) {
 		try {
-			if (get(id_inst, id_documento) != null) {
+			if (get(representante, documento) != null) {
 				return true;
 			}
 		} catch (EntityNotFoundException e) {

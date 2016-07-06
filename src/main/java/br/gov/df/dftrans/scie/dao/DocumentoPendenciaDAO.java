@@ -154,8 +154,8 @@ public class DocumentoPendenciaDAO extends DAO<DocumentoPendencia> implements Se
 		try {
 			TypedQuery<DocumentoPendencia> typedQuery = entityManager
 					.createNamedQuery(DocumentoPendencia
-							.DOCUMENTO_FIND_BY_ID,
-							DocumentoPendencia.class);
+					.DOCUMENTO_FIND_BY_ID,
+					DocumentoPendencia.class);
 			return typedQuery.setParameter("id", id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;

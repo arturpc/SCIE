@@ -42,7 +42,7 @@ public class Endereco implements Serializable {
 	@JoinColumn(name = "id_cidade", referencedColumnName = "id_cidade")
 	private Cidade cidade;
 
-	@Column(name = "nr_cep", unique = true)
+	@Column(name = "nr_cep")
 	private String cep;
 
 	@StringUpperCase

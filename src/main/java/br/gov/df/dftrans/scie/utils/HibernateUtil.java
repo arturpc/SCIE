@@ -7,6 +7,9 @@ public final class HibernateUtil  {
 	private EntityManagerFactory Factory;
 	private EntityManager manager;
 	
+	/**
+	 * Método construtor
+	 */
 	public HibernateUtil() {
 		//Cria tabelas no banco
 		setFactory(Persistence.createEntityManagerFactory("db_cadschool"));

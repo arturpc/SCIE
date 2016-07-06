@@ -56,43 +56,15 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 	}
 
 	/**
-	 * Seleciona uma InstituicaoEnsino pelo nome
-	 * 
-	 * @param nome
-	 * @return se encontrado a InstituicaoEnsino se não null
-	 */
-	public InstituicaoEnsino getByRepNome(String nome) {
-		EntityManager entityManager = factory.createEntityManager();
-		try {
-			TypedQuery<InstituicaoEnsino> typedQuery = entityManager
-					.createNamedQuery(InstituicaoEnsino
-							.INSTITUICAO_FIND_BY_REP_NAME,
-							InstituicaoEnsino.class);
-			return typedQuery.setParameter("nome", nome).getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new DAOExcpetion("Erro ao coletar "
-					+ "Instituicao por Nome de Representante");
-		} finally {
-			entityManager.close();
-		}
-
-	}
-
-	/**
 	 * Persiste uma InstituicaoEnsino
 	 */
 	@Override
 	public InstituicaoEnsino add(InstituicaoEnsino entity) throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
 		Endereco end = entity.getEndereco();
-		Representante rep = entity.getRepresentante();
 		EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
 		RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
 		entity.setEndereco(enddao.update(end));
-		entity.setRepresentante(repdao.update(rep));
 		try {
 			StringUtils.parserObject(entity);
 			entityManager.getTransaction().begin();

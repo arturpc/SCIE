@@ -21,6 +21,12 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.jopendocument.model.TextDocument;
 
 public class readMSOfficeFiles {
+	/**
+	 * Classe teste para manipulação de arquivos XLS, XLSX e ODS
+	 * @param args
+	 * @throws IOException
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws IOException, Exception {
 		File f = new File("C:\\Users\\2695936\\Desktop\\declaracao.ods");
 			if (f.getName().toLowerCase().endsWith(".docx")) {

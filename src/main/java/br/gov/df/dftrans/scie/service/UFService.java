@@ -16,7 +16,10 @@ import br.gov.df.dftrans.scie.exceptions.InsertException;
 public class UFService {
      
     private List<UF> ufs;
-     
+    
+    /**
+     * Método que seta as variáveis e estruturas da classe de serviço UF
+     */
     @PostConstruct
     public void init() {
         ufs = new ArrayList<UF>();
@@ -28,6 +31,11 @@ public class UFService {
         return ufs;
     } 
     
+    /**
+     * Método que retorna determinada UF dada a sigla da UF
+     * @param sigla
+     * @return
+     */
    public UF getUfPorSigla(String sigla){
 	   for(UF uf:ufs){
 		   if(uf.getUf().equals(sigla)){

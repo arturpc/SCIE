@@ -54,12 +54,24 @@ public class Cidade implements Serializable {
 	public Cidade() {
 	}
 	
+	/**
+	 * Método Construtor
+	 * @param id
+	 * @param nome
+	 * @param uf
+	 */
 	public Cidade(int id, String nome, UF uf){
 		this.id = id;
 		this.nome = nome;
 		this.uf = uf;
 	}
 	
+	/**
+	 * Método Construtor
+	 * @param id
+	 * @param nome
+	 * @param uf
+	 */
 	public Cidade(int id, String nome, String uf){
 		this.id = id;
 		this.nome = nome;
@@ -67,6 +79,11 @@ public class Cidade implements Serializable {
 		this.uf = dao.getByUF(uf);
 	}
 	
+	/**
+	 * Método Construtor
+	 * @param nome
+	 * @param uf
+	 */
 	public Cidade(String nome, String uf){
 		this.nome = nome;
 		UFDAO dao = new UFDAO();

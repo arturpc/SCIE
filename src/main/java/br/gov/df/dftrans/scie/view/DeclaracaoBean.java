@@ -43,6 +43,7 @@ import br.gov.df.dftrans.scie.domain.Curso;
 import br.gov.df.dftrans.scie.domain.Declaracao;
 import br.gov.df.dftrans.scie.domain.Estudante;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.exceptions.PlanilhaException;
@@ -68,6 +69,7 @@ public class DeclaracaoBean {
 	private boolean erroProcessamento;
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
+	private Representante representante;
 	
 	
 	/**
@@ -190,8 +192,9 @@ public class DeclaracaoBean {
 			// e ser usada como chave
 			chave = inst.getCnpj();
 			chave += inst.getId();
-			chave += inst.getRepresentante().getNome();
-			chave += inst.getRepresentante().getCpf();
+			setRepresentante((Representante) session.getAttribute("representante"));
+			chave += getRepresentante().getNome();
+			chave += getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += 7;
 			chave = chave.replaceAll(delimitadorDiretorioREGEX, "")
@@ -492,6 +495,7 @@ public class DeclaracaoBean {
 				decl.setDataAulaInicio(fmt.parse(temp[i][10]));
 				decl.setDataAulaFim(fmt.parse(temp[i][11]));
 				decl.setInstituicao(inst);
+				decl.setAutenticacao(chave);
 				listdecl.add(decl);
 			}
 			decdao.add(listdecl);
@@ -580,4 +584,13 @@ public class DeclaracaoBean {
 		this.declaracoes = declaracoes;
 	}
 
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+
+	
 }

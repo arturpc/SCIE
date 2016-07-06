@@ -22,11 +22,9 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @Entity
 @Table(name = "tb_instituicao_ensino")
 @NamedQueries({ @NamedQuery(name = InstituicaoEnsino.INSTITUICAO_GET_ALL, 
-		query = "SELECT i FROM InstituicaoEnsino i"),
+		query = "SELECT i FROM InstituicaoEnsino i order by i.nomeInstituicao"),
 		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_INEP_EMEC, 
 		query = "SELECT i FROM InstituicaoEnsino i WHERE i.codInepEmec = :codInepEmec"),
-		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_REP_NAME, 
-		query = "SELECT i FROM InstituicaoEnsino i where i.representante.nome = :nome"),
 		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_ID, 
 		query = "SELECT i FROM InstituicaoEnsino i WHERE i.id = :id"),
 		@NamedQuery(name = InstituicaoEnsino.INSTITUICAO_FIND_BY_OBJECT, 
@@ -41,8 +39,6 @@ public class InstituicaoEnsino implements Serializable {
 			"InstituicaoEnsino.consultarPorCodigo";
 	public static final String INSTITUICAO_FIND_BY_OBJECT = 
 			"InstituicaoEnsino.consultarPorObject";
-	public static final String INSTITUICAO_FIND_BY_REP_NAME = 
-			"InstituicaoEnsino.consultarPorNomeRepresentante";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,10 +73,6 @@ public class InstituicaoEnsino implements Serializable {
 	@Column(name = "st_privada")
 	int privada;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_representante", referencedColumnName = "id_representante")
-	private Representante representante;
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
 	private Endereco endereco;
@@ -91,26 +83,24 @@ public class InstituicaoEnsino implements Serializable {
 
 	public InstituicaoEnsino(String nomeInstituicao, String cnpj, 
 			String razaoSocial, String codInepEmec,
-			Endereco endereco, Representante representante, int situacao) {
+			Endereco endereco, int situacao) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
 		setCodInepEmec(codInepEmec);
 		setEndereco(endereco);
-		setRepresentante(representante);
 		setSituacao(situacao);
 	}
 
 	public InstituicaoEnsino(String nomeInstituicao, String cnpj, 
 			String razaoSocial, String codInepEmec,
-			Endereco endereco, Representante representante, 
+			Endereco endereco, 
 			int situacao, String codEscola) {
 		setNomeInstituicao(nomeInstituicao);
 		setCnpj(cnpj);
 		setRazaoSocial(razaoSocial);
 		setCodInepEmec(codInepEmec);
 		setEndereco(endereco);
-		setRepresentante(representante);
 		setSituacao(situacao);
 		setCodEscola(codEscola);
 	}
@@ -196,14 +186,6 @@ public class InstituicaoEnsino implements Serializable {
 
 	public void setCodInepEmec(String codInepEmec) {
 		this.codInepEmec = codInepEmec;
-	}
-
-	public Representante getRepresentante() {
-		return representante;
-	}
-
-	public void setRepresentante(Representante representante) {
-		this.representante = representante;
 	}
 
 	public Endereco getEndereco() {

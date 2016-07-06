@@ -12,6 +12,7 @@ import static br.gov.df.dftrans.scie.utils.MessageUtils.getString;
 
 import br.gov.df.dftrans.scie.domain.LogAlteracaoBanco;
 import br.gov.df.dftrans.scie.domain.Representante;
+import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.DAOExcpetion;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
@@ -41,6 +42,33 @@ public class RepresentanteDAO extends DAO<Representante> {
 							.REPRESENTANTE_FIND_BY_CPF,
 							Representante.class);
 			return typedQuery.setParameter("cpf", chave).getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Autorizacao por CPF");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+
+	}
+	
+	/**
+	 * Seleciona um Representando por Usuario
+	 * 
+	 * @param chave
+	 * @return um Representante ou null
+	 */
+	public Representante getByUser(Usuario user) {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<Representante> typedQuery = entityManager
+					.createNamedQuery(Representante
+							.REPRESENTANTE_FIND_BY_USER,
+							Representante.class);
+			return typedQuery.setParameter("usuario", user).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -95,6 +123,30 @@ public class RepresentanteDAO extends DAO<Representante> {
 			return typedQuery.setParameter("id",
 					((Representante) id).getId())
 					.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
+		} finally {
+			if (entityManager.isOpen()) {
+				entityManager.close();
+			}
+		}
+	}
+	
+	/**
+	 * Seleciona um Representante usando como parâmetro de pesquisa um id
+	 */
+	public Representante get(int id) throws EntityNotFoundException {
+		EntityManager entityManager = factory.createEntityManager();
+		try {
+			TypedQuery<Representante> typedQuery = entityManager
+					.createNamedQuery(Representante
+							.REPRESENTANTE_FIND_BY_ID,
+							Representante.class);
+			return typedQuery.setParameter("id",
+					id).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
@@ -162,7 +214,9 @@ public class RepresentanteDAO extends DAO<Representante> {
 			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			if(entityManager.getTransaction().isActive()){
+				entityManager.getTransaction().rollback();
+			}
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao modificar Representante");
 		} finally {

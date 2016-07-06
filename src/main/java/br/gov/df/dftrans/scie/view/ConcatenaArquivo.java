@@ -44,6 +44,10 @@ public class ConcatenaArquivo {
 	private DefaultStreamedContent streamedContent;
 	private InputStream is = null;
 	private int origem;
+	
+	public ConcatenaArquivo(){
+		
+	}
 
 	/**
 	 * Metodo para setup da tela de concatenar arquivos. Inicia as estruturas e variáveis;

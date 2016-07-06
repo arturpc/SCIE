@@ -25,34 +25,34 @@ query = "SELECT l FROM LogValidacaoCadastro l"),
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN_INST, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0 "
-				+ "and l.instituicao = :inst"),
+				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_INST, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
-				+ "and l.instituicao = :inst"),
+				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_USER, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
 				+ "and l.usuario = :usuario"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED_INST, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
-				+ "and l.instituicao = :inst"),
+				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECT_INST, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 "
-				+ "and l.instituicao = :inst"),
+				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ANALISYS, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
-				+ "and l.usuario = :usuario and l.instituicao = :instituicao "
+				+ "and l.usuario = :usuario and l.representante = :representante "
 				+ "and l.documento = :documento"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
-				+ "and l.instituicao.id = :id"),
+				+ "and l.representante.id = :id"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECTED, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 "
-				+ "and l.instituicao.id = :id"),
+				+ "and l.representante.id = :id"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_ID, 
 		query = "SELECT l FROM LogValidacaoCadastro l WHERE l.id = :id"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_FIND_BY_DADOS, 
 		query = "SELECT l FROM LogValidacaoCadastro l "
-				+ "WHERE l.instituicao = :instituicao "
+				+ "WHERE l.representante = :representante "
 				+ "and l.documento = :documento and l.validacao in (0,1)") })
 public class LogValidacaoCadastro implements Serializable {
 
@@ -91,8 +91,8 @@ public class LogValidacaoCadastro implements Serializable {
 	private Usuario usuario;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
-	private InstituicaoEnsino instituicao;
+	@JoinColumn(name = "id_representante", referencedColumnName = "id_representante")
+	private Representante representante;
 
 	@Column(name = "dt_atualizacao")
 	@Temporal(value = TemporalType.DATE)
@@ -117,27 +117,27 @@ public class LogValidacaoCadastro implements Serializable {
 	public LogValidacaoCadastro() {
 	}
 
-	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, 
+	public LogValidacaoCadastro(Usuario usuario, Representante representante, 
 			DocumentoPendencia documento,
 			String comentario) {
 		setUsuario(usuario);
-		setInstituicao(instituicao);
 		setDocumento(documento);
 		setAtualizacao(new Date());
 		setComentario(comentario);
+		setRepresentante(representante);
 	}
 	
-	public LogValidacaoCadastro(InstituicaoEnsino instituicao, 
+	public LogValidacaoCadastro(Representante representante, 
 			DocumentoPendencia documento) {
-		setInstituicao(instituicao);
+		setRepresentante(representante);
 		setDocumento(documento);
 		setAtualizacao(new Date());
 	}
 
-	public LogValidacaoCadastro(Usuario usuario, InstituicaoEnsino instituicao, 
+	public LogValidacaoCadastro(Usuario usuario, Representante representante, 
 			String comentario, int validacao) {
 		setUsuario(usuario);
-		setInstituicao(instituicao);
+		setRepresentante(representante);
 		setAtualizacao(new Date());
 		setComentario(comentario);
 		setValidacao(validacao);
@@ -150,7 +150,7 @@ public class LogValidacaoCadastro implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Id = " + getId() + "\n");
 		sb.append("Usuario = " + getUsuario() + "\n");
-		sb.append("Instituicao = " + getInstituicao() + "\n");
+		sb.append("Representante = " + getRepresentante() + "\n");
 		sb.append("Atualizacao = " + getAtualizacao() + "\n");
 		sb.append("Documentos = " + getDocumento() + "\n");
 		return sb.toString();
@@ -208,14 +208,6 @@ public class LogValidacaoCadastro implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public InstituicaoEnsino getInstituicao() {
-		return instituicao;
-	}
-
-	public void setInstituicao(InstituicaoEnsino instituicao) {
-		this.instituicao = instituicao;
-	}
-
 	public Date getAtualizacao() {
 		return atualizacao;
 	}
@@ -239,5 +231,15 @@ public class LogValidacaoCadastro implements Serializable {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
+
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+	
+	
 
 }

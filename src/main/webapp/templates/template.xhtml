@@ -105,12 +105,12 @@
 			<ui:insert name="menu" />
 			<h:form>
 				<p:slideMenu backLabel="Voltar">
-					<p:submenu label="Instituição" rendered="false">
-						<p:submenu label="Cadastro" rendered="false">
+					<p:submenu label="Instituição" rendered="true">
+						<p:submenu label="Cadastro" rendered="true">
 							<p:menuitem value="Atualizar Cadastro"
-								action="#{loginBean.atualizarCadastro}" rendered="false"/>
+								action="#{loginBean.atualizarCadastro}" rendered="true"/>
 							<p:menuitem value="Verificar Pendências"
-								action="#{loginBean.instituicaoHome}" rendered="false"/>
+								action="#{loginBean.instituicaoHome}" rendered="true"/>
 						</p:submenu>
 					</p:submenu>
 					<p:submenu label="Estudante">
@@ -146,7 +146,7 @@
 		</p:layoutUnit>
 		<p:ajaxStatus onstart="PF('statusDialog').show()"
 			onsuccess="PF('statusDialog').hide()" />
-		<p:dialog widgetVar="statusDialog" modal="false" draggable="false"
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
 			closable="false" resizable="false" showHeader="false">
 			<p:graphicImage value="/resources/images/loading_spinner.gif" />
 		</p:dialog>

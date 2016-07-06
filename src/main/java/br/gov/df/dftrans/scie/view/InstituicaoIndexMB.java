@@ -11,6 +11,7 @@ import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.LogDAO;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.domain.Usuario;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 
@@ -25,7 +26,14 @@ public class InstituicaoIndexMB {
 			"Aprovado", "Não Aprovado" };
 	private LogDAO logdao = LogDAO.LogDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-
+	private Representante representante;
+	
+	public InstituicaoIndexMB(){
+		HttpSession session = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
+		setRepresentante((Representante) session.getAttribute("representante"));
+	}
+	
 	/**
 	 * seta instituicao com a istituicao do usuario na sessão seleciona todos os
 	 * status em diferentes lists <abertas,aprovadas,reprovadas,emAnalise>
@@ -34,7 +42,8 @@ public class InstituicaoIndexMB {
 		HttpSession session = (HttpSession) FacesContext
 				.getCurrentInstance().getExternalContext().getSession(false);
 		setUser((Usuario) session.getAttribute("usuario"));
-		setInstituicao(instdao.getByRepNome(getUser().getNome()));
+		setRepresentante((Representante) session.getAttribute("representante"));
+		setInstituicao(getRepresentante().getInstituicao());
 		session.setAttribute("instituicao", getInstituicao());
 		try {
 			setAbertas(logdao.getOpensInst(instituicao));
@@ -46,6 +55,10 @@ public class InstituicaoIndexMB {
 		}
 	}
 
+	/**
+	 * Método que retorna se determinado cadastro está aprovado
+	 * @return st_solicitacao = 2
+	 */
 	public boolean cadastroValido() {
 		if (getInstituicao().getSituacao() == 2) {
 			return true;
@@ -112,4 +125,11 @@ public class InstituicaoIndexMB {
 		this.validacao = validacao;
 	}
 
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
 }

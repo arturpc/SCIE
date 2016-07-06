@@ -18,6 +18,9 @@ public class CidadeService {
     private List<Cidade> cidades;
     private UF df = new UF(1,"DF");
      
+    /**
+     * Método construtor
+     */
     public CidadeService() {
         cidades = new ArrayList<Cidade>();
         CidadeDAO ciddao = CidadeDAO.CidadeDAO();
@@ -28,6 +31,11 @@ public class CidadeService {
         return cidades;
     }
     
+    /**
+     * Método que retorna determinada cidade dado o nome da cidade
+     * @param nome
+     * @return Cidade
+     */
     public Cidade getCidadePorNome(String nome){
     	for(Cidade cid: cidades){
     		if(cid.getNome().equals(nome)){

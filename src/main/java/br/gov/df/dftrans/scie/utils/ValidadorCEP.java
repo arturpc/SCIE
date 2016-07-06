@@ -22,6 +22,12 @@ public class ValidadorCEP {
 			+ "ON cid.id_uf = uf.id_uf "
 			+ "WHERE end.NR_CEP = ?";
 	
+	/**
+	 * Método que retorna uma conexão a um banco de dados
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Connection con = null;
 		Class.forName("oracle.jdbc.OracleDriver");
@@ -30,6 +36,12 @@ public class ValidadorCEP {
 
 	}
 	
+	/**
+	 * Método que retorna determinado objeto CEP dado uma string cep que represente
+	 * um número de cep desformatado (sem máscara)
+	 * @param cep
+	 * @return
+	 */
 	public static CEP getEndereco(String cep){
 		CEP retorno = null;
 		try{

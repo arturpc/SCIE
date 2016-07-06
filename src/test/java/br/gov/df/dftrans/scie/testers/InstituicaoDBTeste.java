@@ -8,6 +8,11 @@ import br.gov.df.dftrans.scie.domain.UF;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 
 public class InstituicaoDBTeste {
+	
+	public InstituicaoDBTeste(){
+		
+	}
+	
 	@Test
 	@Ignore
 	public void getAll(){

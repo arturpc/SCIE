@@ -39,7 +39,7 @@
 						var="curso" itemLabel="#{curso.curso}" itemValue="#{curso}"
 						showCheckbox="false" effect="bounce" showSourceFilter="true"
 						showTargetFilter="true" filterMatchMode="contains"
-						disabled="#{MBCursoView.detalharCursos}">
+						disabled="#{MBCursoView.getDetalharCursosEEditavel()}">
 
 						<f:facet name="sourceCaption" autoUpdate="true">Todos os Cursos</f:facet>
 						<p:column>#{curso.curso}-(#{curso.nivel})</p:column>
@@ -50,10 +50,10 @@
 
 					</p:pickList>
 					<p:commandButton id="detalharCursos" value="Detalhar Cursos"
-						action="#{MBCursoView.detalharCurso}"
+						action="#{MBCursoView.getDetalharCursosEEditavel()}"
 						update="detalheCursos nmCurso 
 					turnoCurso cursosPickList detalharCursos"
-						disabled="#{MBCursoView.detalharCursos}" />
+						disabled="#{MBCursoView.getDetalharCursosEEditavel()}" />
 					<p:panel id="detalheCursos" header="Detalhes de Oferta do Curso"
 						autoUpdate="true">
 						<p:panelGrid columns="2" autoUpdate="true">

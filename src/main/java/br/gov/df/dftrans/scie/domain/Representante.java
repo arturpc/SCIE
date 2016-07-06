@@ -1,17 +1,20 @@
-//?
 package br.gov.df.dftrans.scie.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
@@ -26,6 +29,8 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 		query = "SELECT r FROM Representante r"),
 		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_CPF, 
 		query = "SELECT r FROM Representante r WHERE r.cpf = :cpf"),
+		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_USER, 
+		query = "SELECT r FROM Representante r WHERE r.usuario = :usuario"),
 		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_ID, 
 		query = "SELECT r FROM Representante r WHERE r.id = :id") })
 public class Representante implements Serializable {
@@ -33,6 +38,7 @@ public class Representante implements Serializable {
 	public static final String REPRESENTANTE_GET_ALL = "Representante.getAll";
 	public static final String REPRESENTANTE_FIND_BY_CPF = "Representante.consultarPorCPF";
 	public static final String REPRESENTANTE_FIND_BY_ID = "Representante.consultarPorCodigo";
+	public static final String REPRESENTANTE_FIND_BY_USER = "Representante.consultarPorUsuario";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,17 +65,42 @@ public class Representante implements Serializable {
 
 	@Column(name = "ds_telefone")
 	private String telefone;
+	
+	@Column(name = "dt_nascimento")
+	private Date dataNascimento;
+	
+	//st_ativo = 1 (Ativo)
+	//st_ativo = 0 (Inativo)
+	@Column(name = "st_ativo")
+	private int ativo = 1;
+	
+	//st_cadastro = 0 (Não Aprovado)
+	//st_cadastro = 1 (Aprovado)
+	@Column(name = "st_cadastro")
+	private int cadastro = 0;
+	
+	@OneToOne
+	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")
+	private InstituicaoEnsino instituicao;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	private Usuario usuario;
 
 	// construtores
 	public Representante() {
 	}
 
-	public Representante(String nome, String cpf, int cargo, String email, String telefone) {
+	public Representante(String nome, String cpf, int cargo, 
+			String email, String telefone, Date dataNascimento, 
+			InstituicaoEnsino instituicao) {
 		setNome(nome);
 		setCpf(cpf);
 		setCargo(cargo);
 		setEmail(email);
 		setTelefone(telefone);
+		setDataNascimento(dataNascimento);
+		setInstituicao(instituicao);
 	}
 
 	// sobrescrita toString
@@ -220,4 +251,45 @@ public class Representante implements Serializable {
 		this.telefone = contato.substring(0, contato.length() - 1);
 	}
 
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public int getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
+	}
+
+	public int getCadastro() {
+		return cadastro;
+	}
+
+	public void setCadastro(int cadastro) {
+		this.cadastro = cadastro;
+	}
+
+	public InstituicaoEnsino getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(InstituicaoEnsino instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	
 }

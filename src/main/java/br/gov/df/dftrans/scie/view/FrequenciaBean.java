@@ -37,6 +37,7 @@ import br.gov.df.dftrans.scie.domain.Estudante;
 import br.gov.df.dftrans.scie.domain.Frequencia;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.domain.MesReferencia;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.exceptions.PlanilhaException;
@@ -69,6 +70,7 @@ public class FrequenciaBean {
 			"Setembro", "Outubro", "Novembro", "Dezembro" };
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
+	private Representante representante;
 
 	/**
 	 * Inicializa instituicao com a instituicao na sessão, e seta uma array de
@@ -103,6 +105,10 @@ public class FrequenciaBean {
 		}
 	}
 
+	/**
+	 * Método que trata upload de arquivos
+	 * @param fileUploadEvent
+	 */
 	public void doUpload(FileUploadEvent fileUploadEvent) {
 		int tipo = 0;
 		// trata o arquvo que o usuário subiu
@@ -166,8 +172,9 @@ public class FrequenciaBean {
 			// Cria chave única que estará presente no PDF
 			chave = instituicao.getCnpj();
 			chave += instituicao.getId();
-			chave += instituicao.getRepresentante().getNome();
-			chave += instituicao.getRepresentante().getCpf();
+			setRepresentante((Representante) session.getAttribute("representante"));
+			chave += getRepresentante().getNome();
+			chave += getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += 8;
 			chave = chave.replaceAll(delimitadorDiretorioREGEX, "")
@@ -196,6 +203,13 @@ public class FrequenciaBean {
 		}
 	}
 
+	/**
+	 * Método que mantêm frequências constantes do arquivo anexo na plataforma.
+	 * @param temp
+	 * @param chave
+	 * @param tipo
+	 * @return
+	 */
 	public String persistirFrequencias(String[][] temp, String chave, int tipo) {
 		InstituicaoEnsino inst;
 		InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
@@ -381,6 +395,7 @@ public class FrequenciaBean {
 				freq.setAutenticacao(chave);
 				freq.setInstituicao(inst);
 				freq.setDataReferencia(getMes().getValue());
+				freq.setAutenticacao(chave);
 				campo = temp[i][9].toUpperCase();
 				if (!campo.startsWith("P") && !campo.startsWith("A")) {
 					throw new PlanilhaException("O valor " + campo
@@ -430,6 +445,9 @@ public class FrequenciaBean {
 		return null;
 	}
 
+	/**
+	 * Método Construtor
+	 */
 	public FrequenciaBean() {
 		// pega instituicão da sessão
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance()
@@ -520,6 +538,9 @@ public class FrequenciaBean {
 		return fileout;
 	}
 
+	/**
+	 * Método que seta a variável o nome do mês
+	 */
 	public void mostrarMes() {
 		for (MesReferencia ref : getMeses()) {
 			if (ref.getValue() == getValorMes()) {
@@ -609,4 +630,13 @@ public class FrequenciaBean {
 		this.valorMes = valorMes;
 	}
 
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+
+	
 }

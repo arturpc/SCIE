@@ -20,6 +20,11 @@ public class CNPJValidator implements Serializable {
 	public void initialize(CNPJ constraintAnnotation) {
 	}
 
+	/**
+	 * Método que retorna se um dado cnpj é valido (bem formatado)
+	 * @param value
+	 * @return boolean
+	 */
 	public boolean isValid(String value) {
 		if (value == null || value.length() == 0) {
 			return true;

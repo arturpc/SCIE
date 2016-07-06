@@ -7,6 +7,10 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 
 
 public class EnderecoDBTeste {
+	
+	public EnderecoDBTeste(){
+		
+	}
 
 	@Test
 	public void testupdate() throws EntityNotFoundException{

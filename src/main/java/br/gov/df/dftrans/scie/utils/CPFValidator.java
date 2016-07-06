@@ -22,6 +22,11 @@ public class CPFValidator implements Serializable {
 	public void initialize(CPF constraintAnnotation) {
 	}
 
+	/**
+	 * Método que retorna se determinado cpf é valido (bem formatado)
+	 * @param value
+	 * @return
+	 */
 	public static boolean isValid(String value) {
 		if (value == null || value.length() == 0) {
 			return true;

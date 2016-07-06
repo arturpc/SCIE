@@ -31,6 +31,7 @@ import br.gov.df.dftrans.scie.dao.LogDAO;
 import br.gov.df.dftrans.scie.domain.DocumentoPendencia;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
 import br.gov.df.dftrans.scie.domain.LogValidacaoCadastro;
+import br.gov.df.dftrans.scie.domain.Representante;
 import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 import br.gov.df.dftrans.scie.exceptions.InsertException;
 import br.gov.df.dftrans.scie.utils.AutenticacaoDocumentos;
@@ -80,6 +81,7 @@ public class FileUploadView implements Serializable {
 	private String msgPortaria = Parametros.getParameter("cadastro_arquivos_portaria");
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
+	private Representante representante;
 
 	// construtor
 	public FileUploadView() {
@@ -107,13 +109,13 @@ public class FileUploadView implements Serializable {
 	 */
 	public void doUploadAto(FileUploadEvent fileUploadEvent){
 		doUpload(fileUploadEvent, ATO_RECONHECIMENTO);
-		DocumentoPendencia doc = null;
 		try {
-			doc = docdao.getByDesc(descricaoArquivos[ATO_RECONHECIMENTO]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			DocumentoPendencia doc = docdao.
+					getByDesc(descricaoArquivos[ATO_RECONHECIMENTO]);
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, ATO_RECONHECIMENTO);
 			}
@@ -134,10 +136,10 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[INSCRICAO_CNPJ]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, INSCRICAO_CNPJ);
 			}
@@ -158,10 +160,10 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(
 					descricaoArquivos[ATO_DESIGNACAO_DIRETOR_SECRETARIO]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, ATO_DESIGNACAO_DIRETOR_SECRETARIO);
 			}
@@ -182,10 +184,10 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[COMPROVANTE_ENDERECO]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, COMPROVANTE_ENDERECO);
 			}
@@ -206,10 +208,10 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[AUTORIZACAO_CURSO_SUPERIOR]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, AUTORIZACAO_CURSO_SUPERIOR);
 			}
@@ -229,10 +231,10 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, ESTATUTO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ESTATUTO]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, ESTATUTO);
 			}
@@ -253,10 +255,10 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[CONVENIO_ESTADO]);
-			log = logdao.get(getInst().getId(), doc.getId());
+			log = logdao.get(getRepresentante(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
-				logdao.add(new LogValidacaoCadastro(getInst(), doc));
+				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
 			} else {
 				logdao.update(log, CONVENIO_ESTADO);
 			}
@@ -267,6 +269,11 @@ public class FileUploadView implements Serializable {
 		}
 	}
 
+	/**
+	 * Método que trata o upload de arquivos conforme documento parâmetro.
+	 * @param fileUploadEvent
+	 * @param documento
+	 */
 	public void doUpload(FileUploadEvent fileUploadEvent, int documento) {
 		ArrayList<String> conteudo;
 		// trata o arquvo que o usuário subiu
@@ -295,12 +302,12 @@ public class FileUploadView implements Serializable {
 		// cria o arquivo abstrato
 		File file = new File(current + "" + delimitadorDiretorio 
 				+ "destino_uploader" + delimitadorDiretorio + ""
-				+ inst.getId() + "" + delimitadorDiretorio + "" 
+				+ representante.getCpf() + "" + delimitadorDiretorio + "" 
 				+ fmt.format(date) + "" + delimitadorDiretorio + ""
 				+ documento + "" + delimitadorDiretorio);
 		file.mkdirs();
 		file = new File(current + delimitadorDiretorio + "destino_uploader" 
-		+ delimitadorDiretorio + "" + inst.getId()
+		+ delimitadorDiretorio + "" + getRepresentante().getCpf()
 				+ delimitadorDiretorio + "files");
 		if (!file.exists()) {
 			// escreve no arquivo o array iniciado como 0
@@ -315,12 +322,12 @@ public class FileUploadView implements Serializable {
 			conteudo.add("0");
 			ManipuladorArquivos.escritor(current + delimitadorDiretorio 
 					+ "destino_uploader" + delimitadorDiretorio + ""
-					+ inst.getId() + delimitadorDiretorio + "files", conteudo);
+					+ representante.getCpf() + delimitadorDiretorio + "files", conteudo);
 		} else {
 			// ler o arquivo
 			String caminhos[] = ManipuladorArquivos.leitor(current 
 					+ delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" + inst.getId() 
+					+ delimitadorDiretorio + "" + getRepresentante().getCpf() 
 					+ delimitadorDiretorio + "files");
 			// exclui arquivo documento
 			file = new File(caminhos[documento]);
@@ -332,7 +339,7 @@ public class FileUploadView implements Serializable {
 		if (aux[1].equals("pdf")) {
 			// copia o pdf
 			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + inst.getId() + ""
+			+ delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
 					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
 					+ delimitadorDiretorio + "" + documento + ""
 					+ delimitadorDiretorio + "" + nomesArquivos[documento], 
@@ -340,7 +347,7 @@ public class FileUploadView implements Serializable {
 		} else {
 			// copia o arquivo
 			copiarArquivo(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + inst.getId() + ""
+			+ delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
 			+ delimitadorDiretorio + "" + fmt.format(date) + "" 
 			+ delimitadorDiretorio + "" + documento + ""
 			+ delimitadorDiretorio + "" + nomesArquivos[documento], 
@@ -351,11 +358,11 @@ public class FileUploadView implements Serializable {
 		// ler o arquivo
 		String files[] = ManipuladorArquivos.leitor(current + "" 
 		+ delimitadorDiretorio + "destino_uploader"
-		+ delimitadorDiretorio + "" + inst.getId() + "" 
+		+ delimitadorDiretorio + "" + getRepresentante().getCpf() + "" 
 		+ delimitadorDiretorio + "files");
 		files[documento] = current + "" + delimitadorDiretorio 
 				+ "destino_uploader" + delimitadorDiretorio + ""
-				+ inst.getId() + "" + delimitadorDiretorio + "" 
+				+ representante.getCpf() + "" + delimitadorDiretorio + "" 
 				+ fmt.format(date) + "" + delimitadorDiretorio + ""
 				+ documento + "" + delimitadorDiretorio + "" 
 				+ nomesArquivos[documento] + "." + aux[1];
@@ -367,7 +374,7 @@ public class FileUploadView implements Serializable {
 		// faz a cópia do arquivo
 		ManipuladorArquivos.escritor(current + "" + delimitadorDiretorio 
 				+ "destino_uploader" + delimitadorDiretorio
-				+ "" + inst.getId() + "" + delimitadorDiretorio 
+				+ "" + representante.getCpf() + "" + delimitadorDiretorio 
 				+ "files", conteudo);
 	}
 
@@ -396,8 +403,8 @@ public class FileUploadView implements Serializable {
 			// Cria chave única que estará presente no PDF
 			chave = inst.getCnpj();
 			chave += inst.getId();
-			chave += inst.getRepresentante().getNome();
-			chave += inst.getRepresentante().getCpf();
+			chave += getRepresentante().getNome();
+			chave += getRepresentante().getCpf();
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 
@@ -424,6 +431,8 @@ public class FileUploadView implements Serializable {
 	 */
 	public void copiarArquivo(String path, UploadedFile uploadedFile, int documento) {
 		try {
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+					.getExternalContext().getSession(false);
 			// escreve no arquivo o conteúdo do UploadedFile(API primeFaces)
 			FileOutputStream os = new FileOutputStream(current + path + "." + aux[1]);
 			os.write(uploadedFile.getContents());
@@ -439,8 +448,9 @@ public class FileUploadView implements Serializable {
 			// Cria chave única que estará presente no PDF
 			chave = inst.getCnpj();
 			chave += inst.getId();
-			chave += inst.getRepresentante().getNome();
-			chave += inst.getRepresentante().getCpf();
+			setRepresentante((Representante) session.getAttribute("representante"));
+			chave += getRepresentante().getNome();
+			chave += getRepresentante().getCpf();
 			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			chave += fmt.format(new Date());
 			chave += documento;
@@ -514,7 +524,12 @@ public class FileUploadView implements Serializable {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Metodo que verifica o anexo dos documentos obrigatórios de retorna o 
+	 * redirecionamento para a pagina de upload de arquivos
+	 * @return
+	 */
 	public String arquivos() {
 		for (int i = 0; i < 4; i++) {
 			if (!isUploaded.get(i)) {
@@ -554,13 +569,14 @@ public class FileUploadView implements Serializable {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		setInst((InstituicaoEnsino) session.getAttribute("instituicao"));
+		setRepresentante((Representante) session.getAttribute("representante"));
 		File file = new File(current + "" + delimitadorDiretorio 
 				+ "destino_uploader" + delimitadorDiretorio + ""
-				+ inst.getId() + "" + delimitadorDiretorio + "files");
+				+ representante.getCpf() + "" + delimitadorDiretorio + "files");
 		if (file.exists()) {
 			arquivosAtuais = ManipuladorArquivos.leitor(current + "" 
 		+ delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" + inst.getId() + "" 
+					+ delimitadorDiretorio + "" + getRepresentante().getCpf() + "" 
 		+ delimitadorDiretorio + "files");
 			// seta o array de boolean caso tenha 0 false, outro valor true
 			for (int i = 0; i < 7; i++) {
@@ -587,6 +603,11 @@ public class FileUploadView implements Serializable {
 		}
 	}
 	
+	/**
+	 * Método que seta as estruturas e variáveis do bean ConcatenaArquivos e
+	 * retorna o redirecionamento para a página de concatenação de arquivos
+	 * @return
+	 */
 	public String concatenaArquivos() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
@@ -697,4 +718,12 @@ public class FileUploadView implements Serializable {
 		return descricaoArquivos;
 	}
 
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+	
 }
