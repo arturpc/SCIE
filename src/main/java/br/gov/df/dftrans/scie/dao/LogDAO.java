@@ -51,7 +51,9 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			if(entityManager.getTransaction().isActive()){
+				entityManager.getTransaction().rollback();
+			}
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao persistir Log");
 		} finally {
@@ -152,21 +154,21 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return Uma List de LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<LogValidacaoCadastro> getOpensInst(InstituicaoEnsino instituicao) 
+	public List<LogValidacaoCadastro> getOpensRep(Representante representante) 
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro
-							.LOG_GET_ALL_OPEN_INST, 
+							.LOG_GET_ALL_OPEN_REP, 
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("inst", instituicao).getResultList();
+			return typedQuery.setParameter("rep", representante).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Logs abertos "
-					+ "para instituicao " + instituicao.getNomeInstituicao());
+					+ "para o representante " + representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -182,21 +184,21 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return List de LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<LogValidacaoCadastro> getAnalisysInst(InstituicaoEnsino instituicao) 
+	public List<LogValidacaoCadastro> getAnalisysRep(Representante representante) 
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro
-							.LOG_GET_ALL_ANALISYS_INST,
+							.LOG_GET_ALL_ANALISYS_REP,
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("inst", instituicao).getResultList();
+			return typedQuery.setParameter("rep", representante).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Logs abertos "
-					+ "para instituicao " + instituicao.getNomeInstituicao());
+					+ "para o representante " + representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -212,21 +214,21 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return List de LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<LogValidacaoCadastro> getAprovedInst(InstituicaoEnsino instituicao) 
+	public List<LogValidacaoCadastro> getAprovedRep(Representante representante) 
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro
-							.LOG_GET_ALL_APROVED_INST, 
+							.LOG_GET_ALL_APROVED_REP, 
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("inst", instituicao).getResultList();
+			return typedQuery.setParameter("rep", representante).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Logs abertos "
-					+ "para instituicao " + instituicao.getNomeInstituicao());
+					+ "para o representante " + representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -243,21 +245,21 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @throws EntityNotFoundException
 	 */
 
-	public List<LogValidacaoCadastro> getRejectInst(InstituicaoEnsino instituicao) 
+	public List<LogValidacaoCadastro> getRejectRep(Representante representante) 
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro
-							.LOG_GET_ALL_REJECT_INST,
+							.LOG_GET_ALL_REJECT_REP,
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("inst", instituicao).getResultList();
+			return typedQuery.setParameter("rep", representante).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Logs abertos "
-					+ "para instituicao " + instituicao.getNomeInstituicao());
+					+ "para o Representante " + representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -277,16 +279,18 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @throws EntityNotFoundException
 	 */
 
-	public LogValidacaoCadastro getAnalisys(Usuario usuario, InstituicaoEnsino instituicao,
+	public LogValidacaoCadastro getAnalisys(Usuario usuario, int id,
 			DocumentoPendencia documento) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
+			RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
+			Representante representante = repdao.get(id);
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
 					.createNamedQuery(LogValidacaoCadastro
 							.LOG_GET_ANALISYS, 
 							LogValidacaoCadastro.class);
 			return typedQuery.setParameter("usuario", usuario)
-					.setParameter("instituicao", instituicao)
+					.setParameter("rep", representante)
 					.setParameter("documento", documento).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
@@ -345,7 +349,7 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return List de LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<LogValidacaoCadastro> getAproved(InstituicaoEnsino instituicao)
+	public List<LogValidacaoCadastro> getAproved(Representante representante)
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
@@ -353,13 +357,13 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 					.createNamedQuery(LogValidacaoCadastro
 							.LOG_GET_ALL_APROVED, 
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("id", instituicao.getId()).getResultList();
+			return typedQuery.setParameter("id", representante.getId()).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Logs aprovados "
-					+ "da instituicao " + instituicao.getNomeInstituicao());
+					+ "do Representante " + representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -374,7 +378,7 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return List de LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public List<LogValidacaoCadastro> getRejected(InstituicaoEnsino instituicao) 
+	public List<LogValidacaoCadastro> getRejected(Representante representante) 
 			throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
@@ -382,14 +386,14 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 					.createNamedQuery(LogValidacaoCadastro
 							.LOG_GET_ALL_REJECTED, 
 							LogValidacaoCadastro.class);
-			return typedQuery.setParameter("id", instituicao.getId()).getResultList();
+			return typedQuery.setParameter("id", representante.getId()).getResultList();
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion(
-					"Erro ao coletar Logs rejeitados da instituicao "
-			+ instituicao.getNomeInstituicao());
+					"Erro ao coletar Logs rejeitados do representante "
+			+ representante.getNome());
 		} finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
@@ -405,8 +409,10 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 * @return um object LogValidacaoCadastro ou null
 	 * @throws EntityNotFoundException
 	 */
-	public LogValidacaoCadastro get(Representante representante, DocumentoPendencia documento)
+	public LogValidacaoCadastro get(int id, DocumentoPendencia documento)
 			throws EntityNotFoundException {
+		RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
+		Representante representante = repdao.get(id);
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<LogValidacaoCadastro> typedQuery = entityManager
@@ -498,7 +504,7 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 	 */
 	public boolean existsLog(Representante representante, DocumentoPendencia documento) {
 		try {
-			if (get(representante, documento) != null) {
+			if (get(representante.getId(), documento) != null) {
 				return true;
 			}
 		} catch (EntityNotFoundException e) {

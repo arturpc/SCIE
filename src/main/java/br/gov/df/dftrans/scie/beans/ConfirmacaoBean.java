@@ -16,6 +16,7 @@ import br.gov.df.dftrans.scie.dao.DocumentoPendenciaDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoCursoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.LogDAO;
+import br.gov.df.dftrans.scie.dao.RepresentanteDAO;
 import br.gov.df.dftrans.scie.domain.Comentario;
 import br.gov.df.dftrans.scie.domain.InstituicaoCurso;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
@@ -49,6 +50,7 @@ public class ConfirmacaoBean {
 	private DocumentoPendenciaDAO docdao = DocumentoPendenciaDAO.DocumentoPendenciaDAO();
 	private Usuario usuario;
 	private ValidadorBean validadorBean;
+	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
 	private Representante representante;
 
 	public void init() {
@@ -57,6 +59,7 @@ public class ConfirmacaoBean {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
+		setRepresentante((Representante) session.getAttribute("representante"));
 		setPath(ManipuladorArquivos
 				.leitor(current + "\\destino_uploader\\" 
 		+ getRepresentante().getCpf() + "\\files"));
@@ -121,7 +124,7 @@ public class ConfirmacaoBean {
 				for (int i = 0; i < existsLog.size(); i++) {
 					if (existsLog.get(i)) {
 						if (docdao.getByNro(i) != null){
-							log = logdao.get(getRepresentante(), 
+							log = logdao.get(getRepresentante().getId(), 
 									docdao.getByNro(i));
 						}else{
 							log = null;
@@ -270,12 +273,14 @@ public class ConfirmacaoBean {
 	public String verifyUser() {
 		String email = getRepresentante().getEmail();
 		String nome = getRepresentante().getNome();
+		String CPF = getRepresentante().getCpf();
 		FacesContext context = FacesContext.getCurrentInstance();
 		ELResolver resolver = context.getApplication().getELResolver();
 		UsuarioBean bean = (UsuarioBean) resolver.getValue(
 				context.getELContext(), null, "usuarioMB");
 		bean.setEmail(email);
 		bean.setNome(nome);
+		bean.setCPF(CPF);
 		return "/pages/confirmacaoCadastroUsuario.xhtml?faces-redirect=true";
 
 	}
@@ -322,7 +327,7 @@ public class ConfirmacaoBean {
 				if (existsLog.get(i)) {
 					try {
 						log = logdao.getAnalisys(getUsuario(), 
-								getInstituicao(), 
+								getRepresentante().getId(), 
 								docdao.getByNro(i));
 					} catch (EntityNotFoundException e) {
 						e.printStackTrace();
@@ -338,8 +343,17 @@ public class ConfirmacaoBean {
 			}
 		}
 		if(validado){
-			getInstituicao().setSituacao(2);
-			instensdao.update(getInstituicao());
+			if(getRepresentante().getCadastro() != 0){
+				getInstituicao().setSituacao(2);
+				instensdao.update(getInstituicao());
+			}
+			try {
+				setRepresentante(repdao.get(getRepresentante().getId()));
+				getRepresentante().setCadastro(1);
+				setRepresentante(repdao.update(getRepresentante()));
+			} catch (EntityNotFoundException e) {
+				e.printStackTrace();
+			}
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 					.getExternalContext().getSession(false);
 			session.setAttribute("instituicao", getInstituicao());

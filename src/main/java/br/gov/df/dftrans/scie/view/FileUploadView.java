@@ -112,7 +112,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[ATO_RECONHECIMENTO]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -136,7 +136,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[INSCRICAO_CNPJ]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -160,7 +160,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(
 					descricaoArquivos[ATO_DESIGNACAO_DIRETOR_SECRETARIO]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -184,7 +184,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[COMPROVANTE_ENDERECO]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -208,7 +208,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[AUTORIZACAO_CURSO_SUPERIOR]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -231,7 +231,7 @@ public class FileUploadView implements Serializable {
 		doUpload(fileUploadEvent, ESTATUTO);
 		try {
 			DocumentoPendencia doc = docdao.getByDesc(descricaoArquivos[ESTATUTO]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -255,7 +255,7 @@ public class FileUploadView implements Serializable {
 		try {
 			DocumentoPendencia doc = docdao.
 					getByDesc(descricaoArquivos[CONVENIO_ESTADO]);
-			log = logdao.get(getRepresentante(), doc);
+			log = logdao.get(getRepresentante().getId(), doc);
 			// grava o log da ação efetuada pelo usuário no banco
 			if (log == null) {
 				logdao.add(new LogValidacaoCadastro(getRepresentante(), doc));
@@ -539,7 +539,11 @@ public class FileUploadView implements Serializable {
 						+ "?faces-redirect=false";
 			}
 		}
-		return "/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true";
+		if(getRepresentante().getCadastro() == 0){
+			return "/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true";
+		}else{
+			return "/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true";
+		}
 	}
 
 	/**
@@ -557,9 +561,9 @@ public class FileUploadView implements Serializable {
 		iconeCNPJ = "//resources//images//unchecked-icon.png";
 		iconeDiretor = "//resources//images//unchecked-icon.png";
 		iconeEndereco = "//resources//images//unchecked-icon.png";
-		iconeCurso = "";
-		iconeEstatuto = "";
-		iconeConvenio = "";
+		iconeCurso = "//resources//images//unchecked-icon.png";
+		iconeEstatuto = "//resources//images//unchecked-icon.png";
+		iconeConvenio = "//resources//images//unchecked-icon.png";
 	}
 
 	/**
@@ -591,12 +595,12 @@ public class FileUploadView implements Serializable {
 					? "" : "un") + "checked-icon.png";
 			iconeEndereco = "//resources//images//" + ((isUploaded.get(3)) 
 					? "" : "un") + "checked-icon.png";
-			iconeCurso = (isUploaded.get(4)) ? 
-					"//resources//images//checked-icon.gif" : "";
-			iconeEstatuto = (isUploaded.get(5)) ? 
-					"//resources//images//checked-icon.gif" : "";
-			iconeConvenio = (isUploaded.get(6)) ? 
-					"//resources//images//checked-icon.gif" : "";
+			iconeCurso = "//resources//images//" + ((isUploaded.get(4)) 
+					? "" : "un") + "checked-icon.png";
+			iconeEstatuto = "//resources//images//" + ((isUploaded.get(5)) 
+					? "" : "un") + "checked-icon.png";
+			iconeConvenio = "//resources//images//" + ((isUploaded.get(6)) 
+					? "" : "un") + "checked-icon.png";
 		} else {
 			// se o arquivo não existir, reseta o upload
 			resetUploaded();

@@ -23,24 +23,24 @@ import javax.persistence.TemporalType;
 query = "SELECT l FROM LogValidacaoCadastro l"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN_INST, 
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_OPEN_REP, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 0 "
 				+ "and l.representante = :rep"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_INST, 
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_REP, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
 				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_ANALISYS_USER, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
 				+ "and l.usuario = :usuario"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED_INST, 
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED_REP, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
 				+ "and l.representante = :rep"),
-		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECT_INST, 
+		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_REJECT_REP, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 3 "
 				+ "and l.representante = :rep"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ANALISYS, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 1 "
-				+ "and l.usuario = :usuario and l.representante = :representante "
+				+ "and l.usuario = :usuario and l.representante = :rep "
 				+ "and l.documento = :documento"),
 		@NamedQuery(name = LogValidacaoCadastro.LOG_GET_ALL_APROVED, 
 		query = "SELECT l FROM LogValidacaoCadastro l where l.validacao = 2 "
@@ -60,15 +60,15 @@ public class LogValidacaoCadastro implements Serializable {
 			"LogValidacaoCadastro.getAll";
 	public static final String LOG_GET_ALL_OPEN = 
 			"LogValidacaoCadastro.getAllOpen";
-	public static final String LOG_GET_ALL_OPEN_INST = 
-			"LogValidacaoCadastro.getAllOpenInst";
-	public static final String LOG_GET_ALL_ANALISYS_INST = 
+	public static final String LOG_GET_ALL_OPEN_REP = 
+			"LogValidacaoCadastro.getAllOpenRep";
+	public static final String LOG_GET_ALL_ANALISYS_REP = 
 			"LogValidacaoCadastro.getAllAnalisysInst";
 	public static final String LOG_GET_ALL_ANALISYS_USER = 
 			"LogValidacaoCadastro.getAllAnalisysUser";
-	public static final String LOG_GET_ALL_APROVED_INST = 
+	public static final String LOG_GET_ALL_APROVED_REP = 
 			"LogValidacaoCadastro.getAllAprovedInst";
-	public static final String LOG_GET_ALL_REJECT_INST = 
+	public static final String LOG_GET_ALL_REJECT_REP = 
 			"LogValidacaoCadastro.getAllRejectInst";
 	public static final String LOG_GET_ANALISYS = 
 			"LogValidacaoCadastro.getAllAnalisys";

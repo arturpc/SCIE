@@ -15,6 +15,7 @@ import org.hibernate.validator.constraints.Email;
 
 import br.gov.df.dftrans.scie.annotations.StringFormatter;
 import br.gov.df.dftrans.scie.annotations.StringUpperCase;
+import br.gov.df.dftrans.scie.exceptions.UsuarioExistenteException;
 import br.gov.df.dftrans.scie.utils.GeradorUsuario;
 
 @Entity
@@ -55,6 +56,8 @@ public class Usuario implements Serializable {
 	@StringFormatter
 	@Column(name = "ds_nome")
 	private String nome;
+	
+	private String CPF;
 
 	// 0 = instituicao
 	// 1 = administrador
@@ -80,12 +83,13 @@ public class Usuario implements Serializable {
 		setPerfil(perfil);
 	}
 
-	public Usuario(String email, String nome, int perfil) {
-		setLogin(GeradorUsuario.gerarLogin(nome));
+	public Usuario(String email, String nome, int perfil, String CPF) throws UsuarioExistenteException{
+		setLogin(GeradorUsuario.gerarLogin(CPF, perfil));
 		setSenha(GeradorUsuario.gerarSenha());
 		setEmail(email);
 		setNome(nome);
 		setPerfil(perfil);
+		setCPF(CPF);
 	}
 
 	// sobrescrita hash code and equals
@@ -183,6 +187,14 @@ public class Usuario implements Serializable {
 
 	public void setPerfil(int perfil) {
 		this.perfil = perfil;
+	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
 	}
 
 }

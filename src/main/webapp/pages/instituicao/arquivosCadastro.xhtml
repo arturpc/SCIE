@@ -29,7 +29,8 @@
 			<p:panel header="Arquivos de Comprovação dos Dados Cadastrais: " style="min-width: 800px;">
 				<h:outputLabel value="Utilize os espaços abaixo para anexar os documentos comprobatórios dos dados cadastrais inseridos."/>
 				<br/>
-				<h:outputLabel value="Somente é permtido envio de documentos em formato PDF e/ou arquivos de imagem (JPG,JPEG,GIF,TIFF,BMP e PNG);"/>
+				<h:outputLabel value="Somente é permtido envio de documentos em formato PDF, DOC, DOCX, ODT e/ou arquivos de imagem 
+				(JPG,JPEG,GIF,TIFF,BMP e PNG);"/>
 				<p:graphicImage value="/resources/images/ods-icon.png"/>
 				<p:graphicImage value="/resources/images/pdf-icon.png"/>
 				<p:graphicImage value="/resources/images/xls-icon.png"/>
@@ -42,7 +43,7 @@
 						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadAto}"
 							mode="advanced" dragDropSupport="true" multiple="false"
 							update="atoIcone" sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px" 
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
@@ -53,7 +54,7 @@
 						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadCNPJ}"
 							mode="advanced" dragDropSupport="true" multiple="false"
 							update="cnpjIcone" sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
@@ -65,7 +66,7 @@
 							fileUploadListener="#{fileUploadView.doUploadDiretor}"
 							mode="advanced" dragDropSupport="true" multiple="false"
 							update="diretorIcone" sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
@@ -78,7 +79,7 @@
 							fileUploadListener="#{fileUploadView.doUploadEndereco}"
 							mode="advanced" dragDropSupport="true" multiple="false"
 							update="enderecoIcone" sizeLimit="2000000" auto="true"
-							fileLimit="1" allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							fileLimit="1" allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
@@ -93,32 +94,38 @@
 						<p:fileUpload
 							fileUploadListener="#{fileUploadView.doUploadCursoSuperior}"
 							mode="advanced" dragDropSupport="true" multiple="false"
-							sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							sizeLimit="2000000" fileLimit="1" auto="true" update="cursoIcone"
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
-						<p:outputLabel/>
+						<p:graphicImage id="cursoIcone"
+							value="#{fileUploadView.iconeCurso}" width="50px"
+							autoUpdate="true" />
 						<p:outputLabel
 							value="#{fileUploadView.descricaoArquivos[5]}" />
 						<p:fileUpload fileUploadListener="#{fileUploadView.doUploadEstatuto}"
 							mode="advanced" dragDropSupport="true" multiple="false"
-							sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							sizeLimit="2000000" fileLimit="1" auto="true" update="estatutoIcone"
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
-						<p:outputLabel/>
+						<p:graphicImage id="estatutoIcone"
+							value="#{fileUploadView.iconeEstatuto}" width="50px"
+							autoUpdate="true" />
 						<p:outputLabel value="#{fileUploadView.descricaoArquivos[6]}" />
 						<p:fileUpload
 							fileUploadListener="#{fileUploadView.doUploadConvenio}"
 							mode="advanced" dragDropSupport="true" multiple="false"
-							sizeLimit="2000000" fileLimit="1" auto="true"
-							allowTypes="/(\.|\/)(pdf|jpe?g|gif|png|tiff|bmp)$/" label="Procurar..."
+							sizeLimit="2000000" fileLimit="1" auto="true" update="convenioIcone"
+							allowTypes="/(\.|\/)(pdf|jpe?g|docx?|odt|gif|png|tiff|bmp)$/" label="Procurar..."
 							uploadLabel="Enviar Arquivo" cancelLabel="Cancelar Envio" style="width:500px"
 							invalidFileMessage="Tipo de arquivo não permitido!" fileLimitMessage="É permitido apenas um envio de arquivo"
 							invalidSizeMessage="Arquivo grande demais"/>
-						<p:outputLabel/>
+						<p:graphicImage id="convenioIcone"
+							value="#{fileUploadView.iconeConvenio}" width="50px"
+							autoUpdate="true" />
 					</h:panelGrid>
 					<p:column width="10%"><p:messages severity="info" escape="false" showDetail="true"
 						autoUpdate="true" closable="true"/></p:column>

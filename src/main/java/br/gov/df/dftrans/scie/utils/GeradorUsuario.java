@@ -4,6 +4,7 @@ import java.text.Normalizer;
 import java.util.Random;
 
 import br.gov.df.dftrans.scie.dao.UsuarioDAO;
+import br.gov.df.dftrans.scie.exceptions.UsuarioExistenteException;
 
 public class GeradorUsuario {
 
@@ -33,26 +34,38 @@ public class GeradorUsuario {
 	 * @param nome
 	 * @return login gerado
 	 */
-	public static String gerarLogin(String nome) {
-		String[] aux = nome.split(" ");
+	public static String gerarLogin(String nome, int perfil) throws UsuarioExistenteException{
 		String resultado = "";
-		String iterador = "";
-		int i = 1;
-		resultado += Normalizer.normalize(aux[0].toLowerCase(), Normalizer.Form.NFD)
-				.replaceAll("[^\\p{ASCII}]", "");
-		resultado += ".";
-		iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(),
-				Normalizer.Form.NFD)
-				.replaceAll("[^\\p{ASCII}]", "");
-		while (usrdao.getByLogin(resultado + iterador) != null) {
-			// Caso login tenha no banco, ele pega nome.sobrenome, invés de
-			// ultimo nome, ate chegar nome.nome
-			i++;
+		if(perfil == 0){
+			resultado = nome;
+			if(usrdao.getByLogin(resultado) != null){
+				throw new UsuarioExistenteException("Já existe um "
+						+ "usuário com o login "+ nome);
+			}
+		}else{
+			String[] aux = nome.split(" ");
+			String iterador = "";
+			int i = 1;
+			resultado += Normalizer.normalize(aux[0].toLowerCase(), Normalizer.Form.NFD)
+					.replaceAll("[^\\p{ASCII}]", "");
+			resultado += ".";
 			iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(),
 					Normalizer.Form.NFD)
 					.replaceAll("[^\\p{ASCII}]", "");
+			while (usrdao.getByLogin(resultado + iterador) != null) {
+				// Caso login tenha no banco, ele pega nome.sobrenome, invés de
+				// ultimo nome, ate chegar nome.nome
+				i++;
+				iterador = Normalizer.normalize(aux[aux.length - i].toLowerCase(),
+						Normalizer.Form.NFD)
+						.replaceAll("[^\\p{ASCII}]", "");
+				if(i == aux.length){
+					throw new UsuarioExistenteException("Já existe um "
+							+ "usuário com o login "+ resultado + iterador);
+				}
+			}
+			resultado += iterador;	
 		}
-		resultado += iterador;
 		return resultado;
 	}
 

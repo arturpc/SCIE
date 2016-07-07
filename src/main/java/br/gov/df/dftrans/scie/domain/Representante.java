@@ -26,13 +26,13 @@ import br.gov.df.dftrans.scie.annotations.StringUpperCase;
 @Entity
 @Table(name = "tb_representante_instituicao")
 @NamedQueries({ @NamedQuery(name = Representante.REPRESENTANTE_GET_ALL, 
-		query = "SELECT r FROM Representante r"),
+		query = "SELECT r FROM Representante r where r.ativo = 1"),
 		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_CPF, 
-		query = "SELECT r FROM Representante r WHERE r.cpf = :cpf"),
+		query = "SELECT r FROM Representante r WHERE r.cpf = :cpf and r.ativo = 1"),
 		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_USER, 
-		query = "SELECT r FROM Representante r WHERE r.usuario = :usuario"),
+		query = "SELECT r FROM Representante r WHERE r.usuario = :usuario and r.ativo = 1"),
 		@NamedQuery(name = Representante.REPRESENTANTE_FIND_BY_ID, 
-		query = "SELECT r FROM Representante r WHERE r.id = :id") })
+		query = "SELECT r FROM Representante r WHERE r.id = :id and r.ativo = 1") })
 public class Representante implements Serializable {
 
 	public static final String REPRESENTANTE_GET_ALL = "Representante.getAll";

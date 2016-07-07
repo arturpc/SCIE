@@ -46,10 +46,10 @@ public class InstituicaoIndexMB {
 		setInstituicao(getRepresentante().getInstituicao());
 		session.setAttribute("instituicao", getInstituicao());
 		try {
-			setAbertas(logdao.getOpensInst(instituicao));
-			setEmAnalise(logdao.getAnalisysInst(instituicao));
-			setAprovadas(logdao.getAprovedInst(instituicao));
-			setReprovadas(logdao.getRejectInst(instituicao));
+			setAbertas(logdao.getOpensRep(getRepresentante()));
+			setEmAnalise(logdao.getAnalisysRep(getRepresentante()));
+			setAprovadas(logdao.getAprovedRep(getRepresentante()));
+			setReprovadas(logdao.getRejectRep(getRepresentante()));
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
 		}

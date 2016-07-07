@@ -50,7 +50,7 @@
 
 					</p:pickList>
 					<p:commandButton id="detalharCursos" value="Detalhar Cursos"
-						action="#{MBCursoView.getDetalharCursosEEditavel()}"
+						action="#{MBCursoView.detalharCurso()}"
 						update="detalheCursos nmCurso 
 					turnoCurso cursosPickList detalharCursos"
 						disabled="#{MBCursoView.getDetalharCursosEEditavel()}" />
@@ -102,9 +102,9 @@
 				<p:panel header="Cursos Cadastrados" autoUpdate="true">
 					<p:dataTable id="cursoTab" var="rowCurso"
 						value="#{MBCursoView.cadastrados}" editable="false"
-						emptyMessage="Não há cursos cadastrados." paginator="true"
+						emptyMessage="Não há cursos cadastrados." paginator="true" rows="10"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,30,100">>
+						rowsPerPageTemplate="10,30,100">
 						<p:column headerText="Código E-mec">
 							<h:outputText value="#{rowCurso.curso.codEmec}" />
 						</p:column>

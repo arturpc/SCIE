@@ -43,7 +43,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 			StringUtils.parserObject(entity);
 			entity.setSenha(MD5.md5(entity.getSenha()));
 			entityManager.getTransaction().begin();
-			entityManager.merge(entity);
+			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 
 		} catch (Exception e) {

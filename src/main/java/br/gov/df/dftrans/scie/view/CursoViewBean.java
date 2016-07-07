@@ -35,7 +35,7 @@ public class CursoViewBean implements Serializable {
 	private InstituicaoEnsino instituicao;
 	private InstituicaoCurso instCurso = new InstituicaoCurso();
 	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
-	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(false);
+	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(true);
 	
 	public CursoViewBean(){
 		
@@ -106,8 +106,9 @@ public class CursoViewBean implements Serializable {
 						getTarget().get(0)));
 			}
 		}
-		// seta detalhar curso para true
+		// seta detalhar curso para true e fim cadastro para false
 		setDetalharCursos(new Boolean(true));
+		setFimCadastro(new Boolean(false));
 		// seta o listDataModel
 		setDualListCurso(new DualListModel<Curso>(getCursosMomento(), getTarget()));
 	}
@@ -168,7 +169,7 @@ public class CursoViewBean implements Serializable {
 		ELResolver resolver = context.getApplication().getELResolver();
 		InstituicaoBean meuBean = (InstituicaoBean) resolver
 				.getValue(context.getELContext(), null, "InstituicaoMB");
-		return !(detalharCursos && meuBean.getEditavel());
+		return (detalharCursos || meuBean.getEditavel());
 	}
 
 	// getteres and setteres

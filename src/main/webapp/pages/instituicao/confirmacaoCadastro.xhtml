@@ -81,22 +81,22 @@
 				<h:panelGrid columns="2">
 					<p:outputLabel value="Nome do Representante" />
 					<p:inputText id="nmRep" size="50"
-						value="#{confirmacaoMB.instituicao.representante.nome}"
+						value="#{confirmacaoMB.representante.nome}"
 						readonly="true" />
 					<p:outputLabel value="CPF do representante" />
 					<p:inputMask id="inputCPF" mask="999.999.999-99"
-						value="#{confirmacaoMB.instituicao.representante.cpf}"
+						value="#{confirmacaoMB.representante.cpf}"
 						readonly="true" />
 					<p:outputLabel value="Cargo do Representante" />
 					<p:inputText id="cargoRep" size="10"
 						value="#{confirmacaoMB.getRepCargo()}" readonly="true" />
 					<p:outputLabel value="Email para Contato" />
 					<p:inputText id="emailRep" size="50"
-						value="#{confirmacaoMB.instituicao.representante.email}"
+						value="#{confirmacaoMB.representante.email}"
 						readonly="true" />
 					<p:outputLabel value="Telefones para Contato" />
 					<p:inputTextarea id="inputTelefone"
-						value="#{confirmacaoMB.instituicao.representante.getTelefoneString()}"
+						value="#{confirmacaoMB.representante.getTelefoneString()}"
 						readonly="true" rows="5" cols="14"/>
 				</h:panelGrid>
 			</p:panel>
@@ -134,9 +134,9 @@
 			<p:panel header="Cursos Cadastrados" autoUpdate="true" toggleable="true" closable="false">
 					<p:dataTable id = "cursoTab" var="rowCurso" value="#{confirmacaoMB.cadastrados}"
 						editable="false" emptyMessage="Não há cursos cadastrados." 
-						paginator="true"
+						paginator="true" rows="10"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="10,30,100">>
+                         rowsPerPageTemplate="10,30,100">
 						<p:column headerText="Código E-mec">
 							<h:outputText value="#{rowCurso.curso.codEmec}" />
 						</p:column>

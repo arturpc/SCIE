@@ -134,8 +134,7 @@ public class InstituicaoBean implements Serializable {
 			setCidade(endereco.getCidade());
 			setUf(getCidade().getUf());
 			setCep(getEndereco().getCep());
-			RepresentanteDAO repDAO = RepresentanteDAO.RepresentanteDAO();
-			setRepresentante(repDAO.getByCPF(codCPFsemMascara));
+			setRepresentante(repdao.getByCPF(codCPFsemMascara));
 			if (getRepresentante() == null) {
 				setRepresentante(new Representante(null, 
 						codCPFsemMascara, 1, null, 
@@ -174,6 +173,11 @@ public class InstituicaoBean implements Serializable {
 		 */
 		InstituicaoEnsino inst = getInstituicao();
 		inst.setCnpj(removeMascara(inst.getCnpj()));
+		getEndereco().setCep(getCep());
+		getEndereco().setBairro(getBairro());
+		getEndereco().setCidade(getCidade());
+		getEndereco().setLogradouro(getLogradouro());
+		getEndereco().setComplemento(getComplemento());
 		Endereco end = getEndereco();
 		if (getCidade() == null) {
 			setCidade(new Cidade());
@@ -192,7 +196,6 @@ public class InstituicaoBean implements Serializable {
 			}
 		}
 		rep.setTelefone(telefones);
-		//inst.setRepresentante(rep);
 		inst.setEndereco(end);
 		if(!getEditavel()){
 			rep.setInstituicao(inst);
@@ -219,6 +222,10 @@ public class InstituicaoBean implements Serializable {
 			autdao.update(autrep);
 		}
 		setRepresentante(repdao.update(getRepresentante()));
+		HttpSession sessao = (HttpSession) FacesContext
+				.getCurrentInstance().getExternalContext().getSession(false);
+		sessao.setAttribute("instituicao", getInstituicao());
+		sessao.setAttribute("representante", getRepresentante());
 		return "/pages/instituicao/arquivosCadastro.xhtml?faces-redirect=true";
 	}
 
