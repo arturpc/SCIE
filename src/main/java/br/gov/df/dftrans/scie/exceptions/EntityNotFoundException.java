@@ -1,6 +1,7 @@
 package br.gov.df.dftrans.scie.exceptions;
 
-import static br.gov.df.dftrans.scie.utils.MessageUtils.*;
+import static br.gov.df.dftrans.scie.utils.MessageUtils.getString;
+import static br.gov.df.dftrans.scie.utils.MessageUtils.ENTITY_NOT_FOUND_KEY;
 
 /**
  * Exceção para quando não localizar algum objeto

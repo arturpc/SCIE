@@ -19,8 +19,12 @@ import br.gov.df.dftrans.scie.utils.Parametros;
 @SessionScoped
 public class ArquivoMB implements Serializable {
 	private String path = null;
-	private DefaultStreamedContent streamedContent1, streamedContent2, streamedContent3;
-	private InputStream is1 = null, is2 = null, is3 = null;
+	private DefaultStreamedContent streamedContent1;
+	private DefaultStreamedContent streamedContent2;
+	private DefaultStreamedContent streamedContent3;
+	private InputStream is1 = null;
+	private InputStream is2 = null;
+	private InputStream is3 = null;
 	private boolean imagem;
 	private boolean arquivo;
 	private int origem;
@@ -74,7 +78,7 @@ public class ArquivoMB implements Serializable {
 			streamedContent1 = new DefaultStreamedContent(is1, "application/pdf");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+        }
 	}
 
 	/**

@@ -43,8 +43,6 @@ public class UsuarioBean {
 				setUser(usrdao.add(getUser()));
 				if(getPerfil() == 0){
 					getRepresentante().setUsuario(getUser());
-					System.out.println(getRepresentante().getId());
-					System.out.println(getRepresentante().getUsuario().getId());
 					setRepresentante(repdao.update(getRepresentante()));
 				}
 			}catch (InsertException e) {
@@ -81,7 +79,6 @@ public class UsuarioBean {
 				if(getPerfil() == 0){
 					setRepresentante(repdao.get(getRepresentante().getId()));
 					getRepresentante().setUsuario(getUser());
-					System.out.println(getRepresentante().getUsuario().getId());
 					setRepresentante(repdao.update(getRepresentante()));
 				}
 				setEmail("");

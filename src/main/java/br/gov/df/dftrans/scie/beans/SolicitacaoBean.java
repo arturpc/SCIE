@@ -31,12 +31,15 @@ public class SolicitacaoBean {
 
 	private Usuario user;
 	private boolean[] arquivoValido = new boolean[3];
-	private String[] comentario = new String[3], nomes = new String[3];
+	private String[] comentario = new String[3];
+	private String[] nomes = new String[3];
 	private Solicitacao solicitacao;
 	private String motivo;
 	private String[] path;
-	private String current = Parametros.getParameter("root_upload"), pathAtual;
-	private int documento, origem;
+	private String current = Parametros.getParameter("root_upload");
+	private String pathAtual;
+	private int documento;
+	private int origem;
 	private SolicitacaoDAO soldao = SolicitacaoDAO.SolicitacaoDAO();
 	private ListDataModel<Solicitacao> solicitacoes;
 	private boolean isEscolhida = false;
@@ -125,9 +128,9 @@ public class SolicitacaoBean {
 			// seta path com array de string que representam as linhas do
 			// arquivo presente no destino informado
 			setPath(ManipuladorArquivos.leitor(current + "" 
-			+ delimitadorDiretorio + "destino_uploader"
+                            + delimitadorDiretorio + "destino_uploader"
 					+ delimitadorDiretorio + "" 
-			+ getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
+			               + getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
 			setFiles(new String[2]);
 			int flag = 0;
 			for(String tmp : getPath()){

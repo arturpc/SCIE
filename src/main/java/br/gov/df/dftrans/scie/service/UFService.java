@@ -8,9 +8,8 @@ import javax.faces.bean.ManagedBean;
 
 import br.gov.df.dftrans.scie.dao.UFDAO;
 import br.gov.df.dftrans.scie.domain.UF;
-import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
-import br.gov.df.dftrans.scie.exceptions.InsertException;
- 
+
+@SuppressWarnings("restriction")
 @ManagedBean(name="UFService", eager = true)
 @ApplicationScoped
 public class UFService {

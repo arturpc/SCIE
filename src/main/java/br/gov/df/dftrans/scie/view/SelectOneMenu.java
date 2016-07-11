@@ -12,6 +12,7 @@ import br.gov.df.dftrans.scie.domain.UF;
 import br.gov.df.dftrans.scie.service.CidadeService;
 import br.gov.df.dftrans.scie.service.UFService;
  
+@SuppressWarnings("restriction")
 @ManagedBean
 public class SelectOneMenu {
      

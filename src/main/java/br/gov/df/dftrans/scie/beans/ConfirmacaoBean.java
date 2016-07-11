@@ -42,8 +42,10 @@ public class ConfirmacaoBean {
 	private ArrayList<Boolean> exists = new ArrayList<Boolean>();
 	private ArrayList<Boolean> existsLog = new ArrayList<Boolean>();
 	private String[] path;
-	private String current = Parametros.getParameter("root_upload"), pathAtual;
-	private int documento, origem;
+	private String current = Parametros.getParameter("root_upload");
+	private String pathAtual;
+	private int documento; 
+	private int origem;
 	private List<InstituicaoCurso> cadastrados;
 	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
 	private LogDAO logdao = LogDAO.LogDAO();
@@ -62,7 +64,7 @@ public class ConfirmacaoBean {
 		setRepresentante((Representante) session.getAttribute("representante"));
 		setPath(ManipuladorArquivos
 				.leitor(current + "\\destino_uploader\\" 
-		+ getRepresentante().getCpf() + "\\files"));
+	                    + getRepresentante().getCpf() + "\\files"));
 		for (String temp : getPath()) {
 			if ("0".equals(temp)) {
 				exists.add(false);
@@ -91,7 +93,7 @@ public class ConfirmacaoBean {
 		}
 		try {
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-			.getExternalContext().getSession(false);
+					.getExternalContext().getSession(false);
 			setUsuario((Usuario) session.getAttribute("usuario"));
 				if (logdao.getAnalisysUser(getUsuario()) != null) {
 					setRepresentante(logdao.getAnalisysUser(getUsuario())
@@ -239,7 +241,8 @@ public class ConfirmacaoBean {
 		chave += getInstituicao().getId();
 		chave += getRepresentante().getNome();
 		chave += getRepresentante().getCpf();
-		String[] aux = getPathAtual().split("destino_uploader"), aux1;
+		String[] aux = getPathAtual().split("destino_uploader");
+		String[] aux1;
 		aux1 = aux[1].split("\\\\");
 		chave += aux1[2];
 		chave += getDocumento();
@@ -293,7 +296,8 @@ public class ConfirmacaoBean {
 				context.getELContext(), null, "validadorMB");
 		String[] comentario = validadorBean.getComentario();
 		boolean[] arquivoValido = validadorBean.getArquivoValido();
-		boolean validado = true, controle = true;
+		boolean validado = true;
+		boolean controle = true;
 		
 		for(int i = 0; i < existsLog.size(); i++){
 			if (existsLog.get(i) && i != 7) {
@@ -343,16 +347,16 @@ public class ConfirmacaoBean {
 			}
 		}
 		if(validado){
-			if(getRepresentante().getCadastro() != 0){
-				getInstituicao().setSituacao(2);
-				instensdao.update(getInstituicao());
-			}
 			try {
 				setRepresentante(repdao.get(getRepresentante().getId()));
-				getRepresentante().setCadastro(1);
+				getRepresentante().setCadastro(2);
 				setRepresentante(repdao.update(getRepresentante()));
 			} catch (EntityNotFoundException e) {
 				e.printStackTrace();
+			}
+			if(getRepresentante().getCadastro() != 1){
+				getInstituicao().setSituacao(2);
+				setInstituicao(instensdao.update(getInstituicao()));
 			}
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 					.getExternalContext().getSession(false);

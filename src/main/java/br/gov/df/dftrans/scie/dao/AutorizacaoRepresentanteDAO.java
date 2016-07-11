@@ -50,12 +50,12 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 			entityManager.getTransaction().rollback();
 			throw new InsertException(entity.getCpf() 
 					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
-		} catch (Exception e) {
+        } catch (Exception e) {
 			if (entityManager.getTransaction().isActive()) {
 				entityManager.getTransaction().rollback();
 			}
 			throw new InsertException();
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
@@ -80,10 +80,10 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 					((AutorizacaoRepresentante) id).getId()).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
@@ -106,10 +106,10 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 							id_instituicao).getSingleResult();
 		} catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por CPF");
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
@@ -126,17 +126,17 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 		EntityManager entityManager = factory.createEntityManager();
 		try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery 
-			= entityManager.createNamedQuery(
+                            = entityManager.createNamedQuery(
 					AutorizacaoRepresentante
 					.AUTORIZACAO_FIND_BY_CPF_ONLY, 
 					AutorizacaoRepresentante.class);
 			return typedQuery.setParameter("cpf", cpf).getResultList().get(0);
 		} catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por CPF");
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
@@ -164,16 +164,16 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 			}else{
 			return retorno.get(0);
 			}
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por CPF");
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
-		}
+        }
 	}
 	
 	/**
@@ -188,23 +188,23 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 			entityManager.getTransaction().begin();
 			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
-		} catch (Exception e) {
+        } catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao atualizar "
 					+ "AutorizacaoRepresentante cpf = "+ entity.getCpf());
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
 		}
-		try {
+        try {
 			logdao.add(new LogAlteracaoBanco("UPDATE",
 					"TB_AUTORIZACAO_REPRESENTANTE", 
 					entity.getId()));
-		} catch (InsertException e) {
+        } catch (InsertException e) {
 			e.printStackTrace();
-		}
+        }
 		return entity;
 	}
 
@@ -216,22 +216,22 @@ DAO<AutorizacaoRepresentante> implements Serializable {
 	 */
 	public List<AutorizacaoRepresentante> get() {
 		EntityManager entityManager = factory.createEntityManager();
-		try {
+        try {
 			TypedQuery<AutorizacaoRepresentante> typedQuery = entityManager
 					.createNamedQuery(AutorizacaoRepresentante
 							.AUTORIZACAO_GET_ALL, 
 							AutorizacaoRepresentante.class);
 			return typedQuery.getResultList();
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Autorizacao por Código");
-		} finally {
+        } finally {
 			if (entityManager.isOpen()) {
 				entityManager.close();
 			}
-		}
+        }
 	}
 
 	/**

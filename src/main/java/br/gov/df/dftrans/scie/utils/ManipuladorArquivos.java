@@ -25,7 +25,9 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 public class ManipuladorArquivos {
 
-	public static final int ODS = 0, XLS = 1, XLSX = 2;
+	public static final int ODS = 0;
+	public static final int XLS = 1;
+	public static final int XLSX = 2;
 	public static final String[] ARQ_NAME = { "ods", "xls", "xlsx" };
 
 	/**
@@ -115,7 +117,8 @@ public class ManipuladorArquivos {
 		File f = new File(path);
 		String string = "";
 		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-		int rowNum = 2000, columnNum = 12;
+		int rowNum = 2000;
+		int columnNum = 12;
 		// verifica se a extenssão do arquivo e .xls
 		if (f.getName().toLowerCase().endsWith(".xls")) {
 			tipo = ManipuladorArquivos.XLS;
@@ -215,7 +218,8 @@ public class ManipuladorArquivos {
 		String[][] retorno = new String[rowNum][columnNum];
 		// separa as linhas
 		String[] aux = string.split("\r\n");
-		int i = 0, j = 0;
+		int i = 0;
+		int j = 0;
 		// itera as linhas
 		for (String temp : aux) {
 			// itera sobre colunas

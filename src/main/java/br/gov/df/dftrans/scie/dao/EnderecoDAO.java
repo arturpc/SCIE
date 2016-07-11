@@ -42,7 +42,8 @@ public class EnderecoDAO extends DAO<Endereco> {
 					Endereco.class);
 			List<Endereco> endlist = typedQuery
 					.setParameter("cep", chave).getResultList();
-			int count1 = 0, count2 = 0;
+			int count1 = 0;
+			int count2 = 0;
 			Endereco end = null;
 			if(!endlist.isEmpty()){
 				end = new Endereco();

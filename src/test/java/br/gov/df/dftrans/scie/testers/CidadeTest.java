@@ -30,13 +30,13 @@ public class CidadeTest {
         cidades.add(new Cidade("CRUZEIRO", df));
         try {
 			cidDao.add(cidades);
-		} catch (InsertException e) {
+        } catch (InsertException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+        }
 	}
 	
 }

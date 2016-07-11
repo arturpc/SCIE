@@ -44,7 +44,10 @@ public class FileUploadEstudanteView {
 
 	public ArrayList<Boolean> isUploaded = new ArrayList<Boolean>();
 	private String fileNameUploaded;
-	private String chave = "", iconeBO = "", iconeTAXA = "", cpf = "";
+	private String chave = "";
+	private String iconeBO = "";
+	private String iconeTAXA = "";
+	private String  cpf = "";
 	private String aux[];
 	public final int BO = 0;
 	public final int TAXA = 1;
@@ -132,7 +135,7 @@ public class FileUploadEstudanteView {
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
 		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
-		+ fileNameUploaded + "</b><br/>"
+                    + fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
@@ -166,7 +169,7 @@ public class FileUploadEstudanteView {
 			conteudo.add("0");
 			conteudo.add("0");
 			ManipuladorArquivos.escritor(current + "" 
-			+ delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
+                            + delimitadorDiretorio + "destino_uploader" + delimitadorDiretorio
 					+ "" + getCpf() + delimitadorDiretorio + "files", conteudo);
 		} else {
 			// ler o arquivo
@@ -183,19 +186,19 @@ public class FileUploadEstudanteView {
 		if (aux[aux.length - 1].equals("pdf")) {
 			// copia o pdf
 			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + getCpf() + ""
+                              + delimitadorDiretorio + "" + getCpf() + ""
 					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
-			+ delimitadorDiretorio + "" + documento + ""
+			                  + delimitadorDiretorio + "" + documento + ""
 					+ delimitadorDiretorio + "" + nomesArquivos[documento],
 					uploadedFile, documento);
 		} else {
 			// copia o arquivo
 			copiarArquivo(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + getCpf() + ""
+			                  + delimitadorDiretorio + "" + getCpf() + ""
 					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
-			+ delimitadorDiretorio + "" + documento + ""
+			                  + delimitadorDiretorio + "" + documento + ""
 					+ delimitadorDiretorio + "" 
-			+ nomesArquivos[documento], uploadedFile, documento);
+			                  + nomesArquivos[documento], uploadedFile, documento);
 		}
 		setIsUploaded(new Boolean(true), documento);
 		setIconeUploaded(documento);
@@ -249,7 +252,7 @@ public class FileUploadEstudanteView {
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 
-			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
+                            + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + "." + aux[aux.length - 1]);
@@ -290,7 +293,7 @@ public class FileUploadEstudanteView {
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 
-			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
+                            + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + ".pdf");
@@ -400,7 +403,7 @@ public class FileUploadEstudanteView {
 		for (int i = 0; i < 2; i++) {
 			if (!isUploaded.get(i)) {
 				FacesUtil.addMsggError("É necessário anexar o documento: " 
-			+ descricaoArquivos[i] + "!");
+                                    + descricaoArquivos[i] + "!");
 				return "/pages/estudante/estudante2ViaArquivos.xhtml?"
 						+ "faces-redirect=false";
 			}

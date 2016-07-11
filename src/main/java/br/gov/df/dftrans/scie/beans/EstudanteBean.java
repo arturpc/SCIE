@@ -244,7 +244,9 @@ public class EstudanteBean {
 
 	public String textoAgendamentos() {
 		String retorno = "";
-		String nroCartao, nroCPF, s;
+		String nroCartao;
+		String nroCPF;
+		String s;
 		setAgendamentos(SelectCPFDAO.getAgendamento(codCPFsemMascara, nome));
 		for (int i = 0; i < getAgendamentos().length; i++) {
 			if (getAgendamentos()[i][2] != null) {

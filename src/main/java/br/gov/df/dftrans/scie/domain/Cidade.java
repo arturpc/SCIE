@@ -27,7 +27,7 @@ import br.gov.df.dftrans.scie.dao.UFDAO;
     @NamedQuery(name = Cidade.CIDADE_FIND_BY_NOME_UF, 
 	query = "SELECT c FROM Cidade c WHERE c.nome = :nome and c.uf.uf = :uf"),
     @NamedQuery(name = Cidade.CIDADE_FIND_BY_ID, query = "SELECT c FROM Cidade c WHERE c.id = :id")
-})
+    })
 public class Cidade implements Serializable {
 	
 

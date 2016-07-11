@@ -17,8 +17,16 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 
 public @interface CPF {
+	
+	/**
+	 * Método que retorna o erro de cpf;
+	 * @return mensagem
+	 */
+    String message() default "CPF inválido";
 
-	String message() default "CPF inválido";
-
+    /**
+     * Método vazio sem implementação
+     * @return
+     */
 	Class<?>[] groups() default {};
 }

@@ -29,7 +29,9 @@ import br.gov.df.dftrans.scie.utils.FacesUtil;
  */
 public class AutenticacaoBean {
 	private Usuario user;
-	private String novaSenha = "", senhaAntiga = "", novaSenha2 = "";
+	private String novaSenha = "";
+	private String senhaAntiga = "";
+	private String novaSenha2 = "";
 	private UsuarioDAO userdao = UsuarioDAO.UsuarioDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
@@ -92,7 +94,7 @@ public class AutenticacaoBean {
 			FacesUtil.addMsggError("Usuario ou Senha inválidos!");
 			getUser().setSenha(null);
 			return "/pages/login.xhtml?faces-redirect=false";
-		}
+        }
 
 	}
 
@@ -271,7 +273,7 @@ public class AutenticacaoBean {
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
-		}
+        }
 		return "/pages/autenticado/validador/validadorCadastro.xhtml?faces-redirect=true";
 	}
 
@@ -293,7 +295,7 @@ public class AutenticacaoBean {
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
-		}
+        }
 		return "/pages/autenticado/validador/"
 		+ "validadorSolicitacao.xhtml?faces-redirect=true";
 	}
@@ -317,7 +319,7 @@ public class AutenticacaoBean {
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
-		}
+        }
 		return "/pages/autenticado/validador/validadorAcessos.xhtml?faces-redirect=true";
 	}
 

@@ -454,7 +454,9 @@ public class LogDAO extends DAO<LogValidacaoCadastro> implements Serializable{
 			entityManager.getTransaction().commit();
 			flag = true;
 		} catch (Exception e) {
-			entityManager.getTransaction().rollback();
+			if(entityManager.getTransaction().isActive()){
+				entityManager.getTransaction().rollback();
+			}
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao modificar Log");
 		} finally {

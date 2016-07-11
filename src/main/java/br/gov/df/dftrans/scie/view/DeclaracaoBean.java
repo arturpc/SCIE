@@ -136,7 +136,7 @@ public class DeclaracaoBean {
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
 		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
-		+ fileNameUploaded + "</b><br/>"
+                    + fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		// seta a instituicao com a da sessao
 		HttpSession session = (HttpSession) FacesContext
@@ -312,7 +312,8 @@ public class DeclaracaoBean {
 		ArrayList<Estudante> listest = new ArrayList<Estudante>();
 		ArrayList<Declaracao> listdecl = new ArrayList<Declaracao>();
 		Set<String> listcpf = new HashSet<String>();
-		String campo, erro = null;
+		String campo;
+		String erro = null;
 		erroProcessamento = false;
 		try {
 			// verifica se existe o id da instituição de ensino

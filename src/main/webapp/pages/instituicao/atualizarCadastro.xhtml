@@ -136,6 +136,12 @@
 					<p:inputMask value="#{InstituicaoMB.representante.cpf}"
 						id="inputCPF" mask="999.999.999-99" disabled="true" />
 					<p:message for="inputCPF" display="text" />
+					<p:outputLabel value="Data de Nascimento do Representante" for="dtRep" />
+					<p:calendar id="dtRep"
+						value="#{InstituicaoMB.representante.dataNascimento}" required="true"
+						requiredMessage="Data de Nascimento do Representante é um campo obrigatório!"
+						maxdate="#{InstituicaoMB.hoje}" locale="pt" navigator="true" pattern="dd/MM/yyyy" mask="99/99/9999"/>
+					<p:message for="dtRep" display="text" />
 					<p:outputLabel value="Cargo do Representante" for="cargoRep" />
 					<p:selectOneMenu id="cargoRep"
 						value="#{InstituicaoMB.representante.cargo}" required="true"

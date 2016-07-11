@@ -26,11 +26,11 @@
 				</p:inputMask>
 				<p:message for="inputCPF" display="text" />
 				<p:outputLabel value="Instituição de Ensino" for="combo"/>
-				<p:selectOneListbox id="combo" value="#{InstituicaoMB.codInepEmec}" required="true" 
+				<p:selectOneListbox id="combo" value="#{InstituicaoMB.id}" required="true" 
 				requiredMessage="Selecione sua instituição de Ensino"
 				filterMatchMode="contains" filter="true" style="width: 400px !important;">
 					<f:selectItem itemLabel="Selecione uma Instituição" itemValue="" noSelectionOption="true" />
-					<f:selectItems value="#{InstituicaoMB.allInstituicoes}" var="inst" itemLabel="#{inst.nomeInstituicao}" itemValue="#{inst.codInepEmec}"/>
+					<f:selectItems value="#{InstituicaoMB.allInstituicoes}" var="inst" itemLabel="#{inst.nomeInstituicao}" itemValue="#{inst.id}"/>
 				</p:selectOneListbox><h:message for="combo" />
 			</h:panelGrid>
 			<p:commandButton value="Pesquisar"

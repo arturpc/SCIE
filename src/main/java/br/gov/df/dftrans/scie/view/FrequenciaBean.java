@@ -65,9 +65,9 @@ public class FrequenciaBean {
 	private FrequenciaDAO freqdao = FrequenciaDAO.FrequenciaDAO();
 	private String chave = "";
 	private boolean erroProcessamento;
-	private String[] nomeMeses = { "Janeiro", "Fevereiro", "Março", 
-			"Abril", "Maio", "Junho", "Julho", "Agosto",
-			"Setembro", "Outubro", "Novembro", "Dezembro" };
+	private String[] nomeMeses = { "Janeiro", "Fevereiro", "Março", "Abril", 
+            "Maio", "Junho", "Julho", "Agosto","Setembro", "Outubro", 
+            "Novembro", "Dezembro" };
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
 	private Representante representante;
@@ -118,7 +118,7 @@ public class FrequenciaBean {
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
 		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
-		+ fileNameUploaded + "</b><br/>"
+                     + fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		// seta Instituicao com a da sessao
 		HttpSession session = (HttpSession) FacesContext
@@ -180,11 +180,11 @@ public class FrequenciaBean {
 			chave = chave.replaceAll(delimitadorDiretorioREGEX, "")
 					.replaceAll(" ", "").replaceAll("-", "");
 			contentStream.drawString("Autenticação: " 
-			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
+                            + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + "" + delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + ""
+                            + delimitadorDiretorio + ""
 					+ instituicao.getId() + "" + delimitadorDiretorio 
 					+ "frequencias" + delimitadorDiretorio + ""
 					+ getMes().getValue() + "" + delimitadorDiretorio 
@@ -217,7 +217,8 @@ public class FrequenciaBean {
 		ArrayList<Estudante> listest = new ArrayList<Estudante>();
 		ArrayList<Frequencia> listfreq = new ArrayList<Frequencia>();
 		Set<String> listcpf = new HashSet<String>();
-		String campo, erro = null;
+		String campo;
+		String erro = null;
 		erroProcessamento = false;
 		try {
 			// verifica se existe o id da instituição de ensino
@@ -281,7 +282,7 @@ public class FrequenciaBean {
 			}
 			// verifica a razão social para arquivos que não são xls
 			if (campo == null || "null".equals(campo) || campo.isEmpty() 
-			|| !campo.contains(inst.getRazaoSocial())) {
+                            || !campo.contains(inst.getRazaoSocial())) {
 				throw new PlanilhaException(
 						"Razão Social não confere com a cadastrada ( " 
 				+ inst.getRazaoSocial() + " )!");

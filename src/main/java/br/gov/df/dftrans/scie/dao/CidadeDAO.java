@@ -35,20 +35,20 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	 */
 	public Cidade getByNome(String chave) {
 		EntityManager entityManager = factory.createEntityManager();
-		try {
+        try {
 			TypedQuery<Cidade> typedQuery = entityManager
 					.createNamedQuery(Cidade
 							.CIDADE_FIND_BY_NOME, 
 							Cidade.class);
 			return typedQuery.setParameter("nome", chave).getSingleResult();
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar UF por sigla");
-		} finally {
+        } finally {
 			entityManager.close();
-		}
+        }
 
 	}
 
@@ -57,23 +57,23 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	 */
 	public Cidade add(Cidade entity) throws InsertException {
 		EntityManager entityManager = factory.createEntityManager();
-		try {
+        try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
-		} catch (EntityExistsException e) {
+        } catch (EntityExistsException e) {
 			entityManager.getTransaction().rollback();
 			throw new InsertException(entity.getUf() 
 					+ getString(ALREADY_EXISTS_EXCEPTION_KEY));
-		} catch (Exception e) {
+        } catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			throw new InsertException();
-		} finally {
+        } finally {
 			if (entityManager.isOpen()){
 				entityManager.close();
 			}
-		}
-		logdao.add(new LogAlteracaoBanco("INSERT", "TB_CIDADE", entity.getId()));
+        }
+        logdao.add(new LogAlteracaoBanco("INSERT", "TB_CIDADE", entity.getId()));
 		return entity;
 	}
 
@@ -97,21 +97,21 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	 */
 	public Cidade get(Object id) throws EntityNotFoundException {
 		EntityManager entityManager = factory.createEntityManager();
-		try {
+        try {
 			TypedQuery<Cidade> typedQuery = entityManager
 					.createNamedQuery(Cidade
 							.CIDADE_FIND_BY_ID, 
 							Cidade.class);
 			return typedQuery.setParameter("id", 
 					((Cidade) id).getId()).getSingleResult();
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar UF por código");
-		} finally {
+        } finally {
 			entityManager.close();
-		}
+        }
 	}
 
 	/**
@@ -121,20 +121,20 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	 */
 	public List<Cidade> get() {
 		EntityManager entityManager = factory.createEntityManager();
-		try {
+        try {
 			TypedQuery<Cidade> typedQuery = entityManager
 					.createNamedQuery(Cidade
 							.CIDADE_GET_ALL, 
 							Cidade.class);
 			return typedQuery.getResultList();
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar UF por código");
-		} finally {
+        } finally {
 			entityManager.close();
-		}
+        }
 	}
 	
 	/**
@@ -155,14 +155,14 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 				return null;
 			}
 			return cid.get(0);
-		} catch (NoResultException e) {
+        } catch (NoResultException e) {
 			return null;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar UF por código");
-		} finally {
+        } finally {
 			entityManager.close();
-		}
+        }
 	}
 
 	/**
@@ -172,26 +172,26 @@ public class CidadeDAO extends DAO<Cidade> implements Serializable {
 	 * @return
 	 */
 	public boolean update(Cidade entity) {
-		EntityManager entityManager = factory.createEntityManager();
-		boolean flag = false;
-		try {
+        EntityManager entityManager = factory.createEntityManager();
+        boolean flag = false;
+        try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 			flag = true;
-		} catch (Exception e) {
+        } catch (Exception e) {
 			entityManager.getTransaction().rollback();
 			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao modificar Cidade");
-		} finally {
+        } finally {
 			entityManager.close();
-		}
-		try {
+        }
+        try {
 			logdao.add(new LogAlteracaoBanco("UPDATE", "TB_CIDADE", entity.getId()));
-		} catch (InsertException e) {
+        } catch (InsertException e) {
 			e.printStackTrace();
-		}
-		return flag;
+        }
+        return flag;
 
 	}
 

@@ -77,7 +77,7 @@ public class Representante implements Serializable {
 	//st_cadastro = 0 (Não Aprovado)
 	//st_cadastro = 1 (Aprovado)
 	@Column(name = "st_cadastro")
-	private int cadastro = 0;
+	private int cadastro = 1;
 	
 	@OneToOne
 	@JoinColumn(name = "id_instituicao", referencedColumnName = "id_instituicao")

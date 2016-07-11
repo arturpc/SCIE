@@ -51,7 +51,7 @@ public class InstituicaoEnsino implements Serializable {
 	private String nomeInstituicao;
 
 	@Column(name = "nr_cnpj")
-	@CNPJ
+	//@CNPJ
 	private String cnpj;
 
 	@StringUpperCase

@@ -296,13 +296,12 @@ public class Mail implements Serializable {
 		// API EMAIL, estabelece conexão com a máquina informada
 		Session mailSession = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
-                     protected PasswordAuthentication getPasswordAuthentication() 
-                     {
-                           return new PasswordAuthentication(Parametros
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(Parametros
                         		   .getParameter("mail_user"), Parametros
                         		   .getParameter("mail_password"));
-                     }
-                });
+                        }
+                    });
 		
 		mailSession.setDebug(new Boolean(Parametros.getParameter("debug")));
 		Transport transport = null;

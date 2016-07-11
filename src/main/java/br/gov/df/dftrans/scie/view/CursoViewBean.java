@@ -30,12 +30,15 @@ public class CursoViewBean implements Serializable {
 	private DualListModel<Curso> dualListCurso;
 	private String curso;
 	private List<InstituicaoCurso> cadastrados;
-	private List<Curso> cursos, target, cadastroAnterior;
+	private List<Curso> cursos;
+	private List<Curso> target;
+	private List<Curso> cadastroAnterior;
 	private List<Curso> cursosMomento;
 	private InstituicaoEnsino instituicao;
 	private InstituicaoCurso instCurso = new InstituicaoCurso();
 	private InstituicaoCursoDAO instdao = InstituicaoCursoDAO.InstituicaoCursoDAO();
-	private Boolean detalharCursos = new Boolean(false), fimCadastro = new Boolean(true);
+	private Boolean detalharCursos = new Boolean(false);
+	private Boolean fimCadastro = new Boolean(true);
 	
 	public CursoViewBean(){
 		

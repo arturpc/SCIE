@@ -63,7 +63,7 @@ public class FileUploadView implements Serializable {
 	public final int ESTATUTO = 5;
 	public final int CONVENIO_ESTADO = 6;
 	public final String nomesArquivos[] = 
-		{ "ATO", "CNPJ", "DIRETOR", "ENDERECO", "CURSO", "ESTATUTO", "CONVENIO" };
+        { "ATO", "CNPJ", "DIRETOR", "ENDERECO", "CURSO", "ESTATUTO", "CONVENIO" };
 	public final String descricaoArquivos[] = { Parametros.getParameter("doc_ato_name"),
 			Parametros.getParameter("doc_cnpj_name"),
 			Parametros.getParameter("doc_dir_name"),
@@ -283,7 +283,7 @@ public class FileUploadView implements Serializable {
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
 		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
-		+ fileNameUploaded + "</b><br/>"
+                    + fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
@@ -339,7 +339,7 @@ public class FileUploadView implements Serializable {
 		if (aux[1].equals("pdf")) {
 			// copia o pdf
 			copiarArquivoPDF(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
+                             + delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
 					+ delimitadorDiretorio + "" + fmt.format(date) + "" 
 					+ delimitadorDiretorio + "" + documento + ""
 					+ delimitadorDiretorio + "" + nomesArquivos[documento], 
@@ -347,10 +347,10 @@ public class FileUploadView implements Serializable {
 		} else {
 			// copia o arquivo
 			copiarArquivo(delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
-			+ delimitadorDiretorio + "" + fmt.format(date) + "" 
-			+ delimitadorDiretorio + "" + documento + ""
-			+ delimitadorDiretorio + "" + nomesArquivos[documento], 
+			                 + delimitadorDiretorio + "" + getRepresentante().getCpf() + ""
+			                 + delimitadorDiretorio + "" + fmt.format(date) + "" 
+			                 + delimitadorDiretorio + "" + documento + ""
+			                 + delimitadorDiretorio + "" + nomesArquivos[documento], 
 			uploadedFile, documento);
 		}
 		setIsUploaded(new Boolean(true), documento);
@@ -408,7 +408,7 @@ public class FileUploadView implements Serializable {
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 
-			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
+                            + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + "." + aux[1]);
@@ -455,7 +455,7 @@ public class FileUploadView implements Serializable {
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 
-			+ AutenticacaoDocumentos.getChaveSeguranca(chave));
+                            + AutenticacaoDocumentos.getChaveSeguranca(chave));
 			contentStream.endText();
 			contentStream.close();
 			doc.save(current + path + ".pdf");
@@ -534,12 +534,12 @@ public class FileUploadView implements Serializable {
 		for (int i = 0; i < 4; i++) {
 			if (!isUploaded.get(i)) {
 				FacesUtil.addMsggError("É necessário anexar o documento: " 
-			+ descricaoArquivos[i] + "!");
+                                    + descricaoArquivos[i] + "!");
 				return "/pages/instituicao/arquivosCadastro.xhtml"
 						+ "?faces-redirect=false";
 			}
 		}
-		if(getRepresentante().getCadastro() == 0){
+		if(getRepresentante().getCadastro() == 1){
 			return "/pages/instituicao/confirmacaoCadastro.xhtml?faces-redirect=true";
 		}else{
 			return "/pages/instituicao/cadastrarCursos.xhtml?faces-redirect=true";

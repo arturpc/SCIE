@@ -15,7 +15,7 @@ public class CNPJValidator implements Serializable {
 	private static final long serialVersionUID = 8856838765083713270L;
 
 	private static final char[] ZEROS = { '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '0', '0', '0', '0', '0' };
+            '0', '0', '0', '0', '0', '0', '0' };
 
 	public void initialize(CNPJ constraintAnnotation) {
 	}
@@ -46,20 +46,20 @@ public class CNPJValidator implements Serializable {
 	 */
 	private static boolean isValidCNPJ(String cnpj) {
 
-		if ((cnpj == null) || "00000000000000".equals(cnpj)) {
+         if ((cnpj == null) || "00000000000000".equals(cnpj)) {
 			return false;
-		}
+         }
 
-		try {
+         try {
 			Integer digit1 = calculateDigit(cnpj.substring(0, 12));
 			Integer digit2 = calculateDigit(cnpj.substring(0, 12) + "" + digit1);
 			System.out.println(cnpj.substring(0, 12) + digit1.toString() 
-			+ digit2.toString());
+                               + digit2.toString());
 			return cnpj.equals(cnpj.substring(0, 12) + digit1.toString() 
 			+ digit2.toString());
-		} catch (Exception e) {
+        } catch (Exception e) {
 			return false;
-		}
+        }
 	}
 
 	/**
@@ -69,7 +69,11 @@ public class CNPJValidator implements Serializable {
 	 * @return o calculo
 	 */
 	private static int calculateDigit(String str) {
-		int soma, iterador, resultado, numero, peso;
+		int soma;
+		int iterador;
+		int resultado;
+		int numero;
+		int peso;
 		soma = 0;
 		peso = 2;
 		for (iterador = str.length() - 1; iterador >= 0; iterador--) {

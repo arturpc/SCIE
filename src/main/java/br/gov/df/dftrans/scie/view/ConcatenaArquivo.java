@@ -1,16 +1,11 @@
 package br.gov.df.dftrans.scie.view;
 
-import static java.nio.file.StandardCopyOption.*;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
@@ -35,7 +30,8 @@ import br.gov.df.dftrans.scie.utils.Parametros;
 public class ConcatenaArquivo {
 
 	private String fileNameUploaded;
-	private String iconeUploaded = "", cpf = "";
+	private String iconeUploaded = "";
+	private String cpf = "";
 	private String current = Parametros.getParameter("root_upload");
 	private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
 	private String delimitadorDiretorioREGEX;
@@ -115,7 +111,7 @@ public class ConcatenaArquivo {
 		File file1 = new File(path);
 		setAux(path);
 		File file2 = new File(current + delimitadorDiretorio + "destino_uploader" 
-		+ delimitadorDiretorio + "" + getCpf()
+                    + delimitadorDiretorio + "" + getCpf()
 				+ "" + delimitadorDiretorio + "documento." + aux[1]);
 		try {
 			if (file2.exists()) {
@@ -182,7 +178,7 @@ public class ConcatenaArquivo {
 		// seta o tamanho do arquivo
 		long fileSizeUploaded = uploadedFile.getSize() / 1000;
 		String infoAboutFile = "<br/> Arquivo recebido: <b>" 
-		+ fileNameUploaded + "</b><br/>"
+                    + fileNameUploaded + "</b><br/>"
 				+ "Tamanho do Arquivo: <b>" + fileSizeUploaded + " KBs</b>";
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.addMessage(null, new FacesMessage("Sucesso", infoAboutFile));
@@ -194,7 +190,7 @@ public class ConcatenaArquivo {
 		file = null;
 		setAux(fileNameUploaded);
 		copiarArquivo(delimitadorDiretorio + "destino_uploader" 
-		+ delimitadorDiretorio + "" + getCpf() + ""
+                    + delimitadorDiretorio + "" + getCpf() + ""
 				+ delimitadorDiretorio + "1", uploadedFile);
 		setIsUploaded(new Boolean(true));
 		setIconeUploaded();
@@ -204,7 +200,7 @@ public class ConcatenaArquivo {
 					+ getCpf() + "" + delimitadorDiretorio + "1." + aux[1]);
 		} else {
 			concatenaImagem(current + delimitadorDiretorio + "destino_uploader" 
-		+ delimitadorDiretorio + "" + getCpf()
+                             + delimitadorDiretorio + "" + getCpf()
 					+ "" + delimitadorDiretorio + "1." + aux[1]);
 		}
 	}
@@ -222,7 +218,7 @@ public class ConcatenaArquivo {
 		if (file2.exists()) {
 			PDFMergerUtility ut = new PDFMergerUtility();
 			ut.addSource(current + delimitadorDiretorio + "destino_uploader" 
-			+ delimitadorDiretorio + "" + getCpf() + ""
+                              + delimitadorDiretorio + "" + getCpf() + ""
 					+ delimitadorDiretorio + "documento." + aux[1]);
 			ut.addSource(current + delimitadorDiretorio + "destino_uploader" 
 					+ delimitadorDiretorio + "" + getCpf() + ""
@@ -357,7 +353,9 @@ public class ConcatenaArquivo {
 	}
 
 	private void setAux(String path) {
-		String aux[] = path.split("\\."), temp = "", aux1[] = new String[2];
+		String aux[] = path.split("\\.");
+		String temp = "";
+		String aux1[] = new String[2];
 		for (int i = 0; i < aux.length - 1; i++) {
 			temp += aux[i];
 		}

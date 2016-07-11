@@ -14,30 +14,28 @@ import org.primefaces.validate.ClientValidator;
 @FacesValidator("namesValidator")
 public class NamesValidator implements Validator, ClientValidator {
 
-	public Map<String, Object> getMetadata() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Map<String, Object> getMetadata() {
+        return null;
+    }
 
-	public String getValidatorId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getValidatorId() {
+        return null;
+    }
 
 	/**
 	 * valida nome vazio ou nulo
 	 */
-	public void validate(FacesContext context, UIComponent component, Object value) 
+    public void validate(FacesContext context, UIComponent component, Object value) 
 			throws ValidatorException {
-		if (value == null) {
-			return;
-		}
+        if (value == null) {
+            return;
+        }
 
-		if (value.toString().trim().isEmpty()) {
-			throw new ValidatorException(new FacesMessage(FacesMessage
+        if (value.toString().trim().isEmpty()) {
+            throw new ValidatorException(new FacesMessage(FacesMessage
 					.SEVERITY_ERROR, "Erro de Validação",
 					"Espaços não é um valor válido!"));
-		}
-	}
+        }
+    }
 
 }

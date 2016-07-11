@@ -19,7 +19,15 @@ import java.lang.annotation.Target;
 
 public @interface CNPJ {
 
-	String message() default "CPF inválido";
+	/**
+	 * Método que retorna o erro de cnpj;
+	 * @return mensagem
+	 */
+    String message() default "CPF inválido";
 
+    /**
+     * Método vazio sem implementação
+     * @return
+     */
 	Class<?>[] groups() default {};
 }

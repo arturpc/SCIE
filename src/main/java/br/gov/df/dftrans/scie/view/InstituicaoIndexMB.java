@@ -19,11 +19,14 @@ import br.gov.df.dftrans.scie.exceptions.EntityNotFoundException;
 @SessionScoped
 public class InstituicaoIndexMB {
 
-	private List<LogValidacaoCadastro> abertas, aprovadas, reprovadas, emAnalise;
+	private List<LogValidacaoCadastro> abertas;
+	private List<LogValidacaoCadastro> aprovadas;
+	private List<LogValidacaoCadastro> reprovadas;
+	private List<LogValidacaoCadastro> emAnalise;
 	private InstituicaoEnsino instituicao;
 	private Usuario user;
 	private String[] validacao = { "Pendente de Verificação", "Em Análise",
-			"Aprovado", "Não Aprovado" };
+            "Aprovado", "Não Aprovado" };
 	private LogDAO logdao = LogDAO.LogDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
 	private Representante representante;

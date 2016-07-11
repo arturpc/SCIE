@@ -12,14 +12,14 @@ public class AutenticacaoDocumentos {
 	 * @return texto convertido
 	 */
 	public static String getChaveSeguranca(String chaveTexto) {
-		byte bytesOriginais[] = chaveTexto.getBytes(), 
-				complementoDeUm[] = new byte[bytesOriginais.length];
+		byte bytesOriginais[] = chaveTexto.getBytes(); 
+		byte complementoDeUm[] = new byte[bytesOriginais.length];
 		MessageDigest m = null;
 		try {
 			m = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-		}
+        }
 		int count = 0;
 		for (byte b : bytesOriginais) {
 			complementoDeUm[count] = (byte) ((b - (byte) 00000001) * (byte) -1);

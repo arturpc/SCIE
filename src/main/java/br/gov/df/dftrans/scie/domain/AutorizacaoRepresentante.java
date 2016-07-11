@@ -30,7 +30,7 @@ import org.hibernate.validator.constraints.br.CPF;
 			+ "and a.instituicao = null"),
     @NamedQuery(name = AutorizacaoRepresentante.AUTORIZACAO_FIND_BY_ID, 
     query = "SELECT a FROM AutorizacaoRepresentante a WHERE a.id = :id")
-})
+    })
 public class AutorizacaoRepresentante implements Serializable{
 
 	public static final String AUTORIZACAO_GET_ALL = "AutorizacaoRepresentante.getAll";

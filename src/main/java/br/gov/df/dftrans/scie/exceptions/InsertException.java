@@ -1,6 +1,7 @@
 package br.gov.df.dftrans.scie.exceptions;
 
-import static br.gov.df.dftrans.scie.utils.MessageUtils.*;
+import static br.gov.df.dftrans.scie.utils.MessageUtils.getString;
+import static br.gov.df.dftrans.scie.utils.MessageUtils.INSERT_EXCEPTION_KEY;
 
 /**
  * 

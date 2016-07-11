@@ -85,6 +85,10 @@
 							<p:inputMask id="inputCPF" mask="999.999.999-99"
 								value="#{confirmacaoMB.representante.cpf}"
 								readonly="true" />
+							<p:outputLabel value="Data de Nascimento do Representante"/>
+							<p:inputMask id="inputDtNasc" mask="99/99/9999"
+								value="#{confirmacaoMB.representante.dataNascimento}"
+								readonly="true" />
 							<p:outputLabel value="Cargo do Representante" />
 							<p:inputText id="cargoRep" size="10"
 								value="#{confirmacaoMB.getRepCargo()}" readonly="true" />

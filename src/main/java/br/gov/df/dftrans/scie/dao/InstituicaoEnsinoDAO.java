@@ -194,7 +194,7 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		String operacao = entity.getId() != 0 ? "UPDATE" : "INSERT";
 		EntityManager entityManager = factory.createEntityManager();
 		try {
-			StringUtils.parserObject(entity);
+			//StringUtils.parserObject(entity);
 			entityManager.getTransaction().begin();
 			entity = entityManager.merge(entity);
 			entityManager.getTransaction().commit();
