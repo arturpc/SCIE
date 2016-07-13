@@ -32,17 +32,20 @@
 							<p:outputLabel value="Nome da Instituição" />
 							<p:inputText id="nmInst" size="50"
 								value="#{confirmacaoMB.instituicao.nomeInstituicao}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Número do CNPJ" />
 							<p:inputMask id="cnpjInst" size="20"
 								value="#{confirmacaoMB.instituicao.cnpj}"
-								mask="99.999.999/9999-99" readonly="true" />
+								mask="99.999.999/9999-99" readonly="true" 
+								disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Razão Social" />
 							<p:inputText size="50" id="rzscInst"
-								value="#{confirmacaoMB.instituicao.razaoSocial}" readonly="true" />
+								value="#{confirmacaoMB.instituicao.razaoSocial}" readonly="true" 
+								disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Código INEP/E-mec" />
 							<p:inputText size="20" id="inepInst"
-								value="#{confirmacaoMB.instituicao.codInepEmec}" readonly="true" />
+								value="#{confirmacaoMB.instituicao.codInepEmec}" readonly="true" 
+								disabled="#{confirmacaoMB.getEditavel()}"/>
 						</h:panelGrid>
 					</p:panel>
 					<p:panel header="Dados do Endereço Comercial da Instituição"
@@ -51,27 +54,28 @@
 							<p:outputLabel value="Número do CEP" />
 							<p:inputMask id="cepInst" size="10"
 								value="#{confirmacaoMB.instituicao.endereco.cep}"
-								mask="99.999-999" readonly="true" />
+								mask="99.999-999" readonly="true" 
+								disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Nome do Bairro" />
 							<p:inputText id="bairroEnd" size="50"
 								value="#{confirmacaoMB.instituicao.endereco.bairro}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Logradouro" />
 							<p:inputText id="logEnd" size="50"
 								value="#{confirmacaoMB.instituicao.endereco.logradouro}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Complemento" />
 							<p:inputText size="100" id="complEnd"
 								value="#{confirmacaoMB.instituicao.endereco.complemento}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Cidade" />
 							<p:inputText size="50" id="cidEnd"
 								value="#{confirmacaoMB.instituicao.endereco.cidade.nome}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 							<p:outputLabel value="Estado" />
 							<p:inputText size="20" id="estEnd"
 								value="#{confirmacaoMB.instituicao.endereco.cidade.uf.uf}"
-								readonly="true" />
+								readonly="true" disabled="#{confirmacaoMB.getEditavel()}"/>
 						</h:panelGrid>
 					</p:panel>
 					<p:panel header="Dados do Representante da Instituição"
@@ -104,7 +108,7 @@
 					</p:panel>
 					<p:panel header="Cursos Cadastrados" autoUpdate="true"
 						toggleable="true" closable="false">
-						<p:dataTable id="cursoTab" var="rowCurso"
+						<p:dataTable id="cursoTab" var="rowCurso" disabled="#{confirmacaoMB.getEditavel()}"
 							value="#{confirmacaoMB.cadastrados}" editable="false"
 							emptyMessage="Não há cursos cadastrados." paginator="true"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

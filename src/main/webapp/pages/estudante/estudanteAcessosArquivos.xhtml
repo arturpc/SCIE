@@ -57,6 +57,11 @@
 					<p:message for="motivo" display="text" />
 					<p:commandButton id="help" icon="fa fa-fw fa-question-circle"
 						title="Ajuda Motivos" type="button" onclick="PF('dlg1').show();" />
+					<p:outputLabel value="Nome do Estudante" for="nome" />
+					<p:inputText id="nome" size="50"
+						value="#{fileUploadAcessosView.ext.nome}" required="true"
+						requiredMessage="Nome é um campo obrigatório!" />
+					<p:message for="nome" display="text" />
 					<p:outputLabel value="Email para Contato" for="email" />
 					<p:inputText id="email" size="50"
 						value="#{fileUploadAcessosView.ext.email}" required="true"

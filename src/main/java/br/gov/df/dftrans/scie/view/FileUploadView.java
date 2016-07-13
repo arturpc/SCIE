@@ -451,7 +451,6 @@ public class FileUploadView implements Serializable {
 			setRepresentante((Representante) session.getAttribute("representante"));
 			chave += getRepresentante().getNome();
 			chave += getRepresentante().getCpf();
-			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 

@@ -1,5 +1,7 @@
 package br.gov.df.dftrans.scie.beans;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -237,7 +239,7 @@ public class ConfirmacaoBean {
 
 	public String getAutenticacao() {
 		String chave = "";
-		chave = getInstituicao().getCnpj();
+		chave = removeMascara(getInstituicao().getCnpj());
 		chave += getInstituicao().getId();
 		chave += getRepresentante().getNome();
 		chave += getRepresentante().getCpf();
@@ -380,5 +382,27 @@ public class ConfirmacaoBean {
 		this.representante = representante;
 	}
 	
+	/**
+	 * Método que retorna se o Representante podia alterar informações da Instituição.
+	 * @return boolean
+	 */
+	public boolean getEditavel() {
+		if (getRepresentante().getCadastro() != 1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
+	private String removeMascara(String campo) {
+		String resultado = campo;
+		resultado = resultado.replace("-", "");
+		resultado = resultado.replace(".", "");
+		resultado = resultado.replace("(", "");
+		resultado = resultado.replace(")", "");
+		resultado = resultado.replace(" ", "");
+		resultado = resultado.replace("/", "");
+		resultado = resultado.replace("_", "");
+		return resultado;
+	}
 }

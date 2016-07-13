@@ -133,6 +133,11 @@
 							itemValue="3" />
 					</p:selectOneMenu>
 					<p:message for="motivo" display="text" />
+					<p:outputLabel value="Nome do Estudante" for="nome" />
+					<p:inputText id="nome" size="50"
+						value="#{fileUploadEstudanteView.sol.nome}" required="true"
+						requiredMessage="Nome é um campo obrigatório!" />
+					<p:message for="nome" display="text" />
 					<p:outputLabel value="Email para Contato" for="email" />
 					<p:inputText id="email" size="50"
 						value="#{fileUploadEstudanteView.sol.email}" required="true"

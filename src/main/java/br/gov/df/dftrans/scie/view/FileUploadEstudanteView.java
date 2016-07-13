@@ -289,7 +289,6 @@ public class FileUploadEstudanteView {
 			contentStream.setFont(PDType1Font.HELVETICA, 12);
 			// Cria chave única que estará presente no PDF
 			chave = getCpf();
-			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			chave += fmt.format(new Date());
 			chave += documento;
 			contentStream.drawString("Autenticação: " 

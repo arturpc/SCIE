@@ -29,6 +29,11 @@
 					sortBy="#{solicitacao.cpf}" style="width: 110px !important;">
 					<h:outputText value="#{solicitacao.cpf}" />
 				</p:column>
+				
+				<p:column headerText="Nome" filterBy="#{solicitacao.nome}"
+					sortBy="#{solicitacao.nome}" style="width: 150px !important;">
+					<h:outputText value="#{solicitacao.nome}" />
+				</p:column>
 
 				<p:column headerText="MOTIVO" filterBy="#{solicitacao.motivo}"
 					sortBy="#{solicitacao.motivo}" style="width: 130px !important;" filterFunction="#{acessoMB.filterMotivo}">

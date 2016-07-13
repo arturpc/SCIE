@@ -93,6 +93,9 @@ public class ExtensaoAcesso implements Serializable {
 	@Column(name = "ds_email")
 	@Email
 	private String email;
+	
+	@Column(name = "ds_nome")
+	private String nome;
 
 	@Column(name = "dt_atualizacao")
 	@Temporal(value = TemporalType.DATE)
@@ -177,5 +180,13 @@ public class ExtensaoAcesso implements Serializable {
 
 	public void setComentario(Comentario comentario) {
 		this.comentario = comentario;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }

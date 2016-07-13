@@ -32,6 +32,10 @@
 							<p:inputMask id="cpf" size="14"
 								value="#{solicitacaoMB.solicitacao.cpf}"
 								mask="999.999.999-99" readonly="true" />
+							<p:outputLabel value="Nome do Estudante" />
+							<p:inputText id="nome" size="50"
+								value="#{solicitacaoMB.solicitacao.nome}"
+								readonly="true" />
 							<p:outputLabel value="Motivo" />
 							<p:inputText size="30" id="motivo"
 								value="#{solicitacaoMB.motivo}" readonly="true" />

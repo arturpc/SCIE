@@ -88,6 +88,11 @@ public class InstituicaoCurso implements Serializable {
 
 	@Column(name = "ds_ano_periodo")
 	private int ano = 1;
+	
+	// Não Transferido para o SitPass = 1;
+	// Transferido para o SitPass = 2;
+	@Column(name = "st_transf_sitpass")
+	int transferencia = 1;
 
 	// construtores
 	public InstituicaoCurso(InstituicaoEnsino ie, Curso curso, String turno, int ano) {
@@ -206,6 +211,14 @@ public class InstituicaoCurso implements Serializable {
 
 	public void setAno(int ano) {
 		this.ano = ano;
+	}
+
+	public int getTransferencia() {
+		return transferencia;
+	}
+
+	public void setTransferencia(int transferencia) {
+		this.transferencia = transferencia;
 	}
 
 }

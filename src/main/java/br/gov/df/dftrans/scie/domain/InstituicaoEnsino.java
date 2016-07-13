@@ -72,6 +72,11 @@ public class InstituicaoEnsino implements Serializable {
 	// Instituição de Ensino Privada = 1;
 	@Column(name = "st_privada")
 	int privada;
+	
+	// Não Transferido para o SitPass = 1;
+	// Transferido para o SitPass = 2;
+	@Column(name = "st_transf_sitpass")
+	int transferencia = 1;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
@@ -212,4 +217,11 @@ public class InstituicaoEnsino implements Serializable {
 		this.codEscola = codEscola;
 	}
 
+	public int getTransferencia() {
+		return transferencia;
+	}
+
+	public void setTransferencia(int transferencia) {
+		this.transferencia = transferencia;
+	}
 }

@@ -87,6 +87,9 @@ public class Solicitacao implements Serializable {
 	@Column(name = "ds_email")
 	@Email
 	private String email;
+	
+	@Column(name = "ds_nome")
+	private String nome;
 
 	@Column(name = "dt_atualizacao")
 	@Temporal(value = TemporalType.DATE)
@@ -179,5 +182,13 @@ public class Solicitacao implements Serializable {
 
 	public void setNsuPagamento(String nsuPagamento) {
 		this.nsuPagamento = nsuPagamento;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }
