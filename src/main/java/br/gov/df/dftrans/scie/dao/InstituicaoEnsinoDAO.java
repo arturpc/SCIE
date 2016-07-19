@@ -159,7 +159,7 @@ public class InstituicaoEnsinoDAO extends DAO<InstituicaoEnsino> implements Seri
 		} catch (NoResultException e) {
 			return null;
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 			throw new DAOExcpetion("Erro ao coletar Instituicoes");
 		} finally {
 			if (entityManager.isOpen()) {
