@@ -16,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
@@ -67,6 +69,7 @@ public class Representante implements Serializable {
 	private String telefone;
 	
 	@Column(name = "dt_nascimento")
+	@Temporal(value = TemporalType.DATE)
 	private Date dataNascimento;
 	
 	//st_ativo = 1 (Ativo)
