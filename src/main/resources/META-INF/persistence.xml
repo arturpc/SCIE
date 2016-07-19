@@ -19,7 +19,6 @@
 		<class>br.gov.df.dftrans.scie.domain.Representante</class>
 		<class>br.gov.df.dftrans.scie.domain.UF</class>
 		<class>br.gov.df.dftrans.scie.domain.Usuario</class>
-		<class>br.gov.df.dftrans.scie.domain.AutorizacaoRepresentante</class>
 		<class>br.gov.df.dftrans.scie.domain.Comentario</class>
 		<class>br.gov.df.dftrans.scie.domain.ExtensaoAcesso</class>
 		<class>br.gov.df.dftrans.scie.domain.LogValidacaoCadastro</class>

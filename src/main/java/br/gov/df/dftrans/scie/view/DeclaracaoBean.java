@@ -225,23 +225,6 @@ public class DeclaracaoBean {
 		}
 	}
 
-	/*// seleciona arquivo exemplo
-	public StreamedContent getArquivo(String tipo){
-		System.out.println(tipo);
-		InputStream stream = null;
-		try {
-
-			stream = new FileInputStream(current + "" + delimitadorDiretorio 
-			+ "destino_uploader" + delimitadorDiretorio
-					+ "templates" + delimitadorDiretorio + "declaracao."+tipo);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		fileout = new DefaultStreamedContent(stream, 
-		"application/"+tipo, "declaracao."+tipo);
-		return fileout;
-	}*/
-
 	// 
 	/**
 	 * Seleciona arquivo xls
@@ -496,7 +479,6 @@ public class DeclaracaoBean {
 				decl.setDataAulaInicio(fmt.parse(temp[i][10]));
 				decl.setDataAulaFim(fmt.parse(temp[i][11]));
 				decl.setInstituicao(inst);
-				decl.setAutenticacao(chave);
 				listdecl.add(decl);
 			}
 			decdao.add(listdecl);

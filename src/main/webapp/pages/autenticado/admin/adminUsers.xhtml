@@ -26,6 +26,10 @@
 					<f:validator validatorId="namesValidator" />
 				</p:inputText>
 				<p:message for="nome" display="text" />
+				<p:outputLabel value="CPF do Usuário" for="inputCPF" />
+				<p:inputMask value="#{usuarioMB.cpf}"
+						id="inputCPF" mask="999.999.999-99" disabled="true" />
+				<p:message for="inputCPF" display="text" />
 				<p:outputLabel value="Perfil" for="perfis" />
 				<p:selectOneMenu id="perfis" value="#{usuarioMB.perfil}"
 					required="true" requiredMessage="Perfil é um campo obrigatório!">

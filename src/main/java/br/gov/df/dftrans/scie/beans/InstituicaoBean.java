@@ -16,13 +16,12 @@ import javax.faces.context.FacesContext;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.gov.df.dftrans.scie.dao.AutorizacaoRepresentanteDAO;
+
 import br.gov.df.dftrans.scie.dao.CidadeDAO;
 import br.gov.df.dftrans.scie.dao.EnderecoDAO;
 import br.gov.df.dftrans.scie.dao.InstituicaoEnsinoDAO;
 import br.gov.df.dftrans.scie.dao.RepresentanteDAO;
 import br.gov.df.dftrans.scie.dao.UFDAO;
-import br.gov.df.dftrans.scie.domain.AutorizacaoRepresentante;
 import br.gov.df.dftrans.scie.domain.Cidade;
 import br.gov.df.dftrans.scie.domain.Endereco;
 import br.gov.df.dftrans.scie.domain.InstituicaoEnsino;
@@ -51,7 +50,6 @@ public class InstituicaoBean implements Serializable {
 	private UF uf;
 	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
 	private InstituicaoEnsinoDAO instdao = InstituicaoEnsinoDAO.InstituicaoEnsinoDAO();
-	private AutorizacaoRepresentanteDAO autdao = AutorizacaoRepresentanteDAO.AutorizacaoRepresentanteDAO();
 	private UFDAO ufdao = UFDAO.UFDAO();
 	private CidadeDAO ciddao = CidadeDAO.CidadeDAO();
 	private EnderecoDAO enddao = EnderecoDAO.EnderecoDAO();
@@ -111,7 +109,6 @@ public class InstituicaoBean implements Serializable {
 				setUf(getCidade().getUf());
 			}
 			setRepresentante(new Representante(null, codCPFsemMascara, 1, null, null, null, getInstituicao()));
-			// instituicao.setRepresentante(getRepresentante());
 		} else {
 			/*
 			 * if (autdao.getByCpf(codCPFsemMascara, instituicao.getId()) ==
@@ -200,11 +197,6 @@ public class InstituicaoBean implements Serializable {
 		cursoBean = (CursoViewBean) resolver.getValue(context.getELContext(), null, "MBCursoView");
 		cursoBean.setInstituicao(getInstituicao());
 		cursoBean.updateTarget();
-		AutorizacaoRepresentante autrep = autdao.getByCpfInstNull(getRepresentante().getCpf());
-		if (autrep != null) {
-			autrep.setInstituicao(getInstituicao());
-			autdao.update(autrep);
-		}
 		if(getEditavel()){
 			getRepresentante().setCadastro(1);
 		}
@@ -262,15 +254,6 @@ public class InstituicaoBean implements Serializable {
 	public void setUf(UF uf) {
 		this.uf = uf;
 	}
-
-	public AutorizacaoRepresentanteDAO getAutDAO() {
-		return autdao;
-	}
-
-	public void setAutDAO(AutorizacaoRepresentanteDAO autDAO) {
-		this.autdao = autDAO;
-	}
-
 	public Representante getRepresentante() {
 		return representante;
 	}

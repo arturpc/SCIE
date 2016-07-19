@@ -57,6 +57,7 @@ public class Usuario implements Serializable {
 	@Column(name = "ds_nome")
 	private String nome;
 	
+	@Column(name = "ds_cpf")
 	private String CPF;
 
 	// 0 = instituicao
