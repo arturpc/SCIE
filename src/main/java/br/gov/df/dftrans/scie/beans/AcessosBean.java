@@ -158,9 +158,9 @@ public class AcessosBean {
             if (temArquivos()) {
                 setFiles(new String[2]);
                 setPath(ManipuladorArquivos.leitor(current + "" 
-                                        + delimitadorDiretorio + "destino_uploader" + 
+                                        + delimitadorDiretorioREGEX + "destino_uploader" + 
                     delimitadorDiretorio + "" + getExtAcesso().getCpf() 
-                                        + "" + delimitadorDiretorio + "files"));
+                                        + "" + delimitadorDiretorioREGEX + "files"));
 
                 int flag = 0;
                 for (String tmp : getPath()) {

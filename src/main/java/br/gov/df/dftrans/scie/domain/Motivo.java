@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_motivo_val_segunda_via")
-@NamedQueries({ @NamedQuery(name = Motivo.MOTIVO_GET_ALL, query = "SELECT m FROM Motivo m"),
+@NamedQueries({ @NamedQuery(name = Motivo.MOTIVO_GET_ALL, query = "SELECT m FROM Motivo m order by m.id"),
 		@NamedQuery(name = Motivo.MOTIVO_FIND_BY_ID, 
 		query = "SELECT m FROM Motivo m WHERE m.id = :id") })
 public class Motivo implements Serializable {

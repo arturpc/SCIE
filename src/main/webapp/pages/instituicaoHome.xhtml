@@ -11,11 +11,15 @@
 	<ui:define name="conteudo">
 		<h:form id="pesquisaInepEmecForm" title="Cadastro de Escolas">
 			<f:facet name="header">
-				<h:outputText value="Autenticação"
+			<h:outputText value="Autenticação"
 					style="font-size: 15px !important;" />
 			</f:facet>
 			<p:outputLabel
-				value="Prezado responsável pela Instituição de Ensino, insira abaixo o seu CPF e o código INEP/E-mec da sua Instituição:" />
+				value="Prezado "/>
+				<b><p:outputLabel value="RESPONSÁVEL"/></b>
+				<p:outputLabel value=" pela " />
+				<b><p:outputLabel value="Instituição de Ensino"/></b>
+			<p:outputLabel value=", insira abaixo o seu CPF e selecione sua Instituição:"/>
 			<br />
 			<br />
 			<h:panelGrid columns="3">

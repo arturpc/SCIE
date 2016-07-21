@@ -56,8 +56,20 @@ public class ConfirmacaoBean {
 	private ValidadorBean validadorBean;
 	private RepresentanteDAO repdao = RepresentanteDAO.RepresentanteDAO();
 	private Representante representante;
+    private String delimitadorDiretorio = Parametros.getParameter("delimitador_diretorios");
+    private String delimitadorDiretorioREGEX;
 
+    
+    public void setDelimitadorDiretorioREGEX() {
+        if (".\\dDwW*+?sS^$|".contains(delimitadorDiretorio)) {
+            delimitadorDiretorioREGEX = "\\" + delimitadorDiretorio;
+        } else {
+            delimitadorDiretorioREGEX = delimitadorDiretorio;
+        }
+    }
+    
 	public void init() {
+		setDelimitadorDiretorioREGEX();
 		exists = new ArrayList<Boolean>();
 		existsLog = new ArrayList<Boolean>();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
@@ -65,8 +77,9 @@ public class ConfirmacaoBean {
 		setInstituicao((InstituicaoEnsino) session.getAttribute("instituicao"));
 		setRepresentante((Representante) session.getAttribute("representante"));
 		setPath(ManipuladorArquivos
-				.leitor(current + "\\destino_uploader\\" 
-	                    + getRepresentante().getCpf() + "\\files"));
+				.leitor(current + delimitadorDiretorioREGEX + "destino_uploader" 
+	                    + delimitadorDiretorioREGEX + getRepresentante().getCpf() 
+	                    + delimitadorDiretorioREGEX +"files"));
 		for (String temp : getPath()) {
 			if ("0".equals(temp)) {
 				exists.add(false);
@@ -86,6 +99,7 @@ public class ConfirmacaoBean {
 	}
 
 	public void reset() {
+		setDelimitadorDiretorioREGEX();
 		exists.clear();
 		existsLog.clear();
 		path = null;
@@ -106,8 +120,9 @@ public class ConfirmacaoBean {
 				}
 				setInstituicao(getRepresentante().getInstituicao());
 				setPath(ManipuladorArquivos
-						.leitor(current + "\\destino_uploader\\" 
-							+ getRepresentante().getCpf() + "\\files"));
+						.leitor(current + delimitadorDiretorioREGEX + "destino_uploader" 
+							+ delimitadorDiretorioREGEX + getRepresentante().getCpf() 
+							+ delimitadorDiretorioREGEX + "files"));
 				int cont = 0;
 				for (String temp : getPath()) {
 					if ("0".equals(temp)) {
@@ -245,7 +260,7 @@ public class ConfirmacaoBean {
 		chave += getRepresentante().getCpf();
 		String[] aux = getPathAtual().split("destino_uploader");
 		String[] aux1;
-		aux1 = aux[1].split("\\\\");
+		aux1 = aux[1].split(delimitadorDiretorioREGEX);
 		chave += aux1[2];
 		chave += getDocumento();
 		return AutenticacaoDocumentos.getChaveSeguranca(chave);

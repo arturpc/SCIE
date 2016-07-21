@@ -128,9 +128,9 @@ public class SolicitacaoBean {
 			// seta path com array de string que representam as linhas do
 			// arquivo presente no destino informado
 			setPath(ManipuladorArquivos.leitor(current + "" 
-                            + delimitadorDiretorio + "destino_uploader"
-					+ delimitadorDiretorio + "" 
-			               + getSolicitacao().getCpf() + "" + delimitadorDiretorio + "files"));
+                            + delimitadorDiretorioREGEX + "destino_uploader"
+					+ delimitadorDiretorioREGEX + "" 
+			               + getSolicitacao().getCpf() + "" + delimitadorDiretorioREGEX + "files"));
 			setFiles(new String[2]);
 			int flag = 0;
 			for(String tmp : getPath()){
